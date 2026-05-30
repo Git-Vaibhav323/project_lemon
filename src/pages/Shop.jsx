@@ -184,19 +184,19 @@ function ScrollFlowerAnimation({ onFrameChange }) {
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
   const imagesRef = useRef([]);
+  const firstFrameDrawn = useRef(false);
 
   // Preload images
   useEffect(() => {
     const loadedImages = [];
-    let loadedCount = 0;
-
+    
     flowerFrames.forEach((src, i) => {
       const img = new Image();
       img.src = src;
       img.onload = () => {
-        loadedCount++;
-        if (loadedCount === flowerFrames.length) {
-          // All images loaded, draw first frame
+        // Draw first frame immediately when it loads so it's not black
+        if (i === 0 && !firstFrameDrawn.current) {
+          firstFrameDrawn.current = true;
           drawFrame(0);
         }
       };
@@ -210,7 +210,7 @@ function ScrollFlowerAnimation({ onFrameChange }) {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     const img = imagesRef.current[index];
-    if (!img) return;
+    if (!img || !img.complete) return;
 
     // Maintain aspect ratio while covering canvas or fitting it
     const canvasRatio = canvas.width / canvas.height;
@@ -231,9 +231,6 @@ function ScrollFlowerAnimation({ onFrameChange }) {
     }
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    // Adjust brightness/contrast/saturation manually via ctx filter
-    ctx.filter = "brightness(0.75) contrast(1.3) saturate(1.2)";
     ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
     
     if (onFrameChange) {

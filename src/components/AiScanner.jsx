@@ -6,6 +6,7 @@ export default function AiScanner({ onClose }) {
   const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef(null);
+  const cameraInputRef = useRef(null);
 
   // Hardcoded key as requested
   const apiKey = "AIzaSyBFnUpSqHLymTVgScM5CcS8K_95eQG37cg";
@@ -83,19 +84,13 @@ export default function AiScanner({ onClose }) {
         <div className="space-y-4">
           <div className="flex gap-2 mb-2">
             <button 
-              onClick={() => {
-                fileInputRef.current.removeAttribute('capture');
-                fileInputRef.current.click();
-              }}
+              onClick={() => fileInputRef.current.click()}
               className="flex-1 bg-white/10 hover:bg-white/20 text-white text-sm py-2 rounded-lg transition-colors border border-white/10"
             >
               Upload Photo
             </button>
             <button 
-              onClick={() => {
-                fileInputRef.current.setAttribute('capture', 'environment');
-                fileInputRef.current.click();
-              }}
+              onClick={() => cameraInputRef.current.click()}
               className="flex-1 bg-[#4edea3]/20 hover:bg-[#4edea3]/30 text-[#4edea3] text-sm py-2 rounded-lg transition-colors border border-[#4edea3]/30"
             >
               Use Camera
@@ -107,6 +102,14 @@ export default function AiScanner({ onClose }) {
               accept="image/*" 
               onChange={handleImageChange}
               ref={fileInputRef}
+              className="hidden"
+            />
+            <input 
+              type="file" 
+              accept="image/*" 
+              capture="environment"
+              onChange={handleImageChange}
+              ref={cameraInputRef}
               className="hidden"
             />
             <div 
