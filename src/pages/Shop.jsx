@@ -241,12 +241,13 @@ function ScrollFlowerAnimation({ onFrameChange }) {
   useEffect(() => {
     const playhead = { frame: 0 };
     
+    // Instead of pinning the absolute container (which breaks layout and adds spacers),
+    // we just use the window scroll to drive the frame animation smoothly.
     const trigger = ScrollTrigger.create({
-      trigger: containerRef.current,
+      trigger: document.body,
       start: "top top",
-      end: "+=2000", // 2000px scroll duration
-      pin: true,
-      scrub: 0.5, // smooth scrubbing
+      end: "1000px", // Animates during the first 1000px of scrolling
+      scrub: 0.5,
       animation: gsap.to(playhead, {
         frame: flowerFrames.length - 1,
         snap: "frame",
@@ -261,12 +262,12 @@ function ScrollFlowerAnimation({ onFrameChange }) {
   }, [drawFrame]);
 
   return (
-    <div ref={containerRef} className="w-full h-screen overflow-hidden flex items-center justify-center bg-transparent">
+    <div ref={containerRef} className="w-full h-[120%] flex items-center justify-center bg-transparent pointer-events-none">
       <canvas 
         ref={canvasRef}
         width={1000}
         height={1000}
-        className="w-full max-w-[800px] h-auto object-contain scale-[1.3]"
+        className="w-full max-w-[900px] h-auto object-contain"
       />
       
       {/* Subtle edge fade only on left to blend with text */}
@@ -718,7 +719,12 @@ function BentoGrid({ onSelectPlant, onAddToCart }) {
             Botanical specimen from our greenhouse reserves.
           </p>
         </div>
-        <MagneticBtn className="p-4" style={{ border:`1px solid rgba(60,74,66,0.5)`, color:DS.onSurface }} aria-label="Filter collection">
+        <MagneticBtn 
+          className="p-4" 
+          style={{ border:`1px solid rgba(60,74,66,0.5)`, color:DS.onSurface }} 
+          aria-label="Filter collection"
+          onClick={() => alert("Filter functionality coming soon!")}
+        >
           <FilterSVG/>
         </MagneticBtn>
       </div>

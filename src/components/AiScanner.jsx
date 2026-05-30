@@ -5,8 +5,10 @@ export default function AiScanner({ onClose }) {
   const [image, setImage] = useState(null);
   const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isCameraActive, setIsCameraActive] = useState(false);
   const fileInputRef = useRef(null);
-  const cameraInputRef = useRef(null);
+  const videoRef = useRef(null);
+  const streamRef = useRef(null);
 
   // Hardcoded key as requested
   const apiKey = "AIzaSyBFnUpSqHLymTVgScM5CcS8K_95eQG37cg";
@@ -17,9 +19,54 @@ export default function AiScanner({ onClose }) {
       const reader = new FileReader();
       reader.onload = (e) => {
         setImage(e.target.result);
+        stopCamera();
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const startCamera = async () => {
+    try {
+      setImage(null);
+      setResult("");
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        video: { facingMode: "environment" } 
+      });
+      streamRef.current = stream;
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+      setIsCameraActive(true);
+    } catch (err) {
+      console.error("Camera error:", err);
+      alert("Unable to access camera. Please allow permissions or try uploading a photo.");
+    }
+  };
+
+  const stopCamera = () => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop());
+      streamRef.current = null;
+    }
+    setIsCameraActive(false);
+  };
+
+  const capturePhoto = () => {
+    if (videoRef.current) {
+      const canvas = document.createElement("canvas");
+      canvas.width = videoRef.current.videoWidth;
+      canvas.height = videoRef.current.videoHeight;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+      const dataUrl = canvas.toDataURL("image/jpeg");
+      setImage(dataUrl);
+      stopCamera();
+    }
+  };
+
+  const handleClose = () => {
+    stopCamera();
+    onClose();
   };
 
   const handleScan = async () => {
@@ -73,7 +120,7 @@ export default function AiScanner({ onClose }) {
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-md p-4">
       <div className="bg-[#14221e] border border-[#4edea3]/30 rounded-2xl p-6 w-full max-w-md shadow-2xl relative">
         <button 
-          onClick={onClose}
+          onClick={handleClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-white"
         >
           ✕
@@ -90,7 +137,7 @@ export default function AiScanner({ onClose }) {
               Upload Photo
             </button>
             <button 
-              onClick={() => cameraInputRef.current.click()}
+              onClick={startCamera}
               className="flex-1 bg-[#4edea3]/20 hover:bg-[#4edea3]/30 text-[#4edea3] text-sm py-2 rounded-lg transition-colors border border-[#4edea3]/30"
             >
               Use Camera
@@ -104,18 +151,25 @@ export default function AiScanner({ onClose }) {
               ref={fileInputRef}
               className="hidden"
             />
-            <input 
-              type="file" 
-              accept="image/*" 
-              capture="environment"
-              onChange={handleImageChange}
-              ref={cameraInputRef}
-              className="hidden"
-            />
             <div 
-              className="w-full h-48 border-2 border-dashed border-gray-600 rounded-xl flex items-center justify-center overflow-hidden relative"
+              className="w-full h-48 border-2 border-dashed border-gray-600 rounded-xl flex flex-col items-center justify-center overflow-hidden relative bg-black/50"
             >
-              {image ? (
+              {isCameraActive ? (
+                <>
+                  <video 
+                    ref={videoRef} 
+                    autoPlay 
+                    playsInline 
+                    className="w-full h-full object-cover"
+                  />
+                  <button 
+                    onClick={capturePhoto}
+                    className="absolute bottom-4 bg-white text-black px-4 py-2 rounded-full font-bold text-sm shadow-lg hover:scale-105 transition-transform"
+                  >
+                    Take Photo
+                  </button>
+                </>
+              ) : image ? (
                 <img src={image} alt="Upload preview" className="w-full h-full object-contain" />
               ) : (
                 <div className="text-center text-gray-500 flex flex-col items-center">
