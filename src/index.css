@@ -36,33 +36,64 @@ html {
 }
 
 body {
-  background-color: #141f14;
+  background-color: #0b1d0d;
   color: #ffffff;
   font-family: 'Inter', sans-serif;
   overflow-x: clip;
   width: 100%;
   -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 50% at 10% 15%, rgba(20,120,80,0.3) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 70% 50%, rgba(10,60,30,0.5) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 30% at 30% 80%, rgba(15,90,50,0.2) 0%, transparent 50%);
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
 }
 
 #root {
   width: 100%;
   overflow-x: clip;
+  position: relative;
+  z-index: 2;
 }
 
 ::-webkit-scrollbar {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #1a2e1a;
+  background: #0b1d0d;
 }
 ::-webkit-scrollbar-thumb {
-  background: #4a7c59;
+  background: #3dffa0;
   border-radius: 3px;
 }
 
 @layer components {
   .glass {
-    @apply bg-white/[0.05] backdrop-blur-glass border border-white/[0.08];
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 20px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.06);
   }
 
@@ -80,8 +111,8 @@ body {
   }
 
   .btn-accent {
-    @apply bg-brand-green/90 border border-brand-light/20 text-white text-sm font-medium px-6 py-2.5 rounded-full
-      hover:bg-brand-green active:scale-[0.98] transition-all duration-300 cursor-pointer;
+    @apply bg-[#3dffa0]/20 border border-[#3dffa0]/30 text-[#3dffa0] text-sm font-medium px-6 py-2.5 rounded-full
+      hover:bg-[#3dffa0]/30 active:scale-[0.98] transition-all duration-300 cursor-pointer;
   }
 
   .btn-icon {
@@ -95,7 +126,7 @@ body {
 
   .nav-link::after {
     content: '';
-    @apply absolute -bottom-1 left-0 w-0 h-px bg-brand-light transition-all duration-300;
+    @apply absolute -bottom-1 left-0 w-0 h-px bg-[#3dffa0] transition-all duration-300;
   }
 
   .nav-link:hover::after {
@@ -103,7 +134,7 @@ body {
   }
 
   .section-bracket {
-    @apply text-brand-light/40 text-lg font-light leading-none select-none;
+    @apply text-[#3dffa0]/40 text-lg font-light leading-none select-none;
   }
 
   .reveal {
@@ -137,7 +168,6 @@ body {
     overflow-y: visible;
   }
 
-  /* 3D plant pop-out — larger than glass card */
   .plant-pop-3d {
     overflow: visible;
     isolation: isolate;
@@ -154,11 +184,10 @@ body {
 
   .hero-atmosphere-glow {
     background:
-      radial-gradient(ellipse 70% 50% at 50% 20%, rgba(74, 124, 89, 0.3) 0%, transparent 65%),
+      radial-gradient(ellipse 70% 50% at 50% 20%, rgba(61,255,160,0.15) 0%, transparent 65%),
       radial-gradient(ellipse 50% 40% at 70% 60%, rgba(45, 90, 61, 0.15) 0%, transparent 55%);
   }
 
-  /* Hero backdrop */
   .hero-rose-backdrop {
     width: 100%;
     height: 100%;
@@ -172,11 +201,10 @@ body {
 
   .hero-rose-overlay {
     background:
-      linear-gradient(180deg, rgba(10, 16, 9, 0.15) 0%, rgba(14, 24, 16, 0.35) 50%, rgba(20, 31, 20, 0.75) 100%),
+      linear-gradient(180deg, rgba(10, 16, 9, 0.15) 0%, rgba(14, 24, 16, 0.35) 50%, rgba(11, 29, 13, 0.75) 100%),
       linear-gradient(90deg, rgba(10, 16, 9, 0.4) 0%, transparent 22%, transparent 78%, rgba(10, 16, 9, 0.4) 100%);
   }
 
-  /* Hero Calathea showcase — matches reference (Rectangle 24 + 1.png) */
   .hero-calathea-card {
     position: relative;
     isolation: isolate;
@@ -210,7 +238,6 @@ body {
     pointer-events: none;
   }
 
-  /* Plant sits in upper ~52% of card (inside the box like reference) */
   .hero-calathea-card__visual {
     position: absolute;
     top: -0.65rem;
@@ -321,7 +348,6 @@ body {
     background: #ffffff;
   }
 
-  /* Nested glass — Calathea card only */
   .hero-nested-glass {
     background: rgba(15, 24, 16, 0.55);
     backdrop-filter: blur(28px);
@@ -330,7 +356,7 @@ body {
     box-shadow:
       0 20px 48px rgba(0, 0, 0, 0.45),
       inset 0 1px 0 rgba(255, 255, 255, 0.12),
-      inset 0 0 40px rgba(74, 124, 89, 0.06);
+      inset 0 0 40px rgba(61, 255, 160, 0.06);
   }
 
   .hero-nested-glass-inner {
@@ -346,7 +372,7 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.12);
     box-shadow:
       0 24px 64px rgba(0, 0, 0, 0.45),
-      0 0 80px rgba(74, 124, 89, 0.08),
+      0 0 80px rgba(61, 255, 160, 0.08),
       inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 
@@ -383,7 +409,6 @@ body {
     box-shadow: 0 16px 48px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
 
-  /* Site-wide hero background — identical on all screen sizes */
   .hero-bg-layer {
     top: 0;
     overflow: visible;
@@ -392,7 +417,6 @@ body {
   .hero-bg-inner {
     position: relative;
     width: 100%;
-    /* Proportional shift: same visual anchor on mobile, tablet, and desktop */
     transform: translateY(-18%);
     transform-origin: center top;
   }
@@ -413,14 +437,13 @@ body {
     pointer-events: none;
   }
 
-  /* Soft blend into page background so the image is never hard-cut */
   .hero-bg-fade {
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
     height: 35%;
-    background: linear-gradient(to bottom, transparent 0%, #141f14 100%);
+    background: linear-gradient(to bottom, transparent 0%, #0b1d0d 100%);
     pointer-events: none;
   }
 
@@ -430,6 +453,32 @@ body {
 
   .animate-float-delayed {
     animation: float 6s ease-in-out 1.2s infinite;
+  }
+
+  /* ── Testimonials Marquee ── */
+  .marquee-track-voices {
+    display: flex;
+    animation: marqueeScroll 30s linear infinite;
+    width: max-content;
+  }
+
+  .marquee-container:hover .marquee-track-voices {
+    animation-play-state: paused;
+  }
+
+  @keyframes marqueeScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ── Cultivate Newsletter Border Pulse ── */
+  .cultivate-panel {
+    animation: borderPulse 3s ease-in-out infinite;
+  }
+
+  @keyframes borderPulse {
+    0%, 100% { border-color: rgba(61,255,160,0.08); }
+    50% { border-color: rgba(61,255,160,0.28); }
   }
 }
 
@@ -447,13 +496,83 @@ body {
     opacity: 1 !important;
     transform: none !important;
   }
+
   .animate-fade-in,
   .animate-slide-in-right {
     animation: none !important;
   }
+
+  .marquee-track-voices {
+    animation: none !important;
+  }
+
+  .cultivate-panel {
+    animation: none !important;
+  }
+
+  .nav-shop-btn,
+  .hero-word,
+  .paragraphIn,
+  .secondary-link,
+  .ken-burns-bg,
+  .review-card,
+  .plant-card-self,
+  .view-more-chevron {
+    animation: none !important;
+  }
+
+  .hero-word,
+  .paragraphIn,
+  .secondary-link,
+  .review-card,
+  .plant-card-self {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .ken-burns-bg {
+    transform: none !important;
+  }
+
+  .plant-hidden {
+    max-height: none;
+    opacity: 1;
+    overflow: visible;
+  }
+
+  * {
+    animation-duration: 0s !important;
+    transition-duration: 0s !important;
+  }
 }
 
-/* Responsive animations */
+/* Mobile responsive adjustments */
+@media (max-width: 640px) {
+  .hero-section {
+    min-height: 100vh;
+    padding-bottom: 2rem;
+  }
+
+  .glass {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .marquee-track-voices {
+    animation-duration: 40s;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-calathea-card {
+    max-width: 14rem;
+  }
+
+  .plant-pop-image {
+    max-width: 90%;
+  }
+}
+
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-20px); }
@@ -519,25 +638,176 @@ body {
   animation: rollUpText 0.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
 }
 
-/* Mobile responsive improvements */
-@media (max-width: 640px) {
-  .hero-section {
-    min-height: 100vh;
-    padding-bottom: 2rem;
-  }
-  
-  .glass {
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-  }
+/* ── Navbar Pulse ── */
+.nav-shop-btn {
+  animation: navPulse 2.4s ease-in-out infinite;
 }
 
-@media (max-width: 768px) {
-  .hero-calathea-card {
-    max-width: 14rem;
-  }
-  
-  .plant-pop-image {
-    max-width: 90%;
-  }
+@keyframes navPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(61,255,160,0.2); }
+  50% { box-shadow: 0 0 0 8px rgba(61,255,160,0); }
+}
+
+/* ── Hero Word Split ── */
+.hero-word {
+  display: inline-block;
+  opacity: 0;
+  animation: wordIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes wordIn {
+  0% { opacity: 0; transform: translateY(1.2rem) scale(0.96); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.paragraphIn {
+  opacity: 0;
+  animation: slideUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes slideUp {
+  0% { opacity: 0; transform: translateY(1.5rem); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.secondary-link {
+  opacity: 0;
+  animation: slideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.9s forwards;
+}
+
+/* ── Ken Burns Background ── */
+.ken-burns-bg {
+  animation: kenBurns 20s ease-in-out infinite alternate;
+}
+
+@keyframes kenBurns {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.08); }
+}
+
+/* ── Review Card ── */
+.review-card {
+  opacity: 0;
+  animation: slideRight 0.7s cubic-bezier(0.22, 1, 0.36, 1) 1.1s forwards,
+             floatY 5s ease-in-out 1.8s infinite;
+}
+
+@keyframes slideRight {
+  0% { opacity: 0; transform: translateX(-2rem); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+.plant-card-self {
+  opacity: 0;
+  animation: slideLeft 0.7s cubic-bezier(0.22, 1, 0.36, 1) 1.3s forwards,
+             floatY 5s ease-in-out 2.4s infinite;
+}
+
+@keyframes slideLeft {
+  0% { opacity: 0; transform: translateX(2rem); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ── Plant Hidden / Visible for View More ── */
+.plant-hidden {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  margin-bottom: 0;
+  padding: 0;
+  transition: max-height 0.5s ease, opacity 0.4s ease, margin 0.4s ease, padding 0.4s ease;
+}
+
+.plant-visible {
+  max-height: 400px;
+  opacity: 1;
+  transition: max-height 0.5s ease, opacity 0.5s ease 0.1s, margin 0.4s ease;
+}
+
+/* ── Tooltip on Add to Collection ── */
+.card-tooltip-group {
+  position: relative;
+}
+
+.card-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: rgba(10,25,12,0.95);
+  color: #fff;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  border: 1px solid rgba(61,255,160,0.2);
+}
+
+.card-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-top-color: rgba(61,255,160,0.2);
+}
+
+.card-tooltip-group:hover .card-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ── Chevron bounce on View More ── */
+.view-more-chevron {
+  animation: chevronBounce 1.6s ease-in-out infinite;
+}
+
+@keyframes chevronBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+
+/* ── Autoplay Video Background ── */
+#plant-bg-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+#plant-bg-video.ready {
+  opacity: 1;
+}
+
+#hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(5, 15, 7, 0.50) 0%,
+    rgba(5, 15, 7, 0.30) 40%,
+    rgba(5, 15, 7, 0.65) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+#home > *:not(#plant-bg-video):not(#hero-overlay) {
+  position: relative;
+  z-index: 2;
 }

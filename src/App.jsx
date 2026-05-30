@@ -2,7 +2,12 @@ import { useState, useEffect } from "react";
 import Lenis from "lenis";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
+import PlantPhilosophy from "./components/PlantPhilosophy";
 import TopSelling from "./components/TopSelling";
+import ShopStrip from "./components/ShopStrip";
+import GrowingConditions from "./components/GrowingConditions";
+import GreenhouseVoices from "./components/GreenhouseVoices";
+import CultivateNewsletter from "./components/CultivateNewsletter";
 import CustomerReviews from "./components/CustomerReviews";
 import BestO2 from "./components/BestO2";
 import Contact from "./components/Contact";
@@ -10,8 +15,11 @@ import Footer from "./components/Footer";
 import Shop from "./pages/Shop";
 import About from "./pages/About";
 import Admin from "./pages/Admin";
+import useCustomCursor from "./hooks/useCustomCursor";
 
 export default function App() {
+  useCustomCursor();
+
   const [hash, setHash] = useState(window.location.hash || "#home");
 
   useEffect(() => {
@@ -76,7 +84,12 @@ export default function App() {
         <Navbar />
         <main>
           <Hero />
+          <PlantPhilosophy />
           <TopSelling />
+          <ShopStrip />
+          <GrowingConditions />
+          <GreenhouseVoices />
+          <CultivateNewsletter />
           <CustomerReviews />
           <BestO2 />
           <Contact />

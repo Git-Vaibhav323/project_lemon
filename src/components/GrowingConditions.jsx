@@ -1,0 +1,87 @@
+import { useState } from "react";
+
+const items = [
+  {
+    id: 1,
+    question: "How do I know which light my space gets?",
+    answer:
+      "Stand where you'd place the plant at noon. Direct sun = square of sunlight on floor. Indirect = bright but no direct beam. Low light = comfortable reading without a lamp.",
+  },
+  {
+    id: 2,
+    question: "When exactly should I water?",
+    answer:
+      "Push a finger 2cm into the soil. If it comes out clean and dry — water. If soil clings — wait. Most indoor plants fail from overwatering, not drought.",
+  },
+  {
+    id: 3,
+    question: "Do all plants actually clean air?",
+    answer:
+      "Yes, but the effect is real at scale. Studies show noticeable VOC reduction with 6–8 plants per 100 sq ft. Our air-benefit labels reflect independently documented species data.",
+  },
+  {
+    id: 4,
+    question: "What size pot should I repot into?",
+    answer:
+      "Go one size up only — 2–3cm wider than current pot. Too large a pot holds excess moisture the roots can't absorb, which causes root rot.",
+  },
+];
+
+export default function GrowingConditions() {
+  const [openId, setOpenId] = useState(null);
+
+  const toggle = (id) => {
+    setOpenId(openId === id ? null : id);
+  };
+
+  return (
+    <section id="care" className="px-4 sm:px-6 lg:px-10 py-14 sm:py-16 lg:py-20 max-w-4xl mx-auto relative z-10">
+      <div className="text-center mb-10 sm:mb-12">
+        <h2 className="text-white text-2xl sm:text-3xl md:text-4xl font-bold">
+          Everything your plant needs to thrive
+        </h2>
+        <p className="text-white/50 text-sm sm:text-base mt-2">
+          Honest guidance — not generic tips.
+        </p>
+      </div>
+
+      <div>
+        {items.map((item) => {
+          const isOpen = openId === item.id;
+          return (
+            <div
+              key={item.id}
+              className="border-b border-white/[0.06]"
+            >
+              <button
+                type="button"
+                onClick={() => toggle(item.id)}
+                className="w-full flex items-center justify-between py-5 text-left text-white text-sm sm:text-base font-medium hover:text-white/90 transition-colors"
+              >
+                <span>{item.question}</span>
+                <span
+                  className={`text-[#3dffa0] text-lg font-light transition-transform duration-300 shrink-0 ml-4 ${
+                    isOpen ? "rotate-45" : ""
+                  }`}
+                >
+                  +
+                </span>
+              </button>
+              <div
+                className="overflow-hidden transition-all duration-350 ease"
+                style={{
+                  maxHeight: isOpen ? "300px" : "0",
+                  opacity: isOpen ? 1 : 0,
+                }}
+              >
+                <p className="pb-5 text-white/55 text-sm leading-relaxed">
+                  {item.answer}
+                </p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}

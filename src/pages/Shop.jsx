@@ -5,6 +5,7 @@ gsap.registerPlugin(ScrollTrigger);
 import PlantDetail from "../components/PlantDetail";
 import CartModal from "../components/CartModal";
 import AiScanner from "../components/AiScanner";
+import useCustomCursor from "../hooks/useCustomCursor";
 import BrandLogo from "../components/ui/BrandLogo";
 import mainLogo from "../assets/plants/mainlog.png";
 import img1 from "../assets/plants/1.png";
@@ -1288,6 +1289,8 @@ function SearchResultsSection({ query, allPlants, onSelectPlant, onAddToCart }) 
 }
 
 export default function Shop() {
+  useCustomCursor();
+
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedPlant, setSelectedPlant] = useState(null);
   const [cartItems, setCartItems]         = useState([]);

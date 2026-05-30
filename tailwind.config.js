@@ -12,6 +12,7 @@ export default {
           light: "#6db87a",
           accent: "#8bc34a",
           glow: "#2d5a3d",
+          teal: "#3dffa0",
         },
       },
       fontFamily: {
