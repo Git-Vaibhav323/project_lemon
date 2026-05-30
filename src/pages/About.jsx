@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import mainLogo from "../assets/plants/mainlog.png";
 
 export default function About() {
   const [scrolled, setScrolled] = useState(false);
@@ -28,7 +29,7 @@ export default function About() {
               className="group shrink-0 transition-opacity duration-300 hover:opacity-90 flex items-center gap-2"
             >
               <img 
-                src="/mainlog.png" 
+                src={mainLogo} 
                 alt="Planto Logo" 
                 className="h-8 w-8 object-contain transition-transform duration-300 group-hover:scale-105"
               />

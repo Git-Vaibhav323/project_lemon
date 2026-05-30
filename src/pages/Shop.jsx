@@ -3,6 +3,7 @@ import gsap from "gsap";
 import PlantDetail from "../components/PlantDetail";
 import CartModal from "../components/CartModal";
 import AiScanner from "../components/AiScanner";
+import mainLogo from "../assets/plants/mainlog.png";
 import img1 from "../assets/plants/1.png";
 import img2 from "../assets/plants/2.png";
 import img3 from "../assets/plants/3.png";
@@ -115,101 +116,6 @@ const flowerFrames = Array.from({ length: 50 }, (_, i) => {
   const frameNum = String(i + 1).padStart(3, '0');
   return `/ezgif-6d2a08a35083e533-jpg/ezgif-frame-${frameNum}.jpg`;
 });
-
-// ──────────────────────────────────────────────────────────────────────────────
-// PREMIUM CURSOR
-// ──────────────────────────────────────────────────────────────────────────────
-function PremiumCursor() {
-  const dotRef    = useRef(null);
-  const ringRef   = useRef(null);
-  const glowRef   = useRef(null);
-  const labelRef  = useRef(null);
-  const stateRef  = useRef({ mx: -300, my: -300, rx: -300, ry: -300, label: "", expanded: false });
-
-  useEffect(() => {
-    const dot   = dotRef.current;
-    const ring  = ringRef.current;
-    const glow  = glowRef.current;
-    const label = labelRef.current;
-    if (!dot || !ring || !glow) return;
-
-    const onMove = (e) => {
-      stateRef.current.mx = e.clientX;
-      stateRef.current.my = e.clientY;
-      const t = e.target;
-      const isCard   = t.closest("[data-card]");
-      const isBtn    = t.closest("button, a, [data-magnetic]");
-      stateRef.current.label    = isCard ? "View Plant" : "";
-      stateRef.current.expanded = !!isCard || !!isBtn;
-    };
-
-    window.addEventListener("mousemove", onMove, { passive: true });
-
-    let raf;
-    const tick = () => {
-      const s = stateRef.current;
-      s.rx = lerp(s.rx, s.mx, 0.1);
-      s.ry = lerp(s.ry, s.my, 0.1);
-
-      dot.style.transform  = `translate3d(${s.mx - 4}px,${s.my - 4}px,0)`;
-      ring.style.transform = `translate3d(${s.rx - 20}px,${s.ry - 20}px,0)`;
-      glow.style.transform = `translate3d(${s.rx - 140}px,${s.ry - 140}px,0)`;
-
-      const size = s.expanded ? "56px" : "40px";
-      ring.style.width  = size;
-      ring.style.height = size;
-      ring.style.borderColor = s.expanded ? "rgba(78,222,163,0.9)" : "rgba(78,222,163,0.4)";
-      ring.style.marginLeft  = s.expanded ? "-8px"  : "0";
-      ring.style.marginTop   = s.expanded ? "-8px"  : "0";
-
-      if (label) {
-        label.style.opacity   = s.label ? "1" : "0";
-        label.textContent     = s.label;
-        label.style.transform = `translate3d(${s.rx + 14}px,${s.ry + 14}px,0)`;
-      }
-      raf = requestAnimationFrame(tick);
-    };
-    tick();
-
-    return () => {
-      window.removeEventListener("mousemove", onMove);
-      cancelAnimationFrame(raf);
-    };
-  }, []);
-
-  return (
-    <>
-      {/* Dot */}
-      <div ref={dotRef} style={{
-        position:"fixed", top:0, left:0, width:"8px", height:"8px", borderRadius:"50%",
-        background: DS.primary, pointerEvents:"none", zIndex:9999, willChange:"transform",
-        boxShadow:"0 0 10px rgba(78,222,163,0.8)",
-      }}/>
-      {/* Ring */}
-      <div ref={ringRef} style={{
-        position:"fixed", top:0, left:0, width:"40px", height:"40px", borderRadius:"50%",
-        border:"1px solid rgba(78,222,163,0.4)", pointerEvents:"none", zIndex:9998,
-        willChange:"transform", transition:"width .25s ease,height .25s ease,border-color .25s ease,margin .25s ease",
-        background:"rgba(78,222,163,0.04)",
-      }}/>
-      {/* Glow */}
-      <div ref={glowRef} style={{
-        position:"fixed", top:0, left:0, width:"280px", height:"280px", borderRadius:"50%",
-        pointerEvents:"none", zIndex:9997, willChange:"transform",
-        background:"radial-gradient(circle, rgba(78,222,163,0.06) 0%, rgba(78,222,163,0.02) 40%, transparent 70%)",
-      }}/>
-      {/* Label */}
-      <div ref={labelRef} style={{
-        position:"fixed", top:0, left:0, pointerEvents:"none", zIndex:9999, opacity:0,
-        color:DS.primary, fontSize:"11px", fontFamily:"Inter,sans-serif", fontWeight:600,
-        letterSpacing:"0.08em", textTransform:"uppercase",
-        transition:"opacity 0.2s ease", willChange:"transform",
-        background:"rgba(8,22,18,0.8)", padding:"4px 10px", backdropFilter:"blur(8px)",
-        border:"1px solid rgba(78,222,163,0.2)",
-      }}/>
-    </>
-  );
-}
 
 // ──────────────────────────────────────────────────────────────────────────────
 // ATMOSPHERIC LAYER  — particles + light beams + breathing blobs
@@ -621,7 +527,7 @@ function ShopNav({ cartCount, cartBump, onCartClick }) {
             className="group shrink-0 min-w-0 transition-opacity duration-300 hover:opacity-90 flex items-center gap-2"
           >
             <img 
-              src="/mainlog.png" 
+              src={mainLogo}
               alt="Planto Logo" 
               className="h-8 w-8 object-contain transition-transform duration-300 group-hover:scale-105"
             />
@@ -1407,9 +1313,6 @@ export default function Shop() {
     <>
       {/* ── Global Styles ── */}
       <style>{`
-        /* Cursor */
-        * { cursor: none !important; }
-
         /* Keyframes */
         @keyframes fadeIn { from{opacity:0} to{opacity:1} }
         @keyframes slideInRight { from{transform:translateX(100%)} to{transform:translateX(0)} }
@@ -1488,16 +1391,10 @@ export default function Shop() {
             animation-duration: 0.01ms !important;
             transition-duration: 0.01ms !important;
           }
-          * { cursor: auto !important; }
           .hero-title-anim, .hero-sub-anim,
           .section-reveal, .stagger-reveal { opacity:1 !important; transform:none !important; }
         }
       `}</style>
-
-      {/* Premium cursor (desktop only) */}
-      <div className="hidden md:block">
-        <PremiumCursor/>
-      </div>
 
       {/* Fly-to-cart particles */}
       {flyParticles.map(p => (
