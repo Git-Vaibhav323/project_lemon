@@ -44,7 +44,10 @@ export default function CartModal({ cartItems, onClose, onCheckoutSuccess }) {
     if (!receiptRef.current) return;
     
     try {
-      const canvas = await html2canvas(receiptRef.current, { backgroundColor: "#14221e" });
+      const canvas = await html2canvas(receiptRef.current, { 
+        backgroundColor: "#14221e",
+        scale: 3
+      });
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
       
@@ -82,25 +85,59 @@ export default function CartModal({ cartItems, onClose, onCheckoutSuccess }) {
             <h2 className="text-2xl font-semibold text-[#4edea3] mb-2">Purchase Successful!</h2>
             <p className="text-gray-400 mb-8">Thank you for your order, {customerName}.</p>
             
-            {/* Hidden Receipt for PDF Generation */}
-            <div className="hidden">
-              <div ref={receiptRef} className="p-8 bg-[#14221e] text-white w-[600px]">
-                <h1 className="text-3xl font-bold text-[#4edea3] mb-6">Planto Receipt</h1>
-                <p className="mb-2"><span className="text-gray-400">Customer:</span> {customerName}</p>
-                <p className="mb-6"><span className="text-gray-400">Date:</span> {new Date().toLocaleString()}</p>
-                
-                <div className="border-t border-white/10 pt-4 mb-4">
-                  {cartItems.map((item, idx) => (
-                    <div key={idx} className="flex justify-between mb-2">
-                      <span>{item.quantity || 1}x {item.name}</span>
-                      <span>${item.price * (item.quantity || 1)}</span>
-                    </div>
-                  ))}
+            {/* Hidden Receipt for PDF Generation (rendered off-screen, NOT display:none) */}
+            <div className="absolute top-[-9999px] left-[-9999px]">
+              <div ref={receiptRef} className="p-12 bg-[#14221e] text-white w-[800px] border border-white/10 shadow-2xl">
+                <div className="flex justify-between items-end mb-8 border-b border-white/10 pb-6">
+                  <div>
+                    <h1 className="text-4xl font-bold text-[#4edea3] mb-2">Planto</h1>
+                    <p className="text-gray-400">Premium Botanical Specimen</p>
+                  </div>
+                  <h2 className="text-3xl font-light text-white">RECEIPT</h2>
                 </div>
                 
-                <div className="border-t border-white/10 pt-4 flex justify-between font-bold text-xl text-[#4edea3]">
-                  <span>Total</span>
-                  <span>${total}</span>
+                <div className="flex justify-between mb-10 text-lg">
+                  <div>
+                    <p className="text-gray-400 mb-1">Customer</p>
+                    <p className="font-medium text-xl">{customerName}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-gray-400 mb-1">Date</p>
+                    <p className="font-medium">{new Date().toLocaleString()}</p>
+                  </div>
+                </div>
+                
+                <div className="border border-white/10 rounded-xl overflow-hidden mb-8">
+                  <table className="w-full text-left">
+                    <thead className="bg-white/5">
+                      <tr>
+                        <th className="p-4 text-gray-400 font-medium">Item</th>
+                        <th className="p-4 text-gray-400 font-medium text-center">Qty</th>
+                        <th className="p-4 text-gray-400 font-medium text-right">Price</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {cartItems.map((item, idx) => (
+                        <tr key={idx} className="border-t border-white/5">
+                          <td className="p-4 text-lg">{item.name}</td>
+                          <td className="p-4 text-lg text-center">{item.quantity || 1}</td>
+                          <td className="p-4 text-lg text-right">${(item.price * (item.quantity || 1)).toFixed(2)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                
+                <div className="flex justify-end pt-4 pb-8">
+                  <div className="w-1/2 flex justify-between items-center bg-[#4edea3]/10 p-6 rounded-xl border border-[#4edea3]/20">
+                    <span className="text-xl text-gray-300 uppercase tracking-widest">Total</span>
+                    <span className="text-4xl font-bold text-[#4edea3]">${total.toFixed(2)}</span>
+                  </div>
+                </div>
+                
+                <div className="text-center text-gray-500 mt-12 pt-8 border-t border-white/5 text-sm">
+                  Thank you for bringing nature into your home.<br/>
+                  planto © all rights reserved
                 </div>
               </div>
             </div>

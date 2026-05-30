@@ -85,13 +85,16 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Copyright — centered per Figma */}
-        <div className="border-t border-white/[0.06] pt-6 sm:pt-8 flex justify-center items-center relative">
-          <p className="text-white/30 text-xs sm:text-sm text-center">
-            planto © all right reserve
+        {/* Copyright & Admin Link */}
+        <div className="border-t border-white/[0.06] pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-white/30 text-xs sm:text-sm text-center sm:text-left">
+            planto © all rights reserved
           </p>
-          <a href="#admin" className="absolute right-0 text-[10px] text-white/5 hover:text-white/30 transition-colors">
-            admin
+          <a 
+            href="#admin" 
+            className="text-xs sm:text-sm text-white/50 hover:text-[#4edea3] transition-colors border border-white/10 px-4 py-1.5 rounded-full bg-white/5"
+          >
+            Admin Dashboard
           </a>
         </div>
       </div>
