@@ -81,8 +81,27 @@ export default function AiScanner({ onClose }) {
         <h2 className="text-2xl font-semibold text-[#4edea3] mb-4">AI Plant Scanner</h2>
         
         <div className="space-y-4">
+          <div className="flex gap-2 mb-2">
+            <button 
+              onClick={() => {
+                fileInputRef.current.removeAttribute('capture');
+                fileInputRef.current.click();
+              }}
+              className="flex-1 bg-white/10 hover:bg-white/20 text-white text-sm py-2 rounded-lg transition-colors border border-white/10"
+            >
+              Upload Photo
+            </button>
+            <button 
+              onClick={() => {
+                fileInputRef.current.setAttribute('capture', 'environment');
+                fileInputRef.current.click();
+              }}
+              className="flex-1 bg-[#4edea3]/20 hover:bg-[#4edea3]/30 text-[#4edea3] text-sm py-2 rounded-lg transition-colors border border-[#4edea3]/30"
+            >
+              Use Camera
+            </button>
+          </div>
           <div>
-            <label className="block text-xs text-gray-400 uppercase tracking-wider mb-1">Plant Image</label>
             <input 
               type="file" 
               accept="image/*" 
@@ -91,13 +110,19 @@ export default function AiScanner({ onClose }) {
               className="hidden"
             />
             <div 
-              onClick={() => fileInputRef.current.click()}
-              className="w-full h-40 border-2 border-dashed border-gray-600 hover:border-[#4edea3] rounded-xl flex items-center justify-center cursor-pointer overflow-hidden relative"
+              className="w-full h-48 border-2 border-dashed border-gray-600 rounded-xl flex items-center justify-center overflow-hidden relative"
             >
               {image ? (
-                <img src={image} alt="Upload preview" className="w-full h-full object-cover" />
+                <img src={image} alt="Upload preview" className="w-full h-full object-contain" />
               ) : (
-                <span className="text-gray-400">Click to upload photo</span>
+                <div className="text-center text-gray-500 flex flex-col items-center">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="mb-2">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                    <polyline points="21 15 16 10 5 21"/>
+                  </svg>
+                  <span>No image selected</span>
+                </div>
               )}
             </div>
           </div>

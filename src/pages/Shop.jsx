@@ -114,9 +114,8 @@ const flowerTextStages = [
 const lerp = (a, b, n) => (1 - n) * a + n * b;
 
 // ─── Import flower frames ─────────────────────────────────────────────────────
-const flowerFrames = Array.from({ length: 50 }, (_, i) => {
-  const frameNum = String(i + 1).padStart(3, '0');
-  return `/ezgif-6d2a08a35083e533-jpg/ezgif-frame-${frameNum}.jpg`;
+const flowerFrames = Array.from({ length: 100 }, (_, i) => {
+  return `/ezgif/ezgif-frame-${(i + 1).toString().padStart(3, '0')}.jpg`;
 });
 
 // ──────────────────────────────────────────────────────────────────────────────
@@ -794,9 +793,12 @@ function BentoGrid({ onSelectPlant, onAddToCart }) {
               <span style={{ fontFamily:"Geist,sans-serif", fontSize:"24px", fontWeight:600, color:DS.primary }}>
                 {ficus.priceDisplay}
               </span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={DS.primary} strokeWidth="2">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
+              <MagneticBtn
+                className="w-10 h-10 flex items-center justify-center rounded-full border border-[#4edea3]/30"
+                style={{ color:DS.primary }}
+                onClick={(e) => { e.stopPropagation(); onAddToCart(ficus, e); }}
+                aria-label={`Add ${ficus.name} to cart`}
+              ><AddCartSVG/></MagneticBtn>
             </div>
           </TiltCard>
         </div>
@@ -823,9 +825,17 @@ function BentoGrid({ onSelectPlant, onAddToCart }) {
                 <h4 style={{ fontFamily:"Geist,sans-serif", fontSize:"16px", fontWeight:600, color:DS.onSurface, marginTop:"4px" }}>
                   {plant.name}
                 </h4>
-                <p className="mt-1 font-bold" style={{ color:DS.primary, fontFamily:"Inter,sans-serif" }}>
-                  {plant.priceDisplay}
-                </p>
+                <div className="mt-1 flex items-center justify-between gap-4">
+                  <span className="font-bold" style={{ color:DS.primary, fontFamily:"Inter,sans-serif" }}>
+                    {plant.priceDisplay}
+                  </span>
+                  <MagneticBtn
+                    className="w-8 h-8 flex items-center justify-center rounded-full"
+                    style={{ background:DS.primary, color:DS.onPrimary }}
+                    onClick={(e) => { e.stopPropagation(); onAddToCart(plant, e); }}
+                    aria-label={`Add ${plant.name} to cart`}
+                  ><AddCartSVG size={14} /></MagneticBtn>
+                </div>
               </div>
             </TiltCard>
           </div>
