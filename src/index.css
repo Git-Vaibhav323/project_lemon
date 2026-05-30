@@ -1,0 +1,543 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+}
+
+body {
+  background-color: #141f14;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  overflow-x: clip;
+  width: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  width: 100%;
+  overflow-x: clip;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #1a2e1a;
+}
+::-webkit-scrollbar-thumb {
+  background: #4a7c59;
+  border-radius: 3px;
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/[0.05] backdrop-blur-glass border border-white/[0.08];
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  .glass-card {
+    @apply glass rounded-3xl;
+  }
+
+  .card-dark {
+    @apply glass-card;
+  }
+
+  .btn-primary {
+    @apply bg-transparent border border-white/30 text-white text-sm font-medium px-6 py-2.5 rounded-full
+      hover:bg-white/10 hover:border-white/50 active:scale-[0.99] transition-all duration-300 cursor-pointer;
+  }
+
+  .btn-accent {
+    @apply bg-brand-green/90 border border-brand-light/20 text-white text-sm font-medium px-6 py-2.5 rounded-full
+      hover:bg-brand-green active:scale-[0.98] transition-all duration-300 cursor-pointer;
+  }
+
+  .btn-icon {
+    @apply w-9 h-9 flex items-center justify-center rounded-xl border border-white/15
+      hover:bg-white/10 hover:border-white/25 active:scale-95 transition-all duration-300 cursor-pointer text-white/80;
+  }
+
+  .nav-link {
+    @apply text-white/65 text-sm font-medium hover:text-white transition-colors duration-300 relative;
+  }
+
+  .nav-link::after {
+    content: '';
+    @apply absolute -bottom-1 left-0 w-0 h-px bg-brand-light transition-all duration-300;
+  }
+
+  .nav-link:hover::after {
+    @apply w-full;
+  }
+
+  .section-bracket {
+    @apply text-brand-light/40 text-lg font-light leading-none select-none;
+  }
+
+  .reveal {
+    @apply opacity-0 translate-y-6 transition-all duration-700 ease-out;
+  }
+
+  .reveal.visible {
+    @apply opacity-100 translate-y-0;
+  }
+
+  .reveal .stagger-1,
+  .reveal .stagger-2,
+  .reveal .stagger-3,
+  .reveal .stagger-4,
+  .reveal .stagger-5,
+  .reveal .stagger-6 {
+    @apply opacity-0 translate-y-5 transition-all duration-700 ease-out;
+  }
+
+  .reveal.visible .stagger-1 { @apply opacity-100 translate-y-0; transition-delay: 0.08s; }
+  .reveal.visible .stagger-2 { @apply opacity-100 translate-y-0; transition-delay: 0.16s; }
+  .reveal.visible .stagger-3 { @apply opacity-100 translate-y-0; transition-delay: 0.24s; }
+  .reveal.visible .stagger-4 { @apply opacity-100 translate-y-0; transition-delay: 0.32s; }
+  .reveal.visible .stagger-5 { @apply opacity-100 translate-y-0; transition-delay: 0.4s; }
+  .reveal.visible .stagger-6 { @apply opacity-100 translate-y-0; transition-delay: 0.48s; }
+
+  /* Hero section */
+  .hero-section {
+    background: transparent;
+    overflow-x: clip;
+    overflow-y: visible;
+  }
+
+  /* 3D plant pop-out — larger than glass card */
+  .plant-pop-3d {
+    overflow: visible;
+    isolation: isolate;
+  }
+
+  .plant-pop-image {
+    transform-origin: bottom center;
+    filter: drop-shadow(0 20px 35px rgba(0, 0, 0, 0.6)) drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
+  }
+
+  .plant-pop-3d .hero-glass-showcase {
+    z-index:0;
+  }
+
+  .hero-atmosphere-glow {
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 20%, rgba(74, 124, 89, 0.3) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 40% at 70% 60%, rgba(45, 90, 61, 0.15) 0%, transparent 55%);
+  }
+
+  /* Hero backdrop */
+  .hero-rose-backdrop {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    object-fit: cover;
+    object-position: center 25%;
+    opacity: 0.92;
+    filter: saturate(1) brightness(0.95);
+    transform: none;
+  }
+
+  .hero-rose-overlay {
+    background:
+      linear-gradient(180deg, rgba(10, 16, 9, 0.15) 0%, rgba(14, 24, 16, 0.35) 50%, rgba(20, 31, 20, 0.75) 100%),
+      linear-gradient(90deg, rgba(10, 16, 9, 0.4) 0%, transparent 22%, transparent 78%, rgba(10, 16, 9, 0.4) 100%);
+  }
+
+  /* Hero Calathea showcase — matches reference (Rectangle 24 + 1.png) */
+  .hero-calathea-card {
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    max-width: 15.75rem;
+    margin-inline: auto;
+    padding-top: 1.15rem;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-calathea-card {
+      max-width: 16.5rem;
+      margin-inline: 0 0 0 auto;
+    }
+  }
+
+  .hero-calathea-card__body {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 248 / 318;
+    overflow: visible;
+    border-radius: 1.75rem;
+  }
+
+  .hero-calathea-card__shape {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    pointer-events: none;
+  }
+
+  /* Plant sits in upper ~52% of card (inside the box like reference) */
+  .hero-calathea-card__visual {
+    position: absolute;
+    top: -0.65rem;
+    left: 0;
+    right: 0;
+    height: 54%;
+    z-index: 2;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0 0.75rem 0;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .hero-calathea-card__plant {
+    width: 74%;
+    max-height: 118%;
+    height: auto;
+    object-fit: contain;
+    object-position: bottom center;
+    filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.45));
+    transform: translateY(-14%);
+    transition: transform 0.35s ease;
+  }
+
+  .hero-calathea-card:hover .hero-calathea-card__plant {
+    transform: translateY(-16%) scale(1.02);
+  }
+
+  .hero-calathea-card__content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 48%;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.35rem 1.35rem 1.1rem;
+  }
+
+  .hero-calathea-card__label {
+    font-size: 0.6875rem;
+    line-height: 1.2;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 0.2rem;
+  }
+
+  @media (min-width: 640px) {
+    .hero-calathea-card__label {
+      font-size: 0.75rem;
+    }
+  }
+
+  .hero-calathea-card__title {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.25;
+    color: #fff;
+    margin-bottom: 0.65rem;
+  }
+
+  @media (min-width: 640px) {
+    .hero-calathea-card__title {
+      font-size: 1rem;
+    }
+  }
+
+  .hero-calathea-card__btn {
+    font-size: 0.75rem;
+    padding: 0.45rem 1.15rem;
+    border-radius: 9999px;
+  }
+
+  @media (min-width: 640px) {
+    .hero-calathea-card__btn {
+      font-size: 0.8125rem;
+      padding: 0.5rem 1.25rem;
+    }
+  }
+
+  .hero-calathea-card__dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    width: 100%;
+    margin-top: auto;
+    padding-top: 0.55rem;
+  }
+
+  .hero-calathea-card__dot {
+    width: 0.3rem;
+    height: 0.3rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.35);
+  }
+
+  .hero-calathea-card__dot--active {
+    width: 1.4rem;
+    height: 0.16rem;
+    border-radius: 9999px;
+    background: #ffffff;
+  }
+
+  /* Nested glass — Calathea card only */
+  .hero-nested-glass {
+    background: rgba(15, 24, 16, 0.55);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow:
+      0 20px 48px rgba(0, 0, 0, 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      inset 0 0 40px rgba(74, 124, 89, 0.06);
+  }
+
+  .hero-nested-glass-inner {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 2px 20px rgba(0, 0, 0, 0.35);
+  }
+
+  .hero-glass-showcase {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow:
+      0 24px 64px rgba(0, 0, 0, 0.45),
+      0 0 80px rgba(74, 124, 89, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .hero-glass-showcase::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, transparent 45%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .hero-review-card {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .hero-float-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .hero-trendy-card {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  /* Site-wide hero background — identical on all screen sizes */
+  .hero-bg-layer {
+    top: 0;
+    overflow: visible;
+  }
+
+  .hero-bg-inner {
+    position: relative;
+    width: 100%;
+    /* Proportional shift: same visual anchor on mobile, tablet, and desktop */
+    transform: translateY(-18%);
+    transform-origin: center top;
+  }
+
+  .hero-bg-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: center top;
+  }
+
+  .hero-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(14, 24, 14, 0.4);
+    pointer-events: none;
+  }
+
+  /* Soft blend into page background so the image is never hard-cut */
+  .hero-bg-fade {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 35%;
+    background: linear-gradient(to bottom, transparent 0%, #141f14 100%);
+    pointer-events: none;
+  }
+
+  .animate-float-slow {
+    animation: float 7s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float 6s ease-in-out 1.2s infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .animate-float,
+  .animate-fade-up,
+  .shop-hero-fade,
+  .shop-hero-fade-delayed,
+  .shop-bar-slide,
+  .shop-card-entry,
+  .shop-grid-fade {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .animate-fade-in,
+  .animate-slide-in-right {
+    animation: none !important;
+  }
+}
+
+/* Responsive animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes breatheBlob {
+  0%, 100% { transform: scale(1) translateY(0); opacity: 1; }
+  50% { transform: scale(1.1) translateY(-10px); opacity: 0.8; }
+}
+
+@keyframes lightRay {
+  0% { transform: translateX(-60%); opacity: 0; }
+  50% { transform: translateX(100%); opacity: 1; }
+  100% { transform: translateX(200%); opacity: 0; }
+}
+
+@keyframes sihouetteSway {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(2deg); }
+}
+
+@keyframes particleFloat {
+  0% { transform: translateY(0) translateX(0); opacity: 0.3; }
+  50% { transform: translateY(-100px) translateX(var(--drift)); opacity: 0.6; }
+  100% { transform: translateY(-200px) translateX(0); opacity: 0; }
+}
+
+@keyframes flyToCart {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(calc(var(--cart-x) - var(--start-x)), calc(var(--cart-y) - var(--start-y))) scale(0.3); opacity: 0; }
+}
+
+.cart-bump {
+  animation: cartBump 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes cartBump {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-in;
+}
+
+@keyframes rollUpText {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.hero-text-rollup {
+  animation: rollUpText 0.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+/* Mobile responsive improvements */
+@media (max-width: 640px) {
+  .hero-section {
+    min-height: 100vh;
+    padding-bottom: 2rem;
+  }
+  
+  .glass {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-calathea-card {
+    max-width: 14rem;
+  }
+  
+  .plant-pop-image {
+    max-width: 90%;
+  }
+}
