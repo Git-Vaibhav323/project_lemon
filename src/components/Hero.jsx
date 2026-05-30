@@ -198,9 +198,17 @@ export default function Hero() {
             </div>
           </div>
 
-          <h2 className="text-center text-white font-semibold text-base sm:text-lg tracking-wide mt-16 sm:mt-20 mb-16 sm:mb-20 px-2">
-            Our Trendy plants
-          </h2>
+          <div className={`flex items-center justify-center gap-3 sm:gap-4 mt-16 sm:mt-20 mb-16 sm:mb-20 px-2`}>
+            <span className="section-bracket hidden sm:inline text-xl sm:text-2xl text-[#4edea3]" aria-hidden="true">
+              ⌜
+            </span>
+            <h2 className="text-center text-white text-2xl sm:text-3xl md:text-4xl font-bold tracking-wide">
+              Our Trendy plants
+            </h2>
+            <span className="section-bracket hidden sm:inline text-xl sm:text-2xl text-[#4edea3]" aria-hidden="true">
+              ⌟
+            </span>
+          </div>
 
           {/* Cards stacked vertically */}
           <div className="flex flex-col gap-8 sm:gap-12 lg:gap-24 w-full max-w-3xl mx-auto">
