@@ -231,8 +231,8 @@ function ScrollFlowerAnimation({ onFrameChange }) {
       offsetY = (canvas.height - drawHeight) / 2;
     }
 
-    // Crop slightly to remove edge artifacts
-    const cropScale = 1.08;
+    // Crop slightly to remove edge artifacts but not too much to clip the flower
+    const cropScale = 1.05;
     drawWidth *= cropScale;
     drawHeight *= cropScale;
     offsetX = (canvas.width - drawWidth) / 2;
