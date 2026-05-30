@@ -231,6 +231,13 @@ function ScrollFlowerAnimation({ onFrameChange }) {
       offsetY = (canvas.height - drawHeight) / 2;
     }
 
+    // Crop slightly to remove edge artifacts
+    const cropScale = 1.08;
+    drawWidth *= cropScale;
+    drawHeight *= cropScale;
+    offsetX = (canvas.width - drawWidth) / 2;
+    offsetY = (canvas.height - drawHeight) / 2;
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
     
@@ -247,7 +254,7 @@ function ScrollFlowerAnimation({ onFrameChange }) {
     const trigger = ScrollTrigger.create({
       trigger: document.body,
       start: "top top",
-      end: "1000px", // Animates during the first 1000px of scrolling
+      end: "769px", // 1000px / 1.3 to make it open 1.3x faster
       scrub: 0.5,
       animation: gsap.to(playhead, {
         frame: flowerFrames.length - 1,
