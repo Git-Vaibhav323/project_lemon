@@ -86,10 +86,13 @@ export default function Footer() {
         </div>
 
         {/* Copyright — centered per Figma */}
-        <div className="border-t border-white/[0.06] pt-6 sm:pt-8">
+        <div className="border-t border-white/[0.06] pt-6 sm:pt-8 flex justify-center items-center relative">
           <p className="text-white/30 text-xs sm:text-sm text-center">
             planto © all right reserve
           </p>
+          <a href="#admin" className="absolute right-0 text-[10px] text-white/5 hover:text-white/30 transition-colors">
+            admin
+          </a>
         </div>
       </div>
     </footer>

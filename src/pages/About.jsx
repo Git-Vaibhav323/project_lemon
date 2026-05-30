@@ -86,18 +86,18 @@ export default function About() {
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-brand-primary/20 rounded-full blur-3xl animate-float-slow" />
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-brand-green/20 rounded-full blur-3xl animate-float-delayed" />
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#4edea3]/20 rounded-full blur-[100px] animate-pulse" />
+          <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#3bc98a]/20 rounded-full blur-[100px]" />
         </div>
 
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-16">
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6">
-              Our <span className="text-brand-primary">Story</span>
+            <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black mb-6 tracking-tighter" style={{ fontFamily: "Geist, sans-serif" }}>
+              Our <span className="text-[#4edea3] italic">Story</span>
             </h1>
-            <p className="text-xl text-white/70 max-w-3xl mx-auto">
-              Where passion for plants meets dedication to sustainable living
+            <p className="text-xl sm:text-2xl text-white/60 max-w-3xl mx-auto font-light leading-relaxed">
+              Where passion for plants meets a dedication to <br className="hidden sm:block"/> sustainable, modern living.
             </p>
           </div>
         </div>
@@ -107,24 +107,28 @@ export default function About() {
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto space-y-16">
           {/* The Beginning */}
-          <div className="glass rounded-3xl p-8 sm:p-12">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-full bg-brand-primary/20 flex items-center justify-center">
-                <span className="text-2xl">🌱</span>
+          <div className="glass rounded-3xl p-8 sm:p-12 hover:-translate-y-2 transition-transform duration-500 border border-white/5 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#4edea3]/5 rounded-full blur-[50px] -translate-y-1/2 translate-x-1/2" />
+            <div className="flex flex-col md:flex-row gap-10 items-center relative z-10">
+              <div className="md:w-1/3">
+                <div className="w-16 h-16 rounded-2xl bg-[#4edea3]/10 flex items-center justify-center mb-6 border border-[#4edea3]/20">
+                  <span className="text-3xl">🌱</span>
+                </div>
+                <h2 className="text-4xl font-bold text-white mb-2" style={{ fontFamily: "Geist, sans-serif" }}>The Beginning</h2>
+                <div className="h-1 w-12 bg-[#4edea3] rounded-full" />
               </div>
-              <h2 className="text-3xl font-bold">The Beginning</h2>
-            </div>
-            <div className="space-y-4 text-white/80 leading-relaxed">
-              <p>
-                It all started in 2018, in a small apartment in San Francisco. Our founder, Emma Chen, 
-                was struggling to keep her plants alive in the urban jungle. Despite her love for greenery, 
-                the demands of city life made it challenging to maintain a thriving indoor garden.
-              </p>
-              <p>
-                One day, while researching plant care, Emma realized that many people shared her struggle. 
-                The disconnect between plant enthusiasts and the right knowledge, tools, and quality plants 
-                was evident. That's when the idea for Planto was born.
-              </p>
+              <div className="md:w-2/3 space-y-6 text-white/70 text-lg leading-relaxed font-light">
+                <p>
+                  It all started in 2018, in a small apartment in San Francisco. Our founder, Emma Chen, 
+                  was struggling to keep her plants alive in the urban jungle. Despite her love for greenery, 
+                  the demands of city life made it challenging to maintain a thriving indoor garden.
+                </p>
+                <p>
+                  One day, while researching plant care, Emma realized that many people shared her struggle. 
+                  The disconnect between plant enthusiasts and the right knowledge, tools, and quality plants 
+                  was evident. That's when the idea for <span className="text-[#4edea3] font-medium">Planto</span> was born.
+                </p>
+              </div>
             </div>
           </div>
 
@@ -230,25 +234,28 @@ export default function About() {
           </div>
 
           {/* CTA */}
-          <div className="glass rounded-3xl p-8 sm:p-12 text-center">
-            <h2 className="text-3xl font-bold mb-4">Join Our Green Journey</h2>
-            <p className="text-white/70 mb-8 max-w-2xl mx-auto">
-              Whether you're a seasoned plant parent or just starting out, we're here to help you grow. 
-              Explore our collection and find your perfect plant companion today.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <button
-                onClick={() => handleNavigation("#shop")}
-                className="px-8 py-4 bg-brand-primary text-brand-bg font-semibold rounded-full hover:bg-brand-primary/90 transition-all duration-300 hover:scale-105"
-              >
-                Shop Plants
-              </button>
-              <button
-                onClick={() => handleNavigation("#home")}
-                className="px-8 py-4 border-2 border-brand-primary text-brand-primary font-semibold rounded-full hover:bg-brand-primary/10 transition-all duration-300"
-              >
-                Contact Us
-              </button>
+          <div className="glass rounded-3xl p-8 sm:p-16 text-center relative overflow-hidden border border-[#4edea3]/20">
+            <div className="absolute inset-0 bg-gradient-to-b from-[#4edea3]/10 to-transparent" />
+            <div className="relative z-10">
+              <h2 className="text-4xl sm:text-5xl font-black mb-6" style={{ fontFamily: "Geist, sans-serif" }}>Join Our Green Journey</h2>
+              <p className="text-white/60 text-lg sm:text-xl mb-10 max-w-2xl mx-auto font-light">
+                Whether you're a seasoned plant parent or just starting out, we're here to help you grow. 
+                Explore our collection and find your perfect plant companion today.
+              </p>
+              <div className="flex flex-wrap justify-center gap-6">
+                <button
+                  onClick={() => handleNavigation("#shop")}
+                  className="px-10 py-4 bg-[#4edea3] text-[#081612] font-bold rounded-full hover:bg-white transition-all duration-300 hover:scale-105 shadow-[0_0_20px_rgba(78,222,163,0.3)]"
+                >
+                  Shop Plants
+                </button>
+                <button
+                  onClick={() => handleNavigation("#home")}
+                  className="px-10 py-4 border-2 border-[#4edea3]/30 text-[#4edea3] font-bold rounded-full hover:border-[#4edea3] transition-all duration-300 hover:bg-[#4edea3]/5"
+                >
+                  Contact Us
+                </button>
+              </div>
             </div>
           </div>
         </div>

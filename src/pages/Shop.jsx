@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 import PlantDetail from "../components/PlantDetail";
 import CartModal from "../components/CartModal";
 import AiScanner from "../components/AiScanner";
@@ -177,139 +179,107 @@ function AtmosphericLayer() {
 }
 
 // ──────────────────────────────────────────────────────────────────────────────
-// SCROLL-BASED FLOWER ANIMATION WITH COMPLETE SCROLL LOCK
+// SCROLL-BASED FLOWER ANIMATION (CANVAS + SCROLLTRIGGER)
 // ──────────────────────────────────────────────────────────────────────────────
-function ScrollFlowerAnimation({ onAnimationStateChange, onFrameChange }) {
+function ScrollFlowerAnimation({ onFrameChange }) {
+  const canvasRef = useRef(null);
   const containerRef = useRef(null);
-  const sectionRef = useRef(null);
-  const [currentFrame, setCurrentFrame] = useState(0);
-  const wheelAccumulator = useRef(0);
-  const isInHeroSection = useRef(true);
+  const imagesRef = useRef([]);
 
-  // Notify parent of frame changes
+  // Preload images
   useEffect(() => {
-    if (onFrameChange) {
-      onFrameChange(currentFrame);
-    }
-  }, [currentFrame, onFrameChange]);
+    const loadedImages = [];
+    let loadedCount = 0;
 
-  useEffect(() => {
-    const handleWheel = (e) => {
-      // Check if we're in the hero section
-      const scrollY = window.scrollY;
-      const heroHeight = window.innerHeight * 0.9; // Approximate hero section height
-      
-      isInHeroSection.current = scrollY < heroHeight;
-      
-      // Only control scroll when in hero section
-      if (!isInHeroSection.current) {
-        // Allow normal scrolling when outside hero section
-        return;
-      }
-      
-      // If animation is not complete, ALWAYS prevent scroll
-      if (currentFrame < flowerFrames.length - 1) {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        // Only advance frames on scroll down
-        if (e.deltaY > 0) {
-          // Accumulate wheel delta
-          wheelAccumulator.current += Math.abs(e.deltaY);
-          
-          // Lower threshold = faster, smoother frame changes
-          const threshold = 8; // Reduced from 15 for smoother animation
-          
-          if (wheelAccumulator.current >= threshold) {
-            setCurrentFrame(prev => {
-              const next = Math.min(prev + 1, flowerFrames.length - 1);
-              wheelAccumulator.current = 0;
-              
-              // Notify when animation completes
-              if (next === flowerFrames.length - 1 && onAnimationStateChange) {
-                onAnimationStateChange(false);
-              }
-              
-              return next;
-            });
-          }
+    flowerFrames.forEach((src, i) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => {
+        loadedCount++;
+        if (loadedCount === flowerFrames.length) {
+          // All images loaded, draw first frame
+          drawFrame(0);
         }
-        // Scroll up - close flower
-        else if (e.deltaY < 0 && currentFrame > 0) {
-          wheelAccumulator.current += Math.abs(e.deltaY);
-          
-          const threshold = 8;
-          
-          if (wheelAccumulator.current >= threshold) {
-            setCurrentFrame(prev => {
-              const next = Math.max(prev - 1, 0);
-              wheelAccumulator.current = 0;
-              return next;
-            });
-          }
-        }
-      }
-      // Animation complete - allow scroll down only
-      else if (currentFrame === flowerFrames.length - 1 && e.deltaY > 0) {
-        // Allow normal scroll to continue
-        return;
-      }
-      // At last frame but scrolling up - close flower
-      else if (currentFrame === flowerFrames.length - 1 && e.deltaY < 0) {
-        e.preventDefault();
-        e.stopPropagation();
-        wheelAccumulator.current += Math.abs(e.deltaY);
-        
-        if (wheelAccumulator.current >= 8) {
-          setCurrentFrame(prev => {
-            wheelAccumulator.current = 0;
-            return Math.max(prev - 1, 0);
-          });
-        }
-      }
-    };
+      };
+      loadedImages[i] = img;
+    });
+    imagesRef.current = loadedImages;
+  }, []);
 
-    // Capture phase to intercept BEFORE any other scroll handlers (including Lenis)
-    document.addEventListener("wheel", handleWheel, { passive: false, capture: true });
+  const drawFrame = useCallback((index) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    const img = imagesRef.current[index];
+    if (!img) return;
+
+    // Maintain aspect ratio while covering canvas or fitting it
+    const canvasRatio = canvas.width / canvas.height;
+    const imgRatio = img.width / img.height;
     
+    let drawWidth = canvas.width;
+    let drawHeight = canvas.height;
+    let offsetX = 0;
+    let offsetY = 0;
+
+    // Use contain logic
+    if (canvasRatio > imgRatio) {
+      drawWidth = canvas.height * imgRatio;
+      offsetX = (canvas.width - drawWidth) / 2;
+    } else {
+      drawHeight = canvas.width / imgRatio;
+      offsetY = (canvas.height - drawHeight) / 2;
+    }
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Adjust brightness/contrast/saturation manually via ctx filter
+    ctx.filter = "brightness(0.75) contrast(1.3) saturate(1.2)";
+    ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+    
+    if (onFrameChange) {
+      onFrameChange(index);
+    }
+  }, [onFrameChange]);
+
+  useEffect(() => {
+    const playhead = { frame: 0 };
+    
+    const trigger = ScrollTrigger.create({
+      trigger: containerRef.current,
+      start: "top top",
+      end: "+=2000", // 2000px scroll duration
+      pin: true,
+      scrub: 0.5, // smooth scrubbing
+      animation: gsap.to(playhead, {
+        frame: flowerFrames.length - 1,
+        snap: "frame",
+        ease: "none",
+        onUpdate: () => drawFrame(playhead.frame)
+      })
+    });
+
     return () => {
-      document.removeEventListener("wheel", handleWheel, { capture: true });
+      trigger.kill();
     };
-  }, [currentFrame, onAnimationStateChange]);
+  }, [drawFrame]);
 
   return (
-    <div ref={sectionRef} className="w-full h-full overflow-hidden pointer-events-none flex items-center justify-center">
+    <div ref={containerRef} className="w-full h-screen overflow-hidden flex items-center justify-center bg-transparent">
+      <canvas 
+        ref={canvasRef}
+        width={1000}
+        height={1000}
+        className="w-full max-w-[800px] h-auto object-contain scale-[1.3]"
+      />
+      
+      {/* Subtle edge fade only on left to blend with text */}
       <div 
-        ref={containerRef}
-        className="w-full h-full flex items-center justify-center relative"
+        className="absolute inset-0 pointer-events-none"
         style={{
-          background: "transparent"
+          background: `linear-gradient(to right, #081612 0%, transparent 25%)`
         }}
-      >
-        {/* Flower image with better visibility */}
-        <img 
-          src={flowerFrames[currentFrame]} 
-          alt="Blooming flower animation"
-          className="w-full h-full object-contain object-center relative"
-          style={{ 
-            transform: "scale(1.3)",
-            transition: "none",
-            filter: "brightness(0.75) contrast(1.3) saturate(1.2)",
-            imageRendering: "high-quality",
-            opacity: 1,
-            maxWidth: "100%",
-            maxHeight: "600px"
-          }}
-        />
-        
-        {/* Subtle edge fade only on left to blend with text */}
-        <div 
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: `linear-gradient(to right, #000000 0%, transparent 25%)`
-          }}
-        />
-      </div>
+      />
     </div>
   );
 }
@@ -499,7 +469,7 @@ function FlyParticle({ x, y, onDone }) {
 // ──────────────────────────────────────────────────────────────────────────────
 // NAVBAR (consistent with Home page)
 // ──────────────────────────────────────────────────────────────────────────────
-function ShopNav({ cartCount, cartBump, onCartClick }) {
+function ShopNav({ cartCount, cartBump, onCartClick, searchQuery, setSearchQuery }) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -561,17 +531,18 @@ function ShopNav({ cartCount, cartBump, onCartClick }) {
           </div>
 
           <div className="flex items-center gap-3">
-            <MagneticBtn
-              aria-label="Search"
-              style={{
-                ...glass,
-                color: DS.primary,
-                padding: "8px",
-                borderRadius: "12px",
-              }}
-            >
-              <SearchSVG />
-            </MagneticBtn>
+            <div className="relative group flex items-center">
+              <input 
+                type="text" 
+                placeholder="Search plants..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="bg-black/20 border border-white/10 rounded-full px-4 py-2 pl-10 text-sm text-white placeholder-white/40 focus:outline-none focus:border-[#4edea3] w-32 focus:w-48 sm:focus:w-64 transition-all duration-300"
+              />
+              <div className="absolute left-3 text-[#4edea3] pointer-events-none">
+                <SearchSVG />
+              </div>
+            </div>
             <div className="relative" id="cart-target">
               <MagneticBtn
                 onClick={onCartClick}
@@ -722,7 +693,7 @@ function HeroSection() {
         </div>
 
         {/* Scroll-based flower animation - Right Side */}
-        <div className="absolute right-0 top-0 w-full md:w-1/2 h-full z-10">
+        <div className="absolute top-0 right-0 w-[60%] lg:w-[45%] h-full z-0 translate-x-12 translate-y-8">
           <ScrollFlowerAnimation onFrameChange={setCurrentFrame} />
         </div>
       </div>
@@ -919,7 +890,7 @@ function RarePlantsSection({ onSelectPlant, onAddToCart }) {
                   {plant.badge}
                 </div>
                 {/* Corner glow */}
-                <div style={{ position:"absolute", bottom:0, right:0, width:"120px", height:"120px",
+                <div style={{ position:"absolute", bottom:0, right:"0", width:"120px", height:"120px",
                   background:"radial-gradient(circle at bottom right, rgba(78,222,163,0.12), transparent 70%)",
                   pointerEvents:"none" }}/>
               </div>
@@ -1264,10 +1235,53 @@ function FAB({ onClick }) {
 // ──────────────────────────────────────────────────────────────────────────────
 // ROOT SHOP COMPONENT
 // ──────────────────────────────────────────────────────────────────────────────
+
+const allPlants = [...bentoPlants, ...rarePlants, ...bestSellers, ...newArrivals];
+
+function SearchResultsSection({ query, allPlants, onSelectPlant, onAddToCart }) {
+  const [ref, visible] = useScrollReveal();
+  const results = allPlants.filter(p => p.name.toLowerCase().includes(query.toLowerCase()));
+
+  return (
+    <section ref={ref} style={{ maxWidth:"1280px", margin:"0 auto", padding:"80px 64px" }}>
+      <div className={`mb-12 section-reveal ${visible ? "section-reveal--in" : ""}`}>
+        <h2 style={{ fontFamily:"Geist,sans-serif", fontSize:"40px", fontWeight:600, color:DS.onSurface }}>
+          Search Results for "{query}"
+        </h2>
+      </div>
+
+      {results.length === 0 ? (
+        <p style={{ color:"rgba(255,255,255,0.5)" }}>No plants found matching your search.</p>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+          {results.map((plant, i) => (
+             <TiltCard key={i} intensity={8} onClick={() => onSelectPlant(plant)}
+                style={{ ...glass, display:"flex", flexDirection:"column", padding:"24px", height:"100%" }}>
+                <div style={{ height:"200px", display:"flex", justifyContent:"center", marginBottom:"20px" }}>
+                  <img src={plant.image || plant.imageUrl || plant.img} style={{ height:"100%", objectFit:"contain" }} alt={plant.name} />
+                </div>
+                <h4 style={{ fontFamily:"Geist,sans-serif", fontSize:"20px", fontWeight:600, color:DS.onSurface }}>{plant.name}</h4>
+                <div className="flex items-center justify-between mt-auto pt-4">
+                  <span style={{ fontFamily:"Geist,sans-serif", fontSize:"20px", fontWeight:600, color:DS.primary }}>{plant.priceDisplay}</span>
+                  <MagneticBtn style={{ ...glass, color:DS.primary, padding:"8px 16px", fontSize:"12px", fontFamily:"Inter,sans-serif", fontWeight:600 }}
+                    onClick={(e) => { e.stopPropagation(); onAddToCart(plant, e); }}>
+                    ADD
+                  </MagneticBtn>
+                </div>
+             </TiltCard>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
 export default function Shop() {
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedPlant, setSelectedPlant] = useState(null);
   const [cartItems, setCartItems]         = useState([]);
   const [isCartOpen, setIsCartOpen]       = useState(false);
+  const [isAnimationComplete, setIsAnimationComplete] = useState(false);
   const [isScannerOpen, setIsScannerOpen] = useState(false);
   const [cartBump, setCartBump]           = useState(false);
   const [flyParticles, setFlyParticles]   = useState([]);
@@ -1417,14 +1431,29 @@ export default function Shop() {
             cartCount={cartItems.reduce((sum, item) => sum + (item.quantity || 1), 0)} 
             cartBump={cartBump} 
             onCartClick={() => setIsCartOpen(true)} 
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
           />
 
           <main>
-            <HeroSection/>
-            <BentoGrid           onSelectPlant={setSelectedPlant} onAddToCart={handleAddToCart}/>
-            <RarePlantsSection   onSelectPlant={setSelectedPlant} onAddToCart={handleAddToCart}/>
-            <BestSellersSection  onSelectPlant={setSelectedPlant} onAddToCart={handleAddToCart}/>
-            <NewArrivalsSection  onSelectPlant={setSelectedPlant} onAddToCart={handleAddToCart}/>
+            {searchQuery ? (
+              <div className="pt-24 min-h-screen">
+                <SearchResultsSection 
+                  query={searchQuery} 
+                  allPlants={allPlants} 
+                  onSelectPlant={setSelectedPlant} 
+                  onAddToCart={handleAddToCart} 
+                />
+              </div>
+            ) : (
+              <>
+                <HeroSection/>
+                <BentoGrid           onSelectPlant={setSelectedPlant} onAddToCart={handleAddToCart}/>
+                <RarePlantsSection   onSelectPlant={setSelectedPlant} onAddToCart={handleAddToCart}/>
+                <BestSellersSection  onSelectPlant={setSelectedPlant} onAddToCart={handleAddToCart}/>
+                <NewArrivalsSection  onSelectPlant={setSelectedPlant} onAddToCart={handleAddToCart}/>
+              </>
+            )}
             <NewsletterSection/>
           </main>
 

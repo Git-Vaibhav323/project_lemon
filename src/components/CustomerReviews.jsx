@@ -76,7 +76,7 @@ export default function CustomerReviews() {
     <section className="px-4 sm:px-6 lg:px-10 py-14 sm:py-16 lg:py-20 max-w-7xl mx-auto">
       <div ref={sectionRef} className="reveal">
         <div className="flex justify-center mb-10 sm:mb-12">
-          <SectionTitle>Customer Review</SectionTitle>
+          <SectionTitle>What Our Plant Parents Say</SectionTitle>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">

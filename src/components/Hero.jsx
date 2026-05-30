@@ -88,9 +88,9 @@ function TrendyShowcaseCard({ plant }) {
           <p className="text-white/50 text-sm leading-relaxed mb-3">{plant.desc}</p>
           <p className="text-white font-bold text-xl mb-5">{plant.price}</p>
           <div className="flex items-center justify-center gap-3">
-            <button type="button" className="btn-primary text-sm px-5 py-2.5">
+            <a href="#shop" className="btn-primary inline-flex items-center text-sm px-5 py-2.5">
               Explore
-            </button>
+            </a>
             <IconButton label="Add to cart" className="w-9 h-9 rounded-lg">
               <CartIcon size={16} />
             </IconButton>
@@ -124,9 +124,9 @@ function TrendyShowcaseCard({ plant }) {
           <p className="text-white/50 text-sm leading-relaxed mb-3">{plant.desc}</p>
           <p className="text-white font-bold text-xl mb-5">{plant.price}</p>
           <div className={`flex items-center gap-3 ${isLeft ? "justify-end" : ""}`}>
-            <button type="button" className="btn-primary text-sm px-5 py-2.5">
+            <a href="#shop" className="btn-primary inline-flex items-center text-sm px-5 py-2.5">
               Explore
-            </button>
+            </a>
             <IconButton label="Add to cart" className="w-9 h-9 rounded-lg">
               <CartIcon size={16} />
             </IconButton>
@@ -156,11 +156,11 @@ export default function Hero() {
                 Transform your space with nature's finest air purifiers. Our curated collection brings wellness and beauty to every corner of your home.
               </p>
               <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-7">
-                <button type="button" className="btn-primary text-sm px-5 sm:px-6 py-2.5">
+                <a href="#shop" className="btn-primary inline-flex items-center text-sm px-5 sm:px-6 py-2.5">
                   Explore
-                </button>
-                <button
-                  type="button"
+                </a>
+                <a
+                  href="#shop"
                   className="flex items-center gap-2 text-white/65 text-sm hover:text-white transition-colors duration-300 group"
                 >
                   <span className="w-9 h-9 rounded-full border border-white/25 flex items-center justify-center group-hover:border-white/45 group-hover:bg-white/5 transition-all duration-300 shrink-0">
@@ -169,7 +169,7 @@ export default function Hero() {
                     </svg>
                   </span>
                   Live Demo...
-                </button>
+                </a>
               </div>
 
               <div className="hero-review-card rounded-2xl p-4 w-full max-w-[320px]">

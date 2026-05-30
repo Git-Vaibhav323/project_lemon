@@ -38,7 +38,7 @@ export default function BestO2() {
       <div ref={sectionRef} className="reveal">
 
         <div className="flex justify-center mb-10 sm:mb-12">
-          <SectionTitle>Our Best o2</SectionTitle>
+          <SectionTitle>Breathe Easy: Our Top O2 Purifiers</SectionTitle>
         </div>
 
         {/* Container with overflow visible to let plant break out */}

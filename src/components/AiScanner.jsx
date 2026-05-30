@@ -2,11 +2,13 @@ import { useState, useRef } from "react";
 import { GoogleGenAI } from "@google/genai";
 
 export default function AiScanner({ onClose }) {
-  const [apiKey, setApiKey] = useState("");
   const [image, setImage] = useState(null);
   const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef(null);
+
+  // Hardcoded key as requested
+  const apiKey = "AIzaSyBFnUpSqHLymTVgScM5CcS8K_95eQG37cg";
 
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -20,10 +22,12 @@ export default function AiScanner({ onClose }) {
   };
 
   const handleScan = async () => {
-    if (!apiKey) {
-      alert("Please enter a Gemini API Key (hidden for security).");
+    const scanCount = parseInt(sessionStorage.getItem("ai_scan_count") || "0", 10);
+    if (scanCount >= 2) {
+      alert("You have reached the maximum limit of 2 scans per visit.");
       return;
     }
+
     if (!image) {
       alert("Please upload an image first.");
       return;
@@ -33,6 +37,7 @@ export default function AiScanner({ onClose }) {
     setResult("");
 
     try {
+      sessionStorage.setItem("ai_scan_count", (scanCount + 1).toString());
       const ai = new GoogleGenAI({ apiKey });
       const base64Image = image.split(",")[1];
       
@@ -76,18 +81,6 @@ export default function AiScanner({ onClose }) {
         <h2 className="text-2xl font-semibold text-[#4edea3] mb-4">AI Plant Scanner</h2>
         
         <div className="space-y-4">
-          <div>
-            <label className="block text-xs text-gray-400 uppercase tracking-wider mb-1">Gemini API Key</label>
-            <input 
-              type="password" 
-              value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
-              placeholder="Enter API Key"
-              className="w-full bg-[#081612] border border-gray-600 rounded px-3 py-2 text-white focus:border-[#4edea3] focus:outline-none"
-            />
-            <p className="text-[10px] text-gray-500 mt-1">Stored locally in this session.</p>
-          </div>
-
           <div>
             <label className="block text-xs text-gray-400 uppercase tracking-wider mb-1">Plant Image</label>
             <input 
