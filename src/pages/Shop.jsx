@@ -5,6 +5,7 @@ gsap.registerPlugin(ScrollTrigger);
 import PlantDetail from "../components/PlantDetail";
 import CartModal from "../components/CartModal";
 import AiScanner from "../components/AiScanner";
+import BrandLogo from "../components/ui/BrandLogo";
 import mainLogo from "../assets/plants/mainlog.png";
 import img1 from "../assets/plants/1.png";
 import img2 from "../assets/plants/2.png";
@@ -491,19 +492,9 @@ function ShopNav({ cartCount, cartBump, onCartClick, searchQuery, setSearchQuery
         <div className="flex items-center justify-between gap-3 sm:gap-4 w-full">
           <a
             href="#home"
-            className="group shrink-0 min-w-0 transition-opacity duration-300 hover:opacity-90 flex items-center gap-2"
+            className="group shrink-0 min-w-0 transition-opacity duration-300 hover:opacity-90 flex items-center"
           >
-            <img 
-              src={mainLogo}
-              alt="Planto Logo" 
-              className="h-8 w-8 object-contain transition-transform duration-300 group-hover:scale-105"
-            />
-            <span 
-              className="font-bold tracking-tight hidden sm:inline"
-              style={{ color: DS.primary, fontFamily: "Geist,sans-serif", fontSize: "24px" }}
-            >
-              Planto
-            </span>
+            <BrandLogo size="nav" className="[&_img]:transition-transform [&_img]:duration-300 group-hover:[&_img]:scale-105" />
           </a>
 
           <div className="hidden md:flex items-center space-x-8">
