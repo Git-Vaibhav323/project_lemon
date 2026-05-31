@@ -4,6 +4,11 @@ import { supabase } from "../lib/supabaseClient";
 export default function Admin() {
   const [purchases, setPurchases] = useState([]);
   const [loading, setLoading] = useState(true);
+  
+  // New states for cancellation UX
+  const [orderToCancel, setOrderToCancel] = useState(null);
+  const [isCanceling, setIsCanceling] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
   useEffect(() => {
     async function fetchPurchases() {
@@ -25,14 +30,93 @@ export default function Admin() {
     fetchPurchases();
   }, []);
 
+  const handleCancelClick = (order) => {
+    setOrderToCancel(order);
+  };
+
+  const confirmCancellation = async () => {
+    if (!orderToCancel) return;
+    setIsCanceling(true);
+    
+    try {
+      // Safely delete without affecting schema
+      const { error } = await supabase
+        .from("purchases")
+        .delete()
+        .eq("id", orderToCancel.id);
+
+      if (error) throw error;
+
+      // Update local state
+      setPurchases((prev) => prev.filter((p) => p.id !== orderToCancel.id));
+      
+      // Show success toast
+      setToastMessage(`Order gracefully canceled. ${orderToCancel.customer_name} has been notified.`);
+      setTimeout(() => setToastMessage(""), 5000);
+      
+    } catch (err) {
+      console.error("Error canceling order:", err);
+      alert("Failed to cancel order: " + err.message);
+    } finally {
+      setIsCanceling(false);
+      setOrderToCancel(null);
+    }
+  };
+
   const totalRevenue = purchases.reduce((sum, p) => sum + (p.price * p.quantity), 0);
   const totalOrders = purchases.length;
   const itemsSold = purchases.reduce((sum, p) => sum + p.quantity, 0);
 
   return (
-    <div className="min-h-screen bg-[#081612] text-white py-20 px-4 sm:px-8">
+    <div className="min-h-screen bg-[#081612] text-white py-20 px-4 sm:px-8 relative">
+      {/* Toast Notification */}
+      {toastMessage && (
+        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 animate-fade-in">
+          <div className="bg-[#14221e] border border-[#4edea3]/30 px-6 py-3 rounded-full shadow-2xl flex items-center gap-3">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3dffa0" strokeWidth="2">
+              <path d="M20 6L9 17l-5-5" />
+            </svg>
+            <span className="text-sm font-medium text-white/90">{toastMessage}</span>
+          </div>
+        </div>
+      )}
+
+      {/* Confirmation Modal */}
+      {orderToCancel && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fade-in">
+          <div className="bg-[#14221e] border border-white/10 rounded-2xl p-8 w-full max-w-md shadow-2xl relative">
+            <h3 className="text-xl font-semibold text-white mb-3">Release Specimen</h3>
+            <p className="text-gray-400 text-sm leading-relaxed mb-6">
+              Would you like to cancel the order for <strong className="text-white">{orderToCancel.customer_name}</strong>? We'll release their <strong className="text-white">{orderToCancel.plant_name}</strong> back to the greenhouse and process their refund.
+            </p>
+            <div className="flex gap-3 justify-end">
+              <button 
+                onClick={() => setOrderToCancel(null)}
+                disabled={isCanceling}
+                className="px-5 py-2.5 rounded-xl text-sm font-medium text-white/70 hover:text-white hover:bg-white/5 transition-colors disabled:opacity-50"
+              >
+                Keep Order
+              </button>
+              <button 
+                onClick={confirmCancellation}
+                disabled={isCanceling}
+                className="px-5 py-2.5 rounded-xl text-sm font-medium border border-orange-500/30 text-orange-400 hover:bg-orange-500/10 transition-colors disabled:opacity-50 flex items-center gap-2"
+              >
+                {isCanceling ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-orange-400/30 border-t-orange-400 rounded-full animate-spin" />
+                    Releasing...
+                  </>
+                ) : (
+                  "Yes, Release Specimen"
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="max-w-6xl mx-auto">
-        
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-4">
           <div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#4edea3] mb-2 tracking-tight">Admin Dashboard</h1>
@@ -86,6 +170,7 @@ export default function Admin() {
                   <th className="p-5 font-semibold text-right">Price</th>
                   <th className="p-5 font-semibold text-center">Qty</th>
                   <th className="p-5 font-semibold text-right">Total</th>
+                  <th className="p-5 font-semibold text-right">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -104,6 +189,14 @@ export default function Admin() {
                     <td className="p-5 text-center text-gray-300">{p.quantity}</td>
                     <td className="p-5 font-bold text-[#4edea3] text-right">
                       ${(p.price * p.quantity).toFixed(2)}
+                    </td>
+                    <td className="p-5 text-right">
+                      <button 
+                        onClick={() => handleCancelClick(p)}
+                        className="px-4 py-1.5 rounded-full text-xs font-medium border border-orange-500/20 text-orange-400 hover:bg-orange-500/10 transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100"
+                      >
+                        Release
+                      </button>
                     </td>
                   </tr>
                 ))}
