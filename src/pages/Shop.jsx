@@ -852,7 +852,7 @@ function BentoGrid({ onSelectPlant, onAddToCart }) {
 // ──────────────────────────────────────────────────────────────────────────────
 function RarePlantsSection({ onSelectPlant, onAddToCart }) {
   const [ref, visible] = useScrollReveal();
-  const [activeFilter, setActiveFilter] = React.useState("All");
+  const [activeFilter, setActiveFilter] = useState("All");
 
   const filterOptions = ["All", "Limited Stock", "Collector", "Limited 3", "By Request"];
 
