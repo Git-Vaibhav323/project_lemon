@@ -20,7 +20,7 @@ export default function ShopStrip() {
           Every plant in our shop is hand-picked and pre-quarantined so it arrives healthy, happy, and ready to thrive.
         </p>
         <a
-          href="/shop"
+          href="#shop"
           className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-[1.03] mt-8"
           style={{ background: "#9db59a", color: "#0b1d0d" }}
         >

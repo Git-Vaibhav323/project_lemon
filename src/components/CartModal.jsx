@@ -162,7 +162,20 @@ export default function CartModal({ cartItems, onClose, onCheckoutSuccess }) {
             <h2 className="text-2xl font-semibold text-white mb-6">Your Cart</h2>
             
             {cartItems.length === 0 ? (
-              <p className="text-gray-400">Your cart is empty. Let's find the perfect plant for your space.</p>
+              <div className="text-center py-8">
+                <p className="text-gray-400 mb-6">Your cart is empty.</p>
+                <div className="bg-white/5 p-6 rounded-2xl border border-white/10 text-left">
+                  <span className="text-[#9db59a] text-[10px] uppercase tracking-widest font-bold mb-2 block">Most Sold Species</span>
+                  <h3 className="text-white text-lg font-semibold mb-1">Calathea Plant</h3>
+                  <p className="text-gray-400 text-sm mb-4">A living masterpiece for your space.</p>
+                  <button 
+                    onClick={() => { window.location.hash = "#shop"; onClose(); }}
+                    className="bg-[#9db59a] text-[#003824] px-6 py-2 rounded-full text-sm font-bold w-full hover:bg-[#9db59a]/90 transition-colors"
+                  >
+                    View in Shop
+                  </button>
+                </div>
+              </div>
             ) : (
               <>
                 <div className="space-y-4 max-h-64 overflow-y-auto mb-6">

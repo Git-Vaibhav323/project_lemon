@@ -174,6 +174,7 @@ function PlantCard({ plant, index, visible, isHidden }) {
             <div className="relative card-tooltip-group">
               <button
                 type="button"
+                onClick={() => { window.location.hash = "#shop"; }}
                 className="px-[22px] py-[10px] rounded-full text-[13px] font-semibold transition-all duration-300 bg-[#9db59a] text-[#0b1d0d] hover:bg-[#9db59a]/90"
               >
                 Add to Collection

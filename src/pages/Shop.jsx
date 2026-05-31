@@ -867,16 +867,25 @@ function RarePlantsSection({ onSelectPlant, onAddToCart }) {
             Genetically distinct. Exceptionally limited. Never restocked.
           </p>
         </div>
-        <div style={{ display:"flex", gap:"8px" }}>
-          {["All","Ultra Rare","Collector","By Request"].map((f,i) => (
-            <button key={f} style={{
-              padding:"8px 16px", fontSize:"12px", fontFamily:"Inter,sans-serif", fontWeight:500,
-              borderRadius:"9999px", cursor:"pointer", transition:"all 0.25s ease",
-              background: i===0 ? DS.primary : "transparent",
-              color: i===0 ? DS.onPrimary : DS.onSurfaceVar,
-              border: i===0 ? "none" : `1px solid rgba(60,74,66,0.5)`,
-            }}>{f}</button>
-          ))}
+        <div style={{ display:"flex", gap:"8px", alignItems:"center" }}>
+          <div style={{ display:"flex", gap:"8px", marginRight:"16px" }}>
+            {["All","Ultra Rare","Collector","By Request"].map((f,i) => (
+              <button key={f} style={{
+                padding:"8px 16px", fontSize:"12px", fontFamily:"Inter,sans-serif", fontWeight:500,
+                borderRadius:"9999px", cursor:"pointer", transition:"all 0.25s ease",
+                background: i===0 ? DS.primary : "transparent",
+                color: i===0 ? DS.onPrimary : DS.onSurfaceVar,
+                border: i===0 ? "none" : `1px solid rgba(60,74,66,0.5)`,
+              }}>{f}</button>
+            ))}
+          </div>
+          <button type="button" onClick={() => window.scrollTo({top:0, behavior:'smooth'})} style={{ color:DS.primary, fontFamily:"Inter,sans-serif", fontSize:"14px", fontWeight:600,
+            letterSpacing:"0.08em", textDecoration:"none", display:"flex", alignItems:"center", gap:"8px", background:"none", border:"none", cursor:"pointer" }}>
+            VIEW ALL
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </button>
         </div>
       </div>
 
@@ -961,13 +970,13 @@ function BestSellersSection({ onSelectPlant, onAddToCart }) {
               Best Sellers
             </h2>
           </div>
-          <a href="#collection" style={{ color:DS.primary, fontFamily:"Inter,sans-serif", fontSize:"14px", fontWeight:600,
-            letterSpacing:"0.08em", textDecoration:"none", display:"flex", alignItems:"center", gap:"8px" }}>
+          <button type="button" onClick={() => window.scrollTo({top:0, behavior:'smooth'})} style={{ color:DS.primary, fontFamily:"Inter,sans-serif", fontSize:"14px", fontWeight:600,
+            letterSpacing:"0.08em", textDecoration:"none", display:"flex", alignItems:"center", gap:"8px", background:"none", border:"none", cursor:"pointer" }}>
             VIEW ALL
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
-          </a>
+          </button>
         </div>
 
         {/* 3-col large cards */}
@@ -1044,13 +1053,22 @@ function NewArrivalsSection({ onSelectPlant, onAddToCart }) {
 
   return (
     <section ref={ref} style={{ maxWidth:"1280px", margin:"0 auto", padding:"80px 64px" }}>
-      <div className={`mb-12 section-reveal ${visible ? "section-reveal--in" : ""}`}>
-        <span style={{ color:DS.primary, fontSize:"12px", fontFamily:"Inter,sans-serif", fontWeight:600, letterSpacing:"0.2em", textTransform:"uppercase" }}>
-          Fresh Stock
-        </span>
-        <h2 style={{ fontFamily:"Geist,sans-serif", fontSize:"40px", fontWeight:600, color:DS.onSurface, letterSpacing:"-0.01em", marginTop:"8px" }}>
-          New Arrivals
-        </h2>
+      <div className={`flex justify-between items-end mb-12 section-reveal ${visible ? "section-reveal--in" : ""}`}>
+        <div>
+          <span style={{ color:DS.primary, fontSize:"12px", fontFamily:"Inter,sans-serif", fontWeight:600, letterSpacing:"0.2em", textTransform:"uppercase" }}>
+            Fresh Stock
+          </span>
+          <h2 style={{ fontFamily:"Geist,sans-serif", fontSize:"40px", fontWeight:600, color:DS.onSurface, letterSpacing:"-0.01em", marginTop:"8px" }}>
+            New Arrivals
+          </h2>
+        </div>
+        <button type="button" onClick={() => window.scrollTo({top:0, behavior:'smooth'})} style={{ color:DS.primary, fontFamily:"Inter,sans-serif", fontSize:"14px", fontWeight:600,
+          letterSpacing:"0.08em", textDecoration:"none", display:"flex", alignItems:"center", gap:"8px", background:"none", border:"none", cursor:"pointer" }}>
+          VIEW ALL
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
       </div>
 
       {/* Horizontal bento for new arrivals */}
