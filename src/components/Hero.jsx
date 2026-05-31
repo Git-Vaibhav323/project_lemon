@@ -109,6 +109,7 @@ export default function Hero() {
       ref={wrapperRef}
     >
       <canvas
+        id="hero-canvas"
         ref={canvasRef}
         className="absolute inset-0 w-full h-full object-cover z-0"
         style={{ opacity: 0.8 }}

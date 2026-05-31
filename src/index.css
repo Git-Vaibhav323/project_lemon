@@ -807,7 +807,7 @@ body::after {
   pointer-events: none;
 }
 
-#home > *:not(#plant-bg-video):not(#hero-overlay) {
+#home > *:not(#plant-bg-video):not(#hero-canvas):not(#hero-overlay) {
   position: relative;
   z-index: 2;
 }
