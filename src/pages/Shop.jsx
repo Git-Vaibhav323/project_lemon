@@ -851,8 +851,41 @@ function BentoGrid({ onSelectPlant, onAddToCart }) {
 // RARE PLANTS SECTION  (new, bento-consistent)
 // ──────────────────────────────────────────────────────────────────────────────
 function RarePlantsSection({ onSelectPlant, onAddToCart }) {
-  const [ref, visible] = useScrollReveal();
+  const sectionRef = useRef(null);
   const [activeFilter, setActiveFilter] = useState("All");
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      // Header animation
+      gsap.from(".rare-header > *", {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+        },
+        y: 30,
+        opacity: 0,
+        stagger: 0.1,
+        duration: 0.8,
+        ease: "power3.out"
+      });
+
+      // Cards staggered 3D animation
+      gsap.from(".rare-card", {
+        scrollTrigger: {
+          trigger: ".rare-cards-container",
+          start: "top 75%",
+        },
+        y: 80,
+        rotationX: 10,
+        transformPerspective: 1000,
+        opacity: 0,
+        stagger: 0.15,
+        duration: 1,
+        ease: "back.out(1.2)"
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, [activeFilter]); // Re-run when filter changes so new cards animate
 
   const filterOptions = ["All", "Limited Stock", "Collector", "Limited 3", "By Request"];
 
@@ -861,8 +894,8 @@ function RarePlantsSection({ onSelectPlant, onAddToCart }) {
     : rarePlants.filter(p => p.badge.toLowerCase() === activeFilter.toLowerCase());
 
   return (
-    <section ref={ref} style={{ maxWidth:"1280px", margin:"0 auto", padding:"0 64px 80px" }}>
-      <div className={`flex justify-between items-end mb-12 section-reveal ${visible ? "section-reveal--in" : ""}`}>
+    <section ref={sectionRef} style={{ maxWidth:"1280px", margin:"0 auto", padding:"0 64px 80px" }}>
+      <div className="rare-header flex justify-between items-end mb-12">
         <div className="space-y-2">
           <span style={{ color:DS.primary, fontSize:"12px", fontFamily:"Inter,sans-serif", fontWeight:600, letterSpacing:"0.2em", textTransform:"uppercase" }}>
             Exclusive
@@ -891,10 +924,9 @@ function RarePlantsSection({ onSelectPlant, onAddToCart }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div className="rare-cards-container grid grid-cols-1 md:grid-cols-4 gap-6">
         {filteredPlants.map((plant, i) => (
-          <div key={plant.id} className={`stagger-reveal ${visible ? "stagger-reveal--in" : ""}`}
-            style={{ "--delay":`${i * 80}ms` }}>
+          <div key={plant.id} className="rare-card">
             <TiltCard intensity={12} onClick={() => onSelectPlant(plant)}
               style={{ ...glass, padding:"0", overflow:"hidden", display:"flex", flexDirection:"column" }}>
               {/* Image area */}
@@ -955,15 +987,60 @@ function RarePlantsSection({ onSelectPlant, onAddToCart }) {
 // BEST SELLERS SECTION
 // ──────────────────────────────────────────────────────────────────────────────
 function BestSellersSection({ onSelectPlant, onAddToCart }) {
-  const [ref, visible] = useScrollReveal();
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      // Header slide in
+      gsap.from(".best-header", {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 85%",
+        },
+        x: -50,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power3.out"
+      });
+
+      // Cards pop in
+      gsap.from(".best-card", {
+        scrollTrigger: {
+          trigger: ".best-cards-container",
+          start: "top 80%",
+        },
+        scale: 0.9,
+        y: 50,
+        opacity: 0,
+        stagger: 0.2,
+        duration: 1,
+        ease: "elastic.out(1, 0.75)"
+      });
+
+      // Floating numbers parallax
+      gsap.utils.toArray(".best-rank").forEach((rank, i) => {
+        gsap.to(rank, {
+          scrollTrigger: {
+            trigger: rank.parentElement,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true
+          },
+          y: -40,
+          rotation: 15
+        });
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section ref={ref} style={{
+    <section ref={sectionRef} style={{
       background:`linear-gradient(180deg, ${DS.surface} 0%, ${DS.surfaceCont} 50%, ${DS.surface} 100%)`,
       padding:"80px 0",
     }}>
       <div style={{ maxWidth:"1280px", margin:"0 auto", padding:"0 64px" }}>
-        <div className={`flex justify-between items-end mb-12 section-reveal ${visible ? "section-reveal--in" : ""}`}>
+        <div className="best-header flex justify-between items-end mb-12">
           <div className="space-y-2">
             <span style={{ color:DS.primary, fontSize:"12px", fontFamily:"Inter,sans-serif", fontWeight:600, letterSpacing:"0.2em", textTransform:"uppercase" }}>
               Most Coveted
@@ -982,10 +1059,9 @@ function BestSellersSection({ onSelectPlant, onAddToCart }) {
         </div>
 
         {/* 3-col large cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="best-cards-container grid grid-cols-1 md:grid-cols-3 gap-6">
           {bestSellers.map((plant, i) => (
-            <div key={plant.id} className={`stagger-reveal ${visible ? "stagger-reveal--in" : ""}`}
-              style={{ "--delay":`${i * 100}ms` }}>
+            <div key={plant.id} className="best-card">
               <TiltCard intensity={10} onClick={() => onSelectPlant(plant)}
                 style={{ ...glass, overflow:"hidden" }}>
                 {/* Image */}
@@ -997,7 +1073,7 @@ function BestSellersSection({ onSelectPlant, onAddToCart }) {
                       filter:"drop-shadow(0 20px 40px rgba(0,0,0,0.5))", transition:"transform 0.5s ease" }}/>
 
                   {/* Rank badge */}
-                  <div style={{ position:"absolute", top:"16px", right:"16px",
+                  <div className="best-rank" style={{ position:"absolute", top:"16px", right:"16px",
                     background:DS.primary, color:DS.onPrimary,
                     fontFamily:"Geist,sans-serif", fontSize:"22px", fontWeight:700,
                     width:"44px", height:"44px", borderRadius:"50%",
@@ -1051,11 +1127,53 @@ function BestSellersSection({ onSelectPlant, onAddToCart }) {
 // NEW ARRIVALS SECTION
 // ──────────────────────────────────────────────────────────────────────────────
 function NewArrivalsSection({ onSelectPlant, onAddToCart }) {
-  const [ref, visible] = useScrollReveal();
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      // Header animation
+      gsap.from(".new-header", {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+        },
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power2.out"
+      });
+
+      // Wide card slide in
+      gsap.from(".new-wide-card", {
+        scrollTrigger: {
+          trigger: ".new-cards-container",
+          start: "top 75%",
+        },
+        x: -50,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out"
+      });
+
+      // Small cards stagger in
+      gsap.from(".new-small-card", {
+        scrollTrigger: {
+          trigger: ".new-cards-container",
+          start: "top 75%",
+        },
+        x: 50,
+        opacity: 0,
+        stagger: 0.2,
+        duration: 1,
+        ease: "power3.out"
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section ref={ref} style={{ maxWidth:"1280px", margin:"0 auto", padding:"80px 64px" }}>
-      <div className={`flex justify-between items-end mb-12 section-reveal ${visible ? "section-reveal--in" : ""}`}>
+    <section ref={sectionRef} style={{ maxWidth:"1280px", margin:"0 auto", padding:"80px 64px" }}>
+      <div className="new-header flex justify-between items-end mb-12">
         <div>
           <span style={{ color:DS.primary, fontSize:"12px", fontFamily:"Inter,sans-serif", fontWeight:600, letterSpacing:"0.2em", textTransform:"uppercase" }}>
             Fresh Stock
@@ -1074,11 +1192,11 @@ function NewArrivalsSection({ onSelectPlant, onAddToCart }) {
       </div>
 
       {/* Horizontal bento for new arrivals */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+      <div className="new-cards-container grid grid-cols-1 md:grid-cols-12 gap-6">
         {/* Wide first card */}
-        <div className={`md:col-span-6 stagger-reveal ${visible ? "stagger-reveal--in" : ""}`} style={{ "--delay":"0ms" }}>
+        <div className="md:col-span-6 new-wide-card">
           <TiltCard intensity={8} onClick={() => onSelectPlant(newArrivals[0])}
-            style={{ ...glass, overflow:"hidden", display:"flex", flexDirection:"column" }}>
+            style={{ ...glass, overflow:"hidden", display:"flex", flexDirection:"column", height:"100%" }}>
             <div style={{ height:"280px", position:"relative", overflow:"hidden" }}>
               <img src={newArrivals[0].image} alt={newArrivals[0].name}
                 style={{ width:"100%", height:"100%", objectFit:"contain", objectPosition:"center",
@@ -1107,8 +1225,7 @@ function NewArrivalsSection({ onSelectPlant, onAddToCart }) {
         {/* Stack 2 small cards */}
         <div className="md:col-span-6 flex flex-col gap-6">
           {newArrivals.slice(1).map((plant, i) => (
-            <div key={plant.id} className={`stagger-reveal ${visible ? "stagger-reveal--in" : ""}`}
-              style={{ "--delay":`${(i+1)*100}ms`, flex:1 }}>
+            <div key={plant.id} className="new-small-card flex-1">
               <TiltCard intensity={12} onClick={() => onSelectPlant(plant)}
                 style={{ ...glass, display:"flex", alignItems:"center", gap:"24px", padding:"28px", height:"100%" }}>
                 <div style={{ position:"relative", flexShrink:0, animation:`plantFloat ${5+i}s ease-in-out ${i*0.6}s infinite` }}>
@@ -1149,7 +1266,25 @@ function NewArrivalsSection({ onSelectPlant, onAddToCart }) {
 function NewsletterSection() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
-  const [ref, visible] = useScrollReveal();
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      // Newsletter popup animation
+      gsap.from(".newsletter-content", {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+        },
+        scale: 0.95,
+        y: 40,
+        opacity: 0,
+        duration: 1,
+        ease: "back.out(1.2)"
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -1157,11 +1292,11 @@ function NewsletterSection() {
   };
 
   return (
-    <section ref={ref} style={{
+    <section ref={sectionRef} style={{
       padding:"80px 64px", background:DS.surfaceContLo,
       borderTop:`1px solid rgba(60,74,66,0.1)`, borderBottom:`1px solid rgba(60,74,66,0.1)`,
     }}>
-      <div className={`max-w-screen-xl mx-auto text-center space-y-12 section-reveal ${visible ? "section-reveal--in" : ""}`}
+      <div className="newsletter-content max-w-screen-xl mx-auto text-center space-y-12"
         style={{ maxWidth:"1280px" }}>
         <div className="max-w-2xl mx-auto space-y-4">
           <h2 style={{ fontFamily:"Geist,sans-serif", fontSize:"40px", fontWeight:600, letterSpacing:"-0.01em", color:DS.onSurface }}>
