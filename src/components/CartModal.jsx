@@ -77,12 +77,12 @@ export default function CartModal({ cartItems, onClose, onCheckoutSuccess }) {
         
         {success ? (
           <div className="text-center py-6">
-            <div className="w-16 h-16 bg-[#4edea3]/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-[#4edea3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-16 h-16 bg-[#9db59a]/20 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-[#9db59a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h2 className="text-2xl font-semibold text-[#4edea3] mb-2">Purchase Successful!</h2>
+            <h2 className="text-2xl font-semibold text-[#9db59a] mb-2">Purchase Successful!</h2>
             <p className="text-gray-400 mb-8">Thank you for your order, {customerName}.</p>
             
             {/* Hidden Receipt for PDF Generation (rendered off-screen, NOT display:none) */}
@@ -90,7 +90,7 @@ export default function CartModal({ cartItems, onClose, onCheckoutSuccess }) {
               <div ref={receiptRef} className="p-12 bg-[#14221e] text-white w-[800px] border border-white/10 shadow-2xl">
                 <div className="flex justify-between items-end mb-8 border-b border-white/10 pb-6">
                   <div>
-                    <h1 className="text-4xl font-bold text-[#4edea3] mb-2">Planto</h1>
+                    <h1 className="text-4xl font-bold text-[#9db59a] mb-2">Planto</h1>
                     <p className="text-gray-400">Premium Botanical Specimen</p>
                   </div>
                   <h2 className="text-3xl font-light text-white">RECEIPT</h2>
@@ -129,9 +129,9 @@ export default function CartModal({ cartItems, onClose, onCheckoutSuccess }) {
                 </div>
                 
                 <div className="flex justify-end pt-4 pb-8">
-                  <div className="w-1/2 flex justify-between items-center bg-[#4edea3]/10 p-6 rounded-xl border border-[#4edea3]/20">
+                  <div className="w-1/2 flex justify-between items-center bg-[#9db59a]/10 p-6 rounded-xl border border-[#9db59a]/20">
                     <span className="text-xl text-gray-300 uppercase tracking-widest">Total</span>
-                    <span className="text-4xl font-bold text-[#4edea3]">${total.toFixed(2)}</span>
+                    <span className="text-4xl font-bold text-[#9db59a]">${total.toFixed(2)}</span>
                   </div>
                 </div>
                 
@@ -145,13 +145,13 @@ export default function CartModal({ cartItems, onClose, onCheckoutSuccess }) {
             <div className="space-y-3">
               <button 
                 onClick={handleDownloadPDF}
-                className="w-full bg-[#14221e] border border-[#4edea3] text-[#4edea3] font-bold py-3 rounded-xl hover:bg-[#4edea3]/10 transition-colors"
+                className="w-full bg-[#14221e] border border-[#9db59a] text-[#9db59a] font-bold py-3 rounded-xl hover:bg-[#9db59a]/10 transition-colors"
               >
                 Download Receipt (PDF)
               </button>
               <button 
                 onClick={handleCloseSuccess}
-                className="w-full bg-[#4edea3] text-[#003824] font-bold py-3 rounded-xl"
+                className="w-full bg-[#9db59a] text-[#003824] font-bold py-3 rounded-xl"
               >
                 Continue Shopping
               </button>
@@ -172,7 +172,7 @@ export default function CartModal({ cartItems, onClose, onCheckoutSuccess }) {
                         <img src={item.imageUrl || item.image || item.img} alt={item.name} className="w-12 h-12 object-cover rounded" />
                         <div>
                           <h4 className="text-white text-sm">{item.name}</h4>
-                          <span className="text-[#4edea3] text-xs">Qty: {item.quantity || 1}</span>
+                          <span className="text-[#9db59a] text-xs">Qty: {item.quantity || 1}</span>
                         </div>
                       </div>
                       <span className="text-white font-bold">${item.price * (item.quantity || 1)}</span>
@@ -182,7 +182,7 @@ export default function CartModal({ cartItems, onClose, onCheckoutSuccess }) {
 
                 <div className="flex justify-between items-center border-t border-white/10 pt-4 mb-6">
                   <span className="text-gray-400 uppercase tracking-wider text-sm">Total</span>
-                  <span className="text-2xl font-bold text-[#4edea3]">${total}</span>
+                  <span className="text-2xl font-bold text-[#9db59a]">${total}</span>
                 </div>
 
                 <div className="space-y-4">
@@ -193,14 +193,14 @@ export default function CartModal({ cartItems, onClose, onCheckoutSuccess }) {
                       value={customerName}
                       onChange={(e) => setCustomerName(e.target.value)}
                       placeholder="Enter your name"
-                      className="w-full bg-[#081612] border border-gray-600 rounded px-3 py-2 text-white focus:border-[#4edea3] focus:outline-none"
+                      className="w-full bg-[#081612] border border-gray-600 rounded px-3 py-2 text-white focus:border-[#9db59a] focus:outline-none"
                     />
                   </div>
 
                   <button 
                     onClick={handleCheckout}
                     disabled={loading}
-                    className="w-full bg-[#4edea3] text-[#003824] font-bold py-3 rounded-xl disabled:opacity-50"
+                    className="w-full bg-[#9db59a] text-[#003824] font-bold py-3 rounded-xl disabled:opacity-50"
                   >
                     {loading ? "Preparing your plant..." : "Reserve Your Specimen"}
                   </button>

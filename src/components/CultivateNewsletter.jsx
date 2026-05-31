@@ -10,7 +10,7 @@ export default function CultivateNewsletter() {
       >
         {/* Left */}
         <div className="lg:max-w-[50%]">
-          <span className="text-[#3dffa0] text-[11px] font-semibold tracking-[2px] uppercase">
+          <span className="text-[#9db59a] text-[11px] font-semibold tracking-[2px] uppercase">
             CULTIVATE
           </span>
           <h2 className="text-white text-3xl sm:text-4xl font-serif font-bold mt-2 leading-tight">
@@ -42,7 +42,7 @@ export default function CultivateNewsletter() {
             type="submit"
             className="w-full sm:w-auto px-6 py-[14px] rounded-xl text-sm font-bold whitespace-nowrap transition-all duration-300 active:scale-[0.98]"
             style={{
-              background: "#3dffa0",
+              background: "#9db59a",
               color: "#0b1d0d",
             }}
           >

@@ -72,8 +72,8 @@ export default function Admin() {
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 animate-fade-in">
-          <div className="bg-[#14221e] border border-[#4edea3]/30 px-6 py-3 rounded-full shadow-2xl flex items-center gap-3">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3dffa0" strokeWidth="2">
+          <div className="bg-[#14221e] border border-[#9db59a]/30 px-6 py-3 rounded-full shadow-2xl flex items-center gap-3">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9db59a" strokeWidth="2">
               <path d="M20 6L9 17l-5-5" />
             </svg>
             <span className="text-sm font-medium text-white/90">{toastMessage}</span>
@@ -119,7 +119,7 @@ export default function Admin() {
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-4">
           <div>
-            <h1 className="text-4xl sm:text-5xl font-bold text-[#4edea3] mb-2 tracking-tight">Admin Dashboard</h1>
+            <h1 className="text-4xl sm:text-5xl font-bold text-[#9db59a] mb-2 tracking-tight">Admin Dashboard</h1>
             <p className="text-gray-400">Overview of your store's performance and recent orders.</p>
           </div>
           <button onClick={() => window.location.hash = "#home"} className="px-6 py-2 bg-white/5 hover:bg-white/10 rounded-full text-sm font-medium transition-colors border border-white/10">
@@ -129,8 +129,8 @@ export default function Admin() {
         
         {/* Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
-          <div className="bg-[#14221e] p-6 rounded-2xl border border-[#4edea3]/20 relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-[#4edea3]/5 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110" />
+          <div className="bg-[#14221e] p-6 rounded-2xl border border-[#9db59a]/20 relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[#9db59a]/5 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110" />
             <h3 className="text-gray-400 text-sm font-medium uppercase tracking-wider mb-2">Total Revenue</h3>
             <p className="text-4xl font-bold text-white">${totalRevenue.toFixed(2)}</p>
           </div>
@@ -147,13 +147,13 @@ export default function Admin() {
         </div>
 
         <h2 className="text-2xl font-semibold mb-6 text-white flex items-center gap-3">
-          <div className="w-2 h-8 bg-[#4edea3] rounded-full" />
+          <div className="w-2 h-8 bg-[#9db59a] rounded-full" />
           Recent Purchases
         </h2>
         
         {loading ? (
           <div className="flex items-center justify-center py-20">
-            <div className="w-10 h-10 border-4 border-[#4edea3]/20 border-t-[#4edea3] rounded-full animate-spin" />
+            <div className="w-10 h-10 border-4 border-[#9db59a]/20 border-t-[#9db59a] rounded-full animate-spin" />
           </div>
         ) : purchases.length === 0 ? (
           <div className="bg-[#14221e] p-10 rounded-2xl border border-white/5 text-center">
@@ -187,7 +187,7 @@ export default function Admin() {
                     </td>
                     <td className="p-5 text-right text-gray-400">${p.price.toFixed(2)}</td>
                     <td className="p-5 text-center text-gray-300">{p.quantity}</td>
-                    <td className="p-5 font-bold text-[#4edea3] text-right">
+                    <td className="p-5 font-bold text-[#9db59a] text-right">
                       ${(p.price * p.quantity).toFixed(2)}
                     </td>
                     <td className="p-5 text-right">

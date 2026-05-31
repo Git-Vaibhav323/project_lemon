@@ -118,7 +118,7 @@ export default function AiScanner({ onClose }) {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-md p-4">
-      <div className="bg-[#14221e] border border-[#4edea3]/30 rounded-2xl p-6 w-full max-w-md shadow-2xl relative">
+      <div className="bg-[#14221e] border border-[#9db59a]/30 rounded-2xl p-6 w-full max-w-md shadow-2xl relative">
         <button 
           onClick={handleClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-white"
@@ -126,7 +126,7 @@ export default function AiScanner({ onClose }) {
           ✕
         </button>
         
-        <h2 className="text-2xl font-semibold text-[#4edea3] mb-4">AI Plant Scanner</h2>
+        <h2 className="text-2xl font-semibold text-[#9db59a] mb-4">AI Plant Scanner</h2>
         
         <div className="space-y-4">
           <div className="flex gap-2 mb-2">
@@ -138,7 +138,7 @@ export default function AiScanner({ onClose }) {
             </button>
             <button 
               onClick={startCamera}
-              className="flex-1 bg-[#4edea3]/20 hover:bg-[#4edea3]/30 text-[#4edea3] text-sm py-2 rounded-lg transition-colors border border-[#4edea3]/30"
+              className="flex-1 bg-[#9db59a]/20 hover:bg-[#9db59a]/30 text-[#9db59a] text-sm py-2 rounded-lg transition-colors border border-[#9db59a]/30"
             >
               Use Camera
             </button>
@@ -187,7 +187,7 @@ export default function AiScanner({ onClose }) {
           <button 
             onClick={handleScan}
             disabled={loading}
-            className="w-full bg-[#4edea3] text-[#003824] font-bold py-3 rounded-xl disabled:opacity-50"
+            className="w-full bg-[#9db59a] text-[#003824] font-bold py-3 rounded-xl disabled:opacity-50"
           >
             {loading ? "Scanning..." : "Identify Plant"}
           </button>

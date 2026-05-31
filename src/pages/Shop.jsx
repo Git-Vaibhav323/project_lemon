@@ -36,7 +36,7 @@ const DS = {
   surfaceContHi:  "#1e2d28",
   surfaceContLo:  "#101e1a",
   surfaceContLow: "#04110d",
-  primary:        "#4edea3",
+  primary:        "#9db59a",
   onPrimary:      "#003824",
   onSurface:      "#d5e6df",
   onSurfaceVar:   "#bbcabf",
@@ -54,15 +54,15 @@ const glass = {
 
 // ─── Product Data ─────────────────────────────────────────────────────────────
 const bentoPlants = [
-  { id: 101, name: "Variegated Monstera",    badge: "SCARCE SPECIMEN", category: "Indoor",       priceDisplay: "$1,240", price: 1240, imageUrl: IMG_VARIEGATED,  layout: "featured" },
-  { id: 102, name: "Ficus Lyrata",           badge: "MINIMALIST",      category: "Indoor",       priceDisplay: "$340",   price: 340,  imageUrl: IMG_FICUS,       layout: "tall" },
-  { id: 103, name: "Calathea Orbifolia",     badge: "COLLECTOR",       category: "Indoor",       priceDisplay: "$85",    price: 85,   imageUrl: IMG_CALATHEA_O,  layout: "small" },
+  { id: 101, name: "Variegated Monstera",    badge: "COLLECTOR'S CHOICE", category: "Indoor",       priceDisplay: "$1,240", price: 1240, imageUrl: IMG_VARIEGATED,  layout: "featured" },
+  { id: 102, name: "Ficus Lyrata",           badge: "EASY CARE",      category: "Indoor",       priceDisplay: "$340",   price: 340,  imageUrl: IMG_FICUS,       layout: "tall" },
+  { id: 103, name: "Calathea Orbifolia",     badge: "PET FRIENDLY",       category: "Indoor",       priceDisplay: "$85",    price: 85,   imageUrl: IMG_CALATHEA_O,  layout: "small" },
   { id: 104, name: "Sansevieria Zeylanica",  badge: "AIR PURIFIER",    category: "Air Purifying",priceDisplay: "$60",    price: 60,   imageUrl: IMG_SANSEVIERIA, layout: "small" },
-  { id: 105, name: "Philodendron Gloriosum", badge: "RARE FIND",       category: "Indoor",       priceDisplay: "$195",   price: 195,  imageUrl: IMG_PHILODENDRON,layout: "small" },
+  { id: 105, name: "Philodendron Gloriosum", badge: "FAST GROWER",       category: "Indoor",       priceDisplay: "$195",   price: 195,  imageUrl: IMG_PHILODENDRON,layout: "small" },
 ];
 
 const rarePlants = [
-  { id: 201, name: "Monstera Obliqua",       badge: "ULTRA RARE",   category: "Rare",   priceDisplay: "$3,800", price: 3800, image: img5 },
+  { id: 201, name: "Monstera Obliqua",       badge: "LIMITED STOCK",   category: "Rare",   priceDisplay: "$3,800", price: 3800, image: img5 },
   { id: 202, name: "Amorphophallus Titanum", badge: "COLLECTOR",    category: "Rare",   priceDisplay: "$2,400", price: 2400, image: img3 },
   { id: 203, name: "Ghost Orchid",           badge: "LIMITED 3",    category: "Rare",   priceDisplay: "$1,100", price: 1100, image: img1 },
   { id: 204, name: "Corpse Flower",          badge: "BY REQUEST",   category: "Rare",   priceDisplay: "$4,200", price: 4200, image: img6 },
@@ -76,7 +76,7 @@ const bestSellers = [
 
 const newArrivals = [
   { id: 401, name: "Cactus Specimen",        badge: "NEW",          category: "Desert", priceDisplay: "$249",   price: 249,  image: img4 },
-  { id: 402, name: "Calathea AI",            badge: "JUST ARRIVED", category: "Air Purifying", priceDisplay: "$399", price: 399, image: img3 },
+  { id: 402, name: "Calathea White Fusion",  badge: "JUST ARRIVED", category: "Air Purifying", priceDisplay: "$399", price: 399, image: img3 },
   { id: 403, name: "Monstera Deliciosa",     badge: "RESTOCK",      category: "Indoor", priceDisplay: "$479",   price: 479,  image: img5 },
 ];
 
@@ -84,31 +84,31 @@ const newArrivals = [
 const flowerTextStages = [
   {
     range: [0, 12],
-    badge: "PRIVATE SELECTION",
-    title: "The Architecture",
-    titleAccent: "of Flora",
-    description: "Curated specimen plants for architectural interiors. High-contrast organisms that redefine spatial luxury."
+    badge: "OUR APPROACH",
+    title: "Living Art",
+    titleAccent: "For Your Space",
+    description: "We source and nurture rare plants from around the world, specifically chosen to thrive in modern homes."
   },
   {
     range: [13, 24],
-    badge: "NATURE AWAKENS",
-    title: "Witness the",
-    titleAccent: "Unfolding",
-    description: "Each petal reveals nature's intricate design. A moment of transformation captured in botanical elegance."
+    badge: "THE GREENHOUSE",
+    title: "Grown with",
+    titleAccent: "Patience",
+    description: "Every plant spends months in our Portland greenhouse before it's ready for your home."
   },
   {
     range: [25, 37],
-    badge: "BOTANICAL ARTISTRY",
-    title: "The Poetry",
-    titleAccent: "of Bloom",
-    description: "Where organic form meets architectural precision. Living sculptures that breathe life into modern spaces."
+    badge: "QUALITY PROMISE",
+    title: "Healthy Roots",
+    titleAccent: "Guaranteed",
+    description: "We inspect every root system and leaf before shipping. If your plant arrives damaged, we replace it."
   },
   {
     range: [38, 49],
-    badge: "FULL BLOOM",
-    title: "Pure",
-    titleAccent: "Magnificence",
-    description: "The complete revelation of nature's masterpiece. Timeless beauty in its most exquisite form."
+    badge: "COMMUNITY",
+    title: "Join Our",
+    titleAccent: "Collectors",
+    description: "Get early access to our rarest restocks and expert care advice from our botanists."
   }
 ];
 
@@ -533,9 +533,9 @@ function ShopNav({ cartCount, cartBump, onCartClick, searchQuery, setSearchQuery
                 placeholder="Search plants..." 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-black/20 border border-white/10 rounded-full px-4 py-2 pl-10 text-sm text-white placeholder-white/40 focus:outline-none focus:border-[#4edea3] w-32 focus:w-48 sm:focus:w-64 transition-all duration-300"
+                className="bg-black/20 border border-white/10 rounded-full px-4 py-2 pl-10 text-sm text-white placeholder-white/40 focus:outline-none focus:border-[#9db59a] w-32 focus:w-48 sm:focus:w-64 transition-all duration-300"
               />
-              <div className="absolute left-3 text-[#4edea3] pointer-events-none">
+              <div className="absolute left-3 text-[#9db59a] pointer-events-none">
                 <SearchSVG />
               </div>
             </div>
@@ -715,7 +715,7 @@ function BentoGrid({ onSelectPlant, onAddToCart }) {
             Current Collection
           </h2>
           <p style={{ color:DS.onSurfaceVar, fontFamily:"Inter,sans-serif", fontSize:"16px" }}>
-            Botanical specimen from our greenhouse reserves.
+            Rare plants, grown in our Portland greenhouse.
           </p>
         </div>
         <MagneticBtn 
@@ -747,7 +747,7 @@ function BentoGrid({ onSelectPlant, onAddToCart }) {
                 {variegated.name}
               </h3>
               <p className="max-w-xs mt-4" style={{ color:DS.onSurfaceVar, fontFamily:"Inter,sans-serif", fontSize:"16px" }}>
-                A living masterpiece featuring rare sectoral variegation and structural elegance.
+                One of our most requested plants, featuring stunning sectoral variegation.
               </p>
             </div>
 
@@ -796,7 +796,7 @@ function BentoGrid({ onSelectPlant, onAddToCart }) {
                 {ficus.priceDisplay}
               </span>
               <MagneticBtn
-                className="w-10 h-10 flex items-center justify-center rounded-full border border-[#4edea3]/30"
+                className="w-10 h-10 flex items-center justify-center rounded-full border border-[#9db59a]/30"
                 style={{ color:DS.primary }}
                 onClick={(e) => { e.stopPropagation(); onAddToCart(ficus, e); }}
                 aria-label={`Add ${ficus.name} to cart`}

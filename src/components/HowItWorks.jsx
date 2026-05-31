@@ -58,7 +58,7 @@ export default function HowItWorks() {
                 ref={lineRef}
                 className={`step-line ${visible ? "visible" : ""}`}
                 d="M0 1 L800 1"
-                stroke="#3dffa0"
+                stroke="#9db59a"
                 strokeWidth="2"
                 strokeDasharray="12 8"
                 fill="none"

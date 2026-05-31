@@ -14,7 +14,7 @@ export default function PlantPhilosophy() {
             03
           </span>
           <span
-            className="text-[#3dffa0] text-[11px] font-semibold tracking-[2px] uppercase whitespace-nowrap mt-6"
+            className="text-[#9db59a] text-[11px] font-semibold tracking-[2px] uppercase whitespace-nowrap mt-6"
             style={{ transform: "rotate(-90deg) translateX(-100%)", transformOrigin: "left top" }}
           >
             EST. GREENHOUSE
@@ -23,7 +23,7 @@ export default function PlantPhilosophy() {
 
         {/* Right column: content */}
         <div className="lg:w-[55%]">
-          <span className="text-[#3dffa0] text-[11px] font-semibold tracking-[2px] uppercase">
+          <span className="text-[#9db59a] text-[11px] font-semibold tracking-[2px] uppercase">
             OUR BELIEF
           </span>
           <h2 className="text-white text-3xl sm:text-4xl lg:text-[32px] font-serif font-bold leading-[1.2] mt-3 max-w-xl">
@@ -35,7 +35,7 @@ export default function PlantPhilosophy() {
           </p>
           <a
             href="#collection"
-            className="inline-block mt-6 text-[#3dffa0] text-sm font-medium hover:underline underline-offset-4 decoration-[#3dffa0]/40"
+            className="inline-block mt-6 text-[#9db59a] text-sm font-medium hover:underline underline-offset-4 decoration-[#9db59a]/40"
           >
             See our collection &rarr;
           </a>

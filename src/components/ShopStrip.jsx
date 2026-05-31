@@ -10,7 +10,7 @@ export default function ShopStrip() {
       />
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center">
-        <span className="inline-block text-[13px] font-medium tracking-[0.2em] uppercase" style={{ color: "#3dffa0", opacity: 0.7 }}>
+        <span className="inline-block text-[13px] font-medium tracking-[0.2em] uppercase" style={{ color: "#9db59a", opacity: 0.7 }}>
           Curated collection
         </span>
         <h2 className="text-white text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mt-4 tracking-tight">
@@ -22,7 +22,7 @@ export default function ShopStrip() {
         <a
           href="/shop"
           className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-[1.03] mt-8"
-          style={{ background: "#3dffa0", color: "#0b1d0d" }}
+          style={{ background: "#9db59a", color: "#0b1d0d" }}
         >
           Visit the Shop
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">

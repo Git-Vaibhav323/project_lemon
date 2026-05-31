@@ -60,7 +60,7 @@ export default function GrowingConditions() {
               >
                 <span>{item.question}</span>
                 <span
-                  className={`text-[#3dffa0] text-lg font-light transition-transform duration-300 shrink-0 ml-4 ${
+                  className={`text-[#9db59a] text-lg font-light transition-transform duration-300 shrink-0 ml-4 ${
                     isOpen ? "rotate-45" : ""
                   }`}
                 >

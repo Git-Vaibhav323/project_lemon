@@ -154,7 +154,7 @@ function PlantCard({ plant, index, visible, isHidden }) {
         <div
           className={`flex flex-col justify-between p-5 sm:p-6 ${entered ? "sm:w-[60%]" : "w-full"} transition-all duration-700`}
         >
-          <span className="text-[#3dffa0] text-[11px] font-semibold tracking-[2px] uppercase opacity-75">
+          <span className="text-[#9db59a] text-[11px] font-semibold tracking-[2px] uppercase opacity-75">
             {plant.category}
           </span>
           <h3 className="text-white text-[26px] font-bold leading-tight mt-1">{plant.name}</h3>
@@ -170,11 +170,11 @@ function PlantCard({ plant, index, visible, isHidden }) {
           </div>
 
           <div className="flex items-center justify-between mt-auto pt-3">
-            <span className="text-[#3dffa0] text-[22px] font-bold">{plant.price}</span>
+            <span className="text-[#9db59a] text-[22px] font-bold">{plant.price}</span>
             <div className="relative card-tooltip-group">
               <button
                 type="button"
-                className="px-[22px] py-[10px] rounded-full text-[13px] font-semibold transition-all duration-300 bg-[#3dffa0] text-[#0b1d0d] hover:bg-[#3dffa0]/90"
+                className="px-[22px] py-[10px] rounded-full text-[13px] font-semibold transition-all duration-300 bg-[#9db59a] text-[#0b1d0d] hover:bg-[#9db59a]/90"
               >
                 Add to Collection
               </button>
@@ -238,7 +238,7 @@ export default function TopSelling() {
             type="button"
             onClick={() => setShowAll(!showAll)}
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium transition-all duration-300"
-            style={{ color: "#3dffa0", border: "1px solid rgba(61,255,160,0.3)" }}
+            style={{ color: "#9db59a", border: "1px solid rgba(61,255,160,0.3)" }}
           >
             {showAll ? "Show Less" : "Explore More Plants"}
             <svg

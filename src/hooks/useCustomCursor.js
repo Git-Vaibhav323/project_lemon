@@ -29,7 +29,7 @@ export default function useCustomCursor() {
       position: "fixed",
       width: "6px",
       height: "6px",
-      background: "#3dffa0",
+      background: "#9db59a",
       borderRadius: "50%",
       pointerEvents: "none",
       zIndex: "10000",

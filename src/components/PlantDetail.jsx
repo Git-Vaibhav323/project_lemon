@@ -172,7 +172,7 @@ export default function PlantDetail({ plant, onClose }) {
               <span
                 className="inline-block text-xs font-semibold tracking-widest uppercase px-3 py-1 mb-3"
                 style={{
-                  color: "#4edea3",
+                  color: "#9db59a",
                   background: "rgba(78,222,163,0.1)",
                   border: "1px solid rgba(78,222,163,0.2)",
                 }}
@@ -187,7 +187,7 @@ export default function PlantDetail({ plant, onClose }) {
               </h2>
             </div>
 
-            <p className="text-2xl font-bold" style={{ color: "#4edea3", fontFamily: "Geist, sans-serif" }}>
+            <p className="text-2xl font-bold" style={{ color: "#9db59a", fontFamily: "Geist, sans-serif" }}>
               {priceDisplay}
             </p>
 
@@ -205,7 +205,7 @@ export default function PlantDetail({ plant, onClose }) {
                 { type: "humidity", label: "Humidity", value: details.humidity },
               ].map(({ type, label, value }) => (
                 <div key={type} className="flex flex-col items-center gap-2 text-center">
-                  <div style={{ color: "#4edea3", opacity: 0.8 }}>
+                  <div style={{ color: "#9db59a", opacity: 0.8 }}>
                     <CareIcon type={type} />
                   </div>
                   <span
@@ -225,7 +225,7 @@ export default function PlantDetail({ plant, onClose }) {
               type="button"
               className="mt-auto w-full font-bold py-4 text-sm transition-all duration-300 active:scale-[0.98]"
               style={{
-                background: "#4edea3",
+                background: "#9db59a",
                 color: "#003824",
                 boxShadow: "0 0 24px rgba(78,222,163,0.3)",
               }}

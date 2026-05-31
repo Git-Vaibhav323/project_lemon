@@ -92,7 +92,7 @@ export default function Footer() {
           </p>
           <a 
             href="#admin" 
-            className="text-xs sm:text-sm text-white/50 hover:text-[#4edea3] transition-colors border border-white/10 px-4 py-1.5 rounded-full bg-white/5"
+            className="text-xs sm:text-sm text-white/50 hover:text-[#9db59a] transition-colors border border-white/10 px-4 py-1.5 rounded-full bg-white/5"
           >
             Admin Dashboard
           </a>

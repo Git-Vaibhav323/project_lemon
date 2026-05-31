@@ -10,7 +10,7 @@ const navLinks = [
 function LeafMark() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M12 2C9.5 2 7 4.5 7 8c0 3.5 2 6.5 5 8.5V22h2v-5.5c3-2 5-5 5-8.5 0-3.5-2.5-6-5-6z" fill="#3dffa0" />
+      <path d="M12 2C9.5 2 7 4.5 7 8c0 3.5 2 6.5 5 8.5V22h2v-5.5c3-2 5-5 5-8.5 0-3.5-2.5-6-5-6z" fill="#9db59a" />
     </svg>
   );
 }
@@ -99,13 +99,13 @@ export default function Navbar() {
               <button type="button" className="flex items-center justify-center w-9 h-9 hover:bg-white/5 rounded-full transition-colors" aria-label="Shopping bag">
                 <BagIcon />
               </button>
-              <span className="absolute -top-0.5 -right-0.5 w-[18px] h-[18px] rounded-full bg-[#3dffa0] flex items-center justify-center text-[10px] font-bold text-[#0b1d0d]">3</span>
+              <span className="absolute -top-0.5 -right-0.5 w-[18px] h-[18px] rounded-full bg-[#9db59a] flex items-center justify-center text-[10px] font-bold text-[#0b1d0d]">3</span>
             </div>
 
             <a
               href="#shop"
               className="nav-shop-btn hidden sm:inline-flex items-center px-[18px] py-[7px] rounded-full text-[13px] font-medium transition-all duration-200 hover:bg-[rgba(61,255,160,0.08)]"
-              style={{ border: "1px solid rgba(61,255,160,0.5)", color: "#3dffa0" }}
+              style={{ border: "1px solid rgba(61,255,160,0.5)", color: "#9db59a" }}
             >
               Visit Shop
             </a>
@@ -144,7 +144,7 @@ export default function Navbar() {
           <a
             href="#shop"
             className="flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold"
-            style={{ background: "#3dffa0", color: "#0b1d0d" }}
+            style={{ background: "#9db59a", color: "#0b1d0d" }}
             onClick={() => setMenuOpen(false)}
           >
             Visit Shop

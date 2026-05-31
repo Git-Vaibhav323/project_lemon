@@ -83,7 +83,7 @@ body::after {
   background: #0b1d0d;
 }
 ::-webkit-scrollbar-thumb {
-  background: #3dffa0;
+  background: #9db59a;
   border-radius: 3px;
 }
 
@@ -111,8 +111,8 @@ body::after {
   }
 
   .btn-accent {
-    @apply bg-[#3dffa0]/20 border border-[#3dffa0]/30 text-[#3dffa0] text-sm font-medium px-6 py-2.5 rounded-full
-      hover:bg-[#3dffa0]/30 active:scale-[0.98] transition-all duration-300 cursor-pointer;
+    @apply bg-[#9db59a]/20 border border-[#9db59a]/30 text-[#9db59a] text-sm font-medium px-6 py-2.5 rounded-full
+      hover:bg-[#9db59a]/30 active:scale-[0.98] transition-all duration-300 cursor-pointer;
   }
 
   .btn-icon {
@@ -126,7 +126,7 @@ body::after {
 
   .nav-link::after {
     content: '';
-    @apply absolute -bottom-1 left-0 w-0 h-px bg-[#3dffa0] transition-all duration-300;
+    @apply absolute -bottom-1 left-0 w-0 h-px bg-[#9db59a] transition-all duration-300;
   }
 
   .nav-link:hover::after {
@@ -134,7 +134,7 @@ body::after {
   }
 
   .section-bracket {
-    @apply text-[#3dffa0]/40 text-lg font-light leading-none select-none;
+    @apply text-[#9db59a]/40 text-lg font-light leading-none select-none;
   }
 
   .reveal {

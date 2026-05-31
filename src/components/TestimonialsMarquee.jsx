@@ -47,7 +47,7 @@ function StarRatingTeal() {
   return (
     <div className="flex gap-0.5 mb-2">
       {[...Array(5)].map((_, i) => (
-        <svg key={i} width="12" height="12" viewBox="0 0 24 24" fill="#3dffa0" aria-hidden="true">
+        <svg key={i} width="12" height="12" viewBox="0 0 24 24" fill="#9db59a" aria-hidden="true">
           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
         </svg>
       ))}
@@ -63,12 +63,12 @@ function ReviewCard({ review }) {
         "{review.text}"
       </p>
       <div className="flex items-center gap-3">
-        <div className="w-8 h-8 rounded-full bg-[#3dffa0] flex items-center justify-center text-xs font-bold text-[#003824] shrink-0">
+        <div className="w-8 h-8 rounded-full bg-[#9db59a] flex items-center justify-center text-xs font-bold text-[#003824] shrink-0">
           {review.initials}
         </div>
         <div className="min-w-0">
           <p className="text-white text-xs font-semibold">{review.name}</p>
-          <p className="text-[#3dffa0]/60 text-[10px]">{review.plant}</p>
+          <p className="text-[#9db59a]/60 text-[10px]">{review.plant}</p>
         </div>
       </div>
     </div>

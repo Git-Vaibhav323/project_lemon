@@ -20,11 +20,11 @@ export default function NewsletterCTA() {
             id="newsletter-home-email"
             type="email"
             placeholder="Enter your email"
-            className="w-full sm:flex-1 glass rounded-full text-white text-sm px-5 py-3 outline-none placeholder:text-white/30 focus:border-[#3dffa0]/40 transition-colors duration-300"
+            className="w-full sm:flex-1 glass rounded-full text-white text-sm px-5 py-3 outline-none placeholder:text-white/30 focus:border-[#9db59a]/40 transition-colors duration-300"
           />
           <button
             type="submit"
-            className="w-full sm:w-auto bg-[#3dffa0] text-[#003824] text-sm font-bold px-6 py-3 rounded-full hover:bg-[#3dffa0]/90 active:scale-[0.98] transition-all duration-300 whitespace-nowrap"
+            className="w-full sm:w-auto bg-[#9db59a] text-[#003824] text-sm font-bold px-6 py-3 rounded-full hover:bg-[#9db59a]/90 active:scale-[0.98] transition-all duration-300 whitespace-nowrap"
           >
             Subscribe
           </button>

@@ -69,7 +69,7 @@ export default function Hero() {
             {/* Eyebrow */}
             <span
               className="inline-block text-[13px] font-medium tracking-[0.2em] uppercase"
-              style={{ color: "#3dffa0", opacity: 0.8 }}
+              style={{ color: "#9db59a", opacity: 0.8 }}
             >
               Hand-selected & nurtured
             </span>
@@ -89,7 +89,7 @@ export default function Hero() {
               <a
                 href="#collection"
                 className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-[1.03]"
-                style={{ background: "#3dffa0", color: "#0b1d0d" }}
+                style={{ background: "#9db59a", color: "#0b1d0d" }}
               >
                 Browse Plants
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
@@ -99,7 +99,7 @@ export default function Hero() {
               <a
                 href="#philosophy"
                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-medium transition-all duration-300"
-                style={{ color: "#3dffa0", border: "1px solid rgba(61,255,160,0.3)" }}
+                style={{ color: "#9db59a", border: "1px solid rgba(61,255,160,0.3)" }}
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                   <circle cx="12" cy="12" r="10" />
@@ -125,7 +125,7 @@ export default function Hero() {
           <div className="relative hidden lg:flex flex-col gap-4">
             {/* Review card */}
             <div className="review-card flex items-start gap-3 w-fit max-w-[260px] rounded-2xl p-4 backdrop-blur-sm bg-white/[0.04] border border-white/[0.06]">
-              <div className="w-9 h-9 rounded-full bg-[#3dffa0]/20 flex items-center justify-center text-[#3dffa0] text-sm font-bold shrink-0">
+              <div className="w-9 h-9 rounded-full bg-[#9db59a]/20 flex items-center justify-center text-[#9db59a] text-sm font-bold shrink-0">
                 JD
               </div>
               <div>

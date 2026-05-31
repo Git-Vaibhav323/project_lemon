@@ -53,9 +53,9 @@ export default function About() {
                   href={href}
                   className="nav-link"
                   style={{
-                    color: lbl === "About" ? "#4edea3" : "rgba(213,230,223,0.7)",
+                    color: lbl === "About" ? "#9db59a" : "rgba(213,230,223,0.7)",
                     fontWeight: lbl === "About" ? 600 : 400,
-                    borderBottom: lbl === "About" ? "2px solid #4edea3" : "2px solid transparent",
+                    borderBottom: lbl === "About" ? "2px solid #9db59a" : "2px solid transparent",
                     paddingBottom: "2px",
                   }}
                 >
@@ -69,7 +69,7 @@ export default function About() {
                 href="#shop"
                 className="flex items-center gap-2 px-5 py-2 rounded-full font-semibold text-sm transition-all duration-300 hover:scale-105 active:scale-95"
                 style={{
-                  background: "linear-gradient(135deg, #4edea3 0%, #3bc98a 100%)",
+                  background: "linear-gradient(135deg, #9db59a 0%, #3bc98a 100%)",
                   color: "#003824",
                   boxShadow: "0 4px 12px rgba(78, 222, 163, 0.3)",
                 }}
@@ -87,14 +87,14 @@ export default function About() {
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#4edea3]/20 rounded-full blur-[100px] animate-pulse" />
+          <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#9db59a]/20 rounded-full blur-[100px] animate-pulse" />
           <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#3bc98a]/20 rounded-full blur-[100px]" />
         </div>
 
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-16">
             <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black mb-6 tracking-tighter" style={{ fontFamily: "Geist, sans-serif" }}>
-              Our <span className="text-[#4edea3] italic">Story</span>
+              Our <span className="text-[#9db59a] italic">Story</span>
             </h1>
             <p className="text-xl sm:text-2xl text-white/60 max-w-3xl mx-auto font-light leading-relaxed">
               Where passion for plants meets a dedication to <br className="hidden sm:block"/> sustainable, modern living.
@@ -108,14 +108,14 @@ export default function About() {
         <div className="max-w-4xl mx-auto space-y-16">
           {/* The Beginning */}
           <div className="glass rounded-3xl p-8 sm:p-12 hover:-translate-y-2 transition-transform duration-500 border border-white/5 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#4edea3]/5 rounded-full blur-[50px] -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#9db59a]/5 rounded-full blur-[50px] -translate-y-1/2 translate-x-1/2" />
             <div className="flex flex-col md:flex-row gap-10 items-center relative z-10">
               <div className="md:w-1/3">
-                <div className="w-16 h-16 rounded-2xl bg-[#4edea3]/10 flex items-center justify-center mb-6 border border-[#4edea3]/20">
+                <div className="w-16 h-16 rounded-2xl bg-[#9db59a]/10 flex items-center justify-center mb-6 border border-[#9db59a]/20">
                   <span className="text-3xl">🌱</span>
                 </div>
                 <h2 className="text-4xl font-bold text-white mb-2" style={{ fontFamily: "Geist, sans-serif" }}>The Beginning</h2>
-                <div className="h-1 w-12 bg-[#4edea3] rounded-full" />
+                <div className="h-1 w-12 bg-[#9db59a] rounded-full" />
               </div>
               <div className="md:w-2/3 space-y-6 text-white/70 text-lg leading-relaxed font-light">
                 <p>
@@ -126,7 +126,7 @@ export default function About() {
                 <p>
                   One day, while researching plant care, Emma realized that many people shared her struggle. 
                   The disconnect between plant enthusiasts and the right knowledge, tools, and quality plants 
-                  was evident. That's when the idea for <span className="text-[#4edea3] font-medium">Planto</span> was born.
+                  was evident. That's when the idea for <span className="text-[#9db59a] font-medium">Planto</span> was born.
                 </p>
               </div>
             </div>
@@ -234,8 +234,8 @@ export default function About() {
           </div>
 
           {/* CTA */}
-          <div className="glass rounded-3xl p-8 sm:p-16 text-center relative overflow-hidden border border-[#4edea3]/20">
-            <div className="absolute inset-0 bg-gradient-to-b from-[#4edea3]/10 to-transparent" />
+          <div className="glass rounded-3xl p-8 sm:p-16 text-center relative overflow-hidden border border-[#9db59a]/20">
+            <div className="absolute inset-0 bg-gradient-to-b from-[#9db59a]/10 to-transparent" />
             <div className="relative z-10">
               <h2 className="text-4xl sm:text-5xl font-black mb-6" style={{ fontFamily: "Geist, sans-serif" }}>Join Our Green Journey</h2>
               <p className="text-white/60 text-lg sm:text-xl mb-10 max-w-2xl mx-auto font-light">
@@ -245,13 +245,13 @@ export default function About() {
               <div className="flex flex-wrap justify-center gap-6">
                 <button
                   onClick={() => handleNavigation("#shop")}
-                  className="px-10 py-4 bg-[#4edea3] text-[#081612] font-bold rounded-full hover:bg-white transition-all duration-300 hover:scale-105 shadow-[0_0_20px_rgba(78,222,163,0.3)]"
+                  className="px-10 py-4 bg-[#9db59a] text-[#081612] font-bold rounded-full hover:bg-white transition-all duration-300 hover:scale-105 shadow-[0_0_20px_rgba(78,222,163,0.3)]"
                 >
                   Shop Plants
                 </button>
                 <button
                   onClick={() => handleNavigation("#home")}
-                  className="px-10 py-4 border-2 border-[#4edea3]/30 text-[#4edea3] font-bold rounded-full hover:border-[#4edea3] transition-all duration-300 hover:bg-[#4edea3]/5"
+                  className="px-10 py-4 border-2 border-[#9db59a]/30 text-[#9db59a] font-bold rounded-full hover:border-[#9db59a] transition-all duration-300 hover:bg-[#9db59a]/5"
                 >
                   Contact Us
                 </button>

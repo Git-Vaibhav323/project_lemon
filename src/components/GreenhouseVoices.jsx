@@ -4,42 +4,42 @@ const reviews = [
     initials: "PM",
     name: "Priya M.",
     plant: "Calathea Medallion",
-    text: "Arrived wrapped in paper, smelled like a forest. The Calathea opened up in three days.",
+    text: "honestly the best packaging i've ever seen. soil didn't spill at all and she looks so healthy",
   },
   {
     id: 2,
     initials: "AK",
     name: "Arjun K.",
     plant: "Compact Hosta",
-    text: "I've killed every plant I've ever owned. This one's been on my desk for 4 months.",
+    text: "I usually kill everything I touch lol but this one has actually been surviving on my desk for months",
   },
   {
     id: 3,
     initials: "SR",
     name: "Sneha R.",
     plant: "Snake Plant",
-    text: "The packaging was as thoughtful as the plant. That's rare.",
+    text: "arrived faster than expected. exactly as pictured.",
   },
   {
     id: 4,
     initials: "RV",
     name: "Rahul V.",
-    plant: "Desk Plant",
-    text: "I ordered one. I came back for two more. That says enough.",
+    plant: "Ficus Lyrata",
+    text: "it dropped two leaves when it first got here but the care card helped me fix the watering. doing great now!",
   },
   {
     id: 5,
     initials: "MT",
     name: "Meera T.",
-    plant: "Calathea AI",
-    text: "Grew an inch in the first week. My partner thought I was lying.",
+    plant: "White Fusion",
+    text: "gorgeous plant. my partner thought it was fake because the leaves are so perfect.",
   },
   {
     id: 6,
     initials: "DS",
     name: "Dev S.",
     plant: "Monstera Deliciosa",
-    text: "Finally a plant shop that tells you the truth about maintenance.",
+    text: "love that they are super upfront about the care level needed. repotted it immediately.",
   },
 ];
 
@@ -47,7 +47,7 @@ function StarRow() {
   return (
     <div className="flex gap-0.5 mb-2">
       {[...Array(5)].map((_, i) => (
-        <span key={i} className="text-[#3dffa0] text-[13px]">★</span>
+        <span key={i} className="text-[#9db59a] text-[13px]">★</span>
       ))}
     </div>
   );
@@ -67,7 +67,7 @@ function ReviewCard({ review }) {
         "{review.text}"
       </p>
       <div className="flex items-center gap-2">
-        <div className="w-7 h-7 rounded-full bg-[#3dffa0] flex items-center justify-center text-[10px] font-bold text-[#0b1d0d] shrink-0">
+        <div className="w-7 h-7 rounded-full bg-[#9db59a] flex items-center justify-center text-[10px] font-bold text-[#0b1d0d] shrink-0">
           {review.initials}
         </div>
         <span className="text-white/80 text-xs">{review.name}</span>
@@ -75,7 +75,7 @@ function ReviewCard({ review }) {
           className="text-[10px] font-medium px-2 py-0.5 rounded-full ml-auto"
           style={{
             background: "rgba(61,255,160,0.1)",
-            color: "#3dffa0",
+            color: "#9db59a",
             border: "1px solid rgba(61,255,160,0.15)",
           }}
         >
@@ -90,7 +90,7 @@ export default function GreenhouseVoices() {
   return (
     <section className="py-14 sm:py-16 lg:py-20 relative z-10 overflow-hidden">
       <div className="px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto mb-3">
-        <span className="text-[#3dffa0] text-[11px] font-semibold tracking-[2px] uppercase">
+        <span className="text-[#9db59a] text-[11px] font-semibold tracking-[2px] uppercase">
           GREENHOUSE VOICES
         </span>
       </div>
