@@ -852,6 +852,13 @@ function BentoGrid({ onSelectPlant, onAddToCart }) {
 // ──────────────────────────────────────────────────────────────────────────────
 function RarePlantsSection({ onSelectPlant, onAddToCart }) {
   const [ref, visible] = useScrollReveal();
+  const [activeFilter, setActiveFilter] = React.useState("All");
+
+  const filterOptions = ["All", "Limited Stock", "Collector", "Limited 3", "By Request"];
+
+  const filteredPlants = activeFilter === "All" 
+    ? rarePlants 
+    : rarePlants.filter(p => p.badge.toLowerCase() === activeFilter.toLowerCase());
 
   return (
     <section ref={ref} style={{ maxWidth:"1280px", margin:"0 auto", padding:"0 64px 80px" }}>
@@ -869,15 +876,17 @@ function RarePlantsSection({ onSelectPlant, onAddToCart }) {
         </div>
         <div style={{ display:"flex", gap:"8px", alignItems:"center" }}>
           <div style={{ display:"flex", gap:"8px", marginRight:"16px" }}>
-            {["All","Ultra Rare","Collector","By Request"].map((f,i) => (
-              <button key={f} style={{
+            {filterOptions.map((f,i) => {
+              const isActive = activeFilter === f;
+              return (
+              <button key={f} onClick={() => setActiveFilter(f)} style={{
                 padding:"8px 16px", fontSize:"12px", fontFamily:"Inter,sans-serif", fontWeight:500,
                 borderRadius:"9999px", cursor:"pointer", transition:"all 0.25s ease",
-                background: i===0 ? DS.primary : "transparent",
-                color: i===0 ? DS.onPrimary : DS.onSurfaceVar,
-                border: i===0 ? "none" : `1px solid rgba(60,74,66,0.5)`,
+                background: isActive ? DS.primary : "transparent",
+                color: isActive ? DS.onPrimary : DS.onSurfaceVar,
+                border: isActive ? "none" : `1px solid rgba(60,74,66,0.5)`,
               }}>{f}</button>
-            ))}
+            )})}
           </div>
           <button type="button" onClick={() => window.scrollTo({top:0, behavior:'smooth'})} style={{ color:DS.primary, fontFamily:"Inter,sans-serif", fontSize:"14px", fontWeight:600,
             letterSpacing:"0.08em", textDecoration:"none", display:"flex", alignItems:"center", gap:"8px", background:"none", border:"none", cursor:"pointer" }}>
@@ -890,7 +899,7 @@ function RarePlantsSection({ onSelectPlant, onAddToCart }) {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        {rarePlants.map((plant, i) => (
+        {filteredPlants.map((plant, i) => (
           <div key={plant.id} className={`stagger-reveal ${visible ? "stagger-reveal--in" : ""}`}
             style={{ "--delay":`${i * 80}ms` }}>
             <TiltCard intensity={12} onClick={() => onSelectPlant(plant)}
