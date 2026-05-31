@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import gsap from "gsap";
 import mainLogo from "../assets/plants/mainlog.png";
 
 export default function About() {
   const [scrolled, setScrolled] = useState(false);
+  const containerRef = useRef(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -14,8 +16,38 @@ export default function About() {
     window.location.href = hash;
   };
 
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      gsap.utils.toArray(".about-section").forEach((section) => {
+        gsap.from(section, {
+          scrollTrigger: {
+            trigger: section,
+            start: "top 80%",
+          },
+          y: 50,
+          opacity: 0,
+          duration: 0.8,
+          ease: "power3.out"
+        });
+      });
+
+      gsap.from(".about-stat", {
+        scrollTrigger: {
+          trigger: ".about-stats-container",
+          start: "top 85%",
+        },
+        scale: 0.8,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "back.out(1.5)"
+      });
+    }, containerRef);
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <div className="min-h-screen bg-brand-bg text-white">
+    <div ref={containerRef} className="min-h-screen bg-brand-bg text-white">
       {/* Navbar */}
       <header className="fixed top-0 left-0 right-0 z-50 w-full">
         <nav
@@ -107,7 +139,7 @@ export default function About() {
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto space-y-16">
           {/* The Beginning */}
-          <div className="glass rounded-3xl p-8 sm:p-12 hover:-translate-y-2 transition-transform duration-500 border border-white/5 relative overflow-hidden">
+          <div className="about-section glass rounded-3xl p-8 sm:p-12 hover:-translate-y-2 transition-transform duration-500 border border-white/5 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-[#9db59a]/5 rounded-full blur-[50px] -translate-y-1/2 translate-x-1/2" />
             <div className="flex flex-col md:flex-row gap-10 items-center relative z-10">
               <div className="md:w-1/3">
@@ -133,7 +165,7 @@ export default function About() {
           </div>
 
           {/* Our Mission */}
-          <div className="glass rounded-3xl p-8 sm:p-12">
+          <div className="about-section glass rounded-3xl p-8 sm:p-12">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-12 h-12 rounded-full bg-brand-primary/20 flex items-center justify-center">
                 <span className="text-2xl">🎯</span>
@@ -155,7 +187,7 @@ export default function About() {
           </div>
 
           {/* Our Values */}
-          <div className="glass rounded-3xl p-8 sm:p-12">
+          <div className="about-section glass rounded-3xl p-8 sm:p-12">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-12 h-12 rounded-full bg-brand-primary/20 flex items-center justify-center">
                 <span className="text-2xl">💚</span>
@@ -191,7 +223,7 @@ export default function About() {
           </div>
 
           {/* Today */}
-          <div className="glass rounded-3xl p-8 sm:p-12">
+          <div className="about-section glass rounded-3xl p-8 sm:p-12">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-12 h-12 rounded-full bg-brand-primary/20 flex items-center justify-center">
                 <span className="text-2xl">🌿</span>
@@ -217,14 +249,14 @@ export default function About() {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+          <div className="about-stats-container grid grid-cols-2 sm:grid-cols-4 gap-6">
             {[
               { number: "50K+", label: "Happy Customers" },
               { number: "200+", label: "Plant Varieties" },
               { number: "5 Years", label: "In Business" },
               { number: "98%", label: "Satisfaction Rate" },
             ].map((stat) => (
-              <div key={stat.label} className="glass rounded-2xl p-6 text-center">
+              <div key={stat.label} className="about-stat glass rounded-2xl p-6 text-center">
                 <div className="text-3xl sm:text-4xl font-bold text-brand-primary mb-2">
                   {stat.number}
                 </div>
@@ -234,7 +266,7 @@ export default function About() {
           </div>
 
           {/* CTA */}
-          <div className="glass rounded-3xl p-8 sm:p-16 text-center relative overflow-hidden border border-[#9db59a]/20">
+          <div className="about-section glass rounded-3xl p-8 sm:p-16 text-center relative overflow-hidden border border-[#9db59a]/20">
             <div className="absolute inset-0 bg-gradient-to-b from-[#9db59a]/10 to-transparent" />
             <div className="relative z-10">
               <h2 className="text-4xl sm:text-5xl font-black mb-6" style={{ fontFamily: "Geist, sans-serif" }}>Join Our Green Journey</h2>

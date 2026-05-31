@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
 import plant1 from "../assets/plants/1.png";
 import plant2 from "../assets/plants/2.png";
 import plant3 from "../assets/plants/3.png";
@@ -203,10 +204,36 @@ export default function TopSelling() {
           observer.unobserve(el);
         }
       },
-      { threshold: 0.25, rootMargin: "-60px 0px 0px 0px" }
+      { threshold: 0.1, rootMargin: "-60px 0px 0px 0px" }
     );
     observer.observe(el);
     return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      gsap.from(".top-selling-header", {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+        },
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power3.out"
+      });
+      gsap.from(".top-selling-btn", {
+        scrollTrigger: {
+          trigger: ".top-selling-btn-container",
+          start: "top 90%",
+        },
+        y: 20,
+        opacity: 0,
+        duration: 0.6,
+        ease: "power2.out"
+      });
+    }, sectionRef);
+    return () => ctx.revert();
   }, []);
 
   const visiblePlants = showAll ? plants : plants.slice(0, 3);
@@ -217,7 +244,7 @@ export default function TopSelling() {
       ref={sectionRef}
       className="px-4 sm:px-6 lg:px-10 py-14 sm:py-16 lg:py-20 max-w-7xl mx-auto relative z-10"
     >
-      <h2 className="text-white text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-10 sm:mb-12 tracking-tight">
+      <h2 className="top-selling-header text-white text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-10 sm:mb-12 tracking-tight">
         Our Top Selling
       </h2>
 
@@ -234,11 +261,11 @@ export default function TopSelling() {
       </div>
 
       {plants.length > 3 && (
-        <div className="flex justify-center mt-10">
+        <div className="top-selling-btn-container flex justify-center mt-10">
           <button
             type="button"
             onClick={() => setShowAll(!showAll)}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium transition-all duration-300"
+            className="top-selling-btn inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 hover:bg-white/5"
             style={{ color: "#9db59a", border: "1px solid rgba(61,255,160,0.3)" }}
           >
             {showAll ? "Show Less" : "Explore More Plants"}

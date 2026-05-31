@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { supabase } from "../lib/supabaseClient";
+import gsap from "gsap";
 
 export default function Admin() {
   const [purchases, setPurchases] = useState([]);
@@ -9,6 +10,8 @@ export default function Admin() {
   const [orderToCancel, setOrderToCancel] = useState(null);
   const [isCanceling, setIsCanceling] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
+
+  const containerRef = useRef(null);
 
   useEffect(() => {
     async function fetchPurchases() {
@@ -29,6 +32,36 @@ export default function Admin() {
 
     fetchPurchases();
   }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      let ctx = gsap.context(() => {
+        gsap.from(".admin-header > *", {
+          y: -20,
+          opacity: 0,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power3.out"
+        });
+        gsap.from(".admin-stat", {
+          scale: 0.9,
+          opacity: 0,
+          duration: 0.6,
+          stagger: 0.15,
+          ease: "back.out(1.2)",
+          delay: 0.2
+        });
+        gsap.from(".admin-table", {
+          y: 30,
+          opacity: 0,
+          duration: 0.8,
+          ease: "power2.out",
+          delay: 0.4
+        });
+      }, containerRef);
+      return () => ctx.revert();
+    }
+  }, [loading]);
 
   const handleCancelClick = (order) => {
     setOrderToCancel(order);
@@ -68,7 +101,7 @@ export default function Admin() {
   const itemsSold = purchases.reduce((sum, p) => sum + p.quantity, 0);
 
   return (
-    <div className="min-h-screen bg-[#081612] text-white py-20 px-4 sm:px-8 relative">
+    <div ref={containerRef} className="min-h-screen bg-[#081612] text-white py-20 px-4 sm:px-8 relative">
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 animate-fade-in">
@@ -117,7 +150,7 @@ export default function Admin() {
       )}
 
       <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-4">
+        <div className="admin-header flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-4">
           <div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#9db59a] mb-2 tracking-tight">Admin Dashboard</h1>
             <p className="text-gray-400">Overview of your store's performance and recent orders.</p>
@@ -129,24 +162,24 @@ export default function Admin() {
         
         {/* Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
-          <div className="bg-[#14221e] p-6 rounded-2xl border border-[#9db59a]/20 relative overflow-hidden group">
+          <div className="admin-stat bg-[#14221e] p-6 rounded-2xl border border-[#9db59a]/20 relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#9db59a]/5 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110" />
             <h3 className="text-gray-400 text-sm font-medium uppercase tracking-wider mb-2">Total Revenue</h3>
             <p className="text-4xl font-bold text-white">${totalRevenue.toFixed(2)}</p>
           </div>
-          <div className="bg-[#14221e] p-6 rounded-2xl border border-white/10 relative overflow-hidden group">
+          <div className="admin-stat bg-[#14221e] p-6 rounded-2xl border border-white/10 relative overflow-hidden group">
              <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110" />
             <h3 className="text-gray-400 text-sm font-medium uppercase tracking-wider mb-2">Total Orders</h3>
             <p className="text-4xl font-bold text-white">{totalOrders}</p>
           </div>
-          <div className="bg-[#14221e] p-6 rounded-2xl border border-white/10 relative overflow-hidden group">
+          <div className="admin-stat bg-[#14221e] p-6 rounded-2xl border border-white/10 relative overflow-hidden group">
              <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110" />
             <h3 className="text-gray-400 text-sm font-medium uppercase tracking-wider mb-2">Items Sold</h3>
             <p className="text-4xl font-bold text-white">{itemsSold}</p>
           </div>
         </div>
 
-        <h2 className="text-2xl font-semibold mb-6 text-white flex items-center gap-3">
+        <h2 className="admin-table text-2xl font-semibold mb-6 text-white flex items-center gap-3">
           <div className="w-2 h-8 bg-[#9db59a] rounded-full" />
           Recent Purchases
         </h2>
@@ -156,11 +189,11 @@ export default function Admin() {
             <div className="w-10 h-10 border-4 border-[#9db59a]/20 border-t-[#9db59a] rounded-full animate-spin" />
           </div>
         ) : purchases.length === 0 ? (
-          <div className="bg-[#14221e] p-10 rounded-2xl border border-white/5 text-center">
+          <div className="admin-table bg-[#14221e] p-10 rounded-2xl border border-white/5 text-center">
             <p className="text-gray-400 text-lg">No purchases found yet. Your sales will appear here.</p>
           </div>
         ) : (
-          <div className="overflow-x-auto bg-[#14221e] rounded-2xl border border-white/10 shadow-2xl">
+          <div className="admin-table overflow-x-auto bg-[#14221e] rounded-2xl border border-white/10 shadow-2xl">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-white/5 text-gray-300 text-xs uppercase tracking-widest border-b border-white/10">

@@ -1,6 +1,7 @@
+import { useRef, useEffect } from "react";
+import gsap from "gsap";
 import SectionTitle from "./ui/SectionTitle";
 import StarRating from "./ui/StarRating";
-import useScrollReveal from "../hooks/useScrollReveal";
 import rect8 from "../assets/plants/Rectangle 8.png";
 
 
@@ -48,14 +49,14 @@ function ReviewCard({ review }) {
         <div className="flex items-center gap-3 mb-4">
           <div
             className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold shrink-0"
-            style={{ background: review.avatarColor }}
+            style={{ background: review.avatarColor || "#9db59a", color: "#000" }}
             aria-hidden="true"
           >
             {review.initials}
           </div>
           <div className="min-w-0">
             <p className="text-white text-sm sm:text-base font-semibold">{review.name}</p>
-            <StarRating count={review.rating} size={12} />
+            <StarRating count={review.rating || 5} size={12} />
           </div>
         </div>
 
@@ -70,18 +71,45 @@ function ReviewCard({ review }) {
 }
 
 export default function CustomerReviews() {
-  const sectionRef = useScrollReveal();
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      gsap.from(".cr-header", {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+        },
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power3.out"
+      });
+      gsap.from(".cr-card", {
+        scrollTrigger: {
+          trigger: ".cr-grid",
+          start: "top 85%",
+        },
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: "power2.out"
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section className="px-4 sm:px-6 lg:px-10 py-14 sm:py-16 lg:py-20 max-w-7xl mx-auto">
-      <div ref={sectionRef} className="reveal">
-        <div className="flex justify-center mb-10 sm:mb-12">
+    <section ref={sectionRef} className="px-4 sm:px-6 lg:px-10 py-14 sm:py-16 lg:py-20 max-w-7xl mx-auto">
+      <div>
+        <div className="cr-header flex justify-center mb-10 sm:mb-12">
           <SectionTitle>What Our Plant Parents Say</SectionTitle>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
-          {reviews.map((review, i) => (
-            <div key={review.id} className={`stagger-${i + 1} h-full`}>
+        <div className="cr-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
+          {reviews.map((review) => (
+            <div key={review.id} className="cr-card h-full">
               <ReviewCard review={review} />
             </div>
           ))}

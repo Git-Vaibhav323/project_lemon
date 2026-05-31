@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import gsap from "gsap";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -7,6 +8,7 @@ export default function Contact() {
     message: "",
   });
   const [status, setStatus] = useState("");
+  const sectionRef = useRef(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,20 +23,59 @@ export default function Contact() {
     }, 3000);
   };
 
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      gsap.from(".contact-header", {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+        },
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: "power3.out"
+      });
+      gsap.from(".contact-form > *", {
+        scrollTrigger: {
+          trigger: ".contact-form-container",
+          start: "top 85%",
+        },
+        y: 20,
+        opacity: 0,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power2.out"
+      });
+      gsap.from(".contact-info > *", {
+        scrollTrigger: {
+          trigger: ".contact-info",
+          start: "top 90%",
+        },
+        y: 15,
+        opacity: 0,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power2.out"
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="contact" className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
+    <section id="contact" ref={sectionRef} className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
+          <h2 className="contact-header text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
             Get in <span className="text-brand-primary">Touch</span>
           </h2>
-          <p className="text-white/60 text-base sm:text-lg max-w-2xl mx-auto">
+          <p className="contact-header text-white/60 text-base sm:text-lg max-w-2xl mx-auto">
             Have questions about our plants or need care advice? We're here to help you grow your green sanctuary.
           </p>
         </div>
 
-        <div className="glass rounded-2xl p-6 sm:p-8 lg:p-10">
-          <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="contact-form-container glass rounded-2xl p-6 sm:p-8 lg:p-10">
+          <form onSubmit={handleSubmit} className="contact-form space-y-6">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-white/80 mb-2">
                 Your Name
@@ -97,7 +138,7 @@ export default function Contact() {
             )}
           </form>
 
-          <div className="mt-10 pt-8 border-t border-white/10">
+          <div className="contact-info mt-10 pt-8 border-t border-white/10">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
               <div>
                 <div className="text-brand-primary font-semibold mb-1">Email</div>

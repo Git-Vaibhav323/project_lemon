@@ -1,14 +1,45 @@
+import { useRef, useEffect } from "react";
+import gsap from "gsap";
 import BrandLogo from "./ui/BrandLogo";
 
 const quickLinks = ["Home", "Type's of plants", "Contact", "Privacy"];
 
 export default function Footer() {
+  const footerRef = useRef(null);
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      gsap.from(".footer-col", {
+        scrollTrigger: {
+          trigger: footerRef.current,
+          start: "top 90%",
+        },
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power2.out"
+      });
+      gsap.from(".footer-bottom", {
+        scrollTrigger: {
+          trigger: footerRef.current,
+          start: "top 85%",
+        },
+        opacity: 0,
+        duration: 0.8,
+        ease: "power2.out",
+        delay: 0.4
+      });
+    }, footerRef);
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <footer id="contact" className="bg-brand-dark border-t border-white/[0.06] mt-4">
+    <footer id="contact" ref={footerRef} className="bg-brand-dark border-t border-white/[0.06] mt-4">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-12 sm:py-14 lg:py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-12 mb-10 sm:mb-12">
           {/* Brand */}
-          <div className="sm:col-span-2 lg:col-span-1">
+          <div className="footer-col sm:col-span-2 lg:col-span-1">
             <a
               href="#home"
               className="inline-block mb-4 transition-opacity duration-300 hover:opacity-90"
@@ -39,7 +70,7 @@ export default function Footer() {
           </div>
 
           {/* Quick Links */}
-          <div>
+          <div className="footer-col">
             <h3 className="text-white text-sm sm:text-base font-semibold mb-4 sm:mb-5">
               Quick Link&apos;s
             </h3>
@@ -58,7 +89,7 @@ export default function Footer() {
           </div>
 
           {/* Newsletter */}
-          <div className="sm:col-span-2 lg:col-span-1">
+          <div className="footer-col sm:col-span-2 lg:col-span-1">
             <h3 className="text-white text-sm sm:text-base font-semibold mb-4 sm:mb-5">
               For Every Update
             </h3>
@@ -86,7 +117,7 @@ export default function Footer() {
         </div>
 
         {/* Copyright & Admin Link */}
-        <div className="border-t border-white/[0.06] pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="footer-bottom border-t border-white/[0.06] pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-white/30 text-xs sm:text-sm text-center sm:text-left">
             planto © all rights reserved
           </p>

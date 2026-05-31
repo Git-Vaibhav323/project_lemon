@@ -1,3 +1,6 @@
+import { useRef, useEffect } from "react";
+import gsap from "gsap";
+
 const reviews = [
   {
     id: 1,
@@ -87,18 +90,47 @@ function ReviewCard({ review }) {
 }
 
 export default function GreenhouseVoices() {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      gsap.from(".ghv-header", {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+        },
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power3.out"
+      });
+      gsap.from(".marquee-container", {
+        scrollTrigger: {
+          trigger: ".marquee-container",
+          start: "top 90%",
+        },
+        opacity: 0,
+        scale: 0.95,
+        duration: 1,
+        ease: "power2.out"
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="py-14 sm:py-16 lg:py-20 relative z-10 overflow-hidden">
+    <section ref={sectionRef} className="py-14 sm:py-16 lg:py-20 relative z-10 overflow-hidden">
       <div className="px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto mb-3">
-        <span className="text-[#9db59a] text-[11px] font-semibold tracking-[2px] uppercase">
+        <span className="ghv-header text-[#9db59a] text-[11px] font-semibold tracking-[2px] uppercase block">
           GREENHOUSE VOICES
         </span>
       </div>
       <div className="px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto mb-8 sm:mb-10">
-        <h2 className="text-white text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+        <h2 className="ghv-header text-white text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
           Our team & the people who keep them alive.
         </h2>
-        <p className="text-white/60 max-w-2xl text-base sm:text-lg">
+        <p className="ghv-header text-white/60 max-w-2xl text-base sm:text-lg">
           We believe every home deserves a living masterpiece. Hear from our growers and the community that nurtures our plants every day.
         </p>
       </div>

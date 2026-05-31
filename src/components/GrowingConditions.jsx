@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import gsap from "gsap";
 
 const items = [
   {
@@ -29,14 +30,42 @@ const items = [
 
 export default function GrowingConditions() {
   const [openId, setOpenId] = useState(null);
+  const sectionRef = useRef(null);
 
   const toggle = (id) => {
     setOpenId(openId === id ? null : id);
   };
 
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      gsap.from(".gc-header", {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+        },
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power3.out"
+      });
+      gsap.from(".gc-item", {
+        scrollTrigger: {
+          trigger: ".gc-list",
+          start: "top 80%",
+        },
+        x: -20,
+        opacity: 0,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power2.out"
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="care" className="px-4 sm:px-6 lg:px-10 py-14 sm:py-16 lg:py-20 max-w-4xl mx-auto relative z-10">
-      <div className="text-center mb-10 sm:mb-12">
+    <section id="care" ref={sectionRef} className="px-4 sm:px-6 lg:px-10 py-14 sm:py-16 lg:py-20 max-w-4xl mx-auto relative z-10">
+      <div className="gc-header text-center mb-10 sm:mb-12">
         <h2 className="text-white text-2xl sm:text-3xl md:text-4xl font-bold">
           Everything your plant needs to thrive
         </h2>
@@ -45,13 +74,13 @@ export default function GrowingConditions() {
         </p>
       </div>
 
-      <div>
+      <div className="gc-list">
         {items.map((item) => {
           const isOpen = openId === item.id;
           return (
             <div
               key={item.id}
-              className="border-b border-white/[0.06]"
+              className="gc-item border-b border-white/[0.06]"
             >
               <button
                 type="button"

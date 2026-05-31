@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import gsap from "gsap";
 import besto2Plant from "../assets/plants/besto2-plant.png";
 import SectionTitle from "./ui/SectionTitle";
-import useScrollReveal from "../hooks/useScrollReveal";
 
 const slides = [
   {
@@ -26,18 +26,67 @@ const slides = [
 
 export default function BestO2() {
   const [current, setCurrent] = useState(0);
-  const sectionRef = useScrollReveal();
+  const sectionRef = useRef(null);
 
   const prev = () => setCurrent((c) => (c === 0 ? slides.length - 1 : c - 1));
   const next = () => setCurrent((c) => (c === slides.length - 1 ? 0 : c + 1));
 
   const slideNum = String(current + 1).padStart(2, "0");
 
-  return (
-    <section id="more" className="px-4 sm:px-6 lg:px-10 py-14 sm:py-16 lg:py-30 max-w-7xl mx-auto">
-      <div ref={sectionRef} className="reveal">
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      gsap.from(".besto2-header", {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+        },
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power3.out"
+      });
+      gsap.from(".besto2-card", {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 75%",
+        },
+        scale: 0.95,
+        opacity: 0,
+        duration: 1,
+        ease: "power2.out"
+      });
+      gsap.from(".besto2-img", {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 75%",
+        },
+        x: -50,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+        delay: 0.2
+      });
+      gsap.from(".besto2-content > *", {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 75%",
+        },
+        y: 20,
+        opacity: 0,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power2.out",
+        delay: 0.4
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
 
-        <div className="flex justify-center mb-10 sm:mb-12">
+  return (
+    <section id="more" ref={sectionRef} className="px-4 sm:px-6 lg:px-10 py-14 sm:py-16 lg:py-30 max-w-7xl mx-auto">
+      <div>
+
+        <div className="besto2-header flex justify-center mb-10 sm:mb-12">
           <SectionTitle>Breathe Easy: Our Top O2 Purifiers</SectionTitle>
         </div>
 
@@ -45,7 +94,7 @@ export default function BestO2() {
         <div className="relative flex items-center justify-center">
           {/* Card container — overflow hidden only on right side visually */}
           <div
-            className="rounded-3xl border border-white/[0.09] overflow-visible w-full flex flex-col lg:flex-row items-stretch relative"
+            className="besto2-card rounded-3xl border border-white/[0.09] overflow-visible w-full flex flex-col lg:flex-row items-stretch relative"
             style={{
               background: "rgba(255,255,255,0.04)",
               backdropFilter: "blur(24px)",
@@ -57,13 +106,13 @@ export default function BestO2() {
               <img
                 src={besto2Plant}
                 alt="Best O2 indoor plant"
-                className="w-full max-w-[600px] sm:max-w-[800x] lg:max-w-[400px] object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.5)]"
+                className="besto2-img w-full max-w-[600px] sm:max-w-[800x] lg:max-w-[400px] object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.5)]"
                 key={current}
               />
             </div>
 
             {/* Right — text content inside card */}
-            <div className="lg:w-[55%] px-6 sm:px-8 lg:px-10 py-8 lg:py-12 flex flex-col justify-center">
+            <div className="besto2-content lg:w-[55%] px-6 sm:px-8 lg:px-10 py-8 lg:py-12 flex flex-col justify-center">
               <h2 className="text-white text-xl sm:text-2xl lg:text-[1.65rem] font-bold mb-5 leading-snug">
                 {slides[current].title}
               </h2>
@@ -107,7 +156,7 @@ export default function BestO2() {
         </div>
 
         {/* Dots indicator */}
-        <div className="flex justify-center gap-2 mt-8 sm:mt-10" role="tablist" aria-label="Carousel slides">
+        <div className="besto2-content flex justify-center gap-2 mt-8 sm:mt-10" role="tablist" aria-label="Carousel slides">
           {slides.map((_, i) => (
             <button
               key={i}
