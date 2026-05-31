@@ -162,7 +162,7 @@ export default function CartModal({ cartItems, onClose, onCheckoutSuccess }) {
             <h2 className="text-2xl font-semibold text-white mb-6">Your Cart</h2>
             
             {cartItems.length === 0 ? (
-              <p className="text-gray-400">Your cart is empty.</p>
+              <p className="text-gray-400">Your cart is empty. Let's find the perfect plant for your space.</p>
             ) : (
               <>
                 <div className="space-y-4 max-h-64 overflow-y-auto mb-6">
@@ -202,7 +202,7 @@ export default function CartModal({ cartItems, onClose, onCheckoutSuccess }) {
                     disabled={loading}
                     className="w-full bg-[#4edea3] text-[#003824] font-bold py-3 rounded-xl disabled:opacity-50"
                   >
-                    {loading ? "Processing..." : "Complete Purchase"}
+                    {loading ? "Preparing your plant..." : "Reserve Your Specimen"}
                   </button>
                 </div>
               </>

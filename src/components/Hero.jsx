@@ -71,7 +71,7 @@ export default function Hero() {
               className="inline-block text-[13px] font-medium tracking-[0.2em] uppercase"
               style={{ color: "#3dffa0", opacity: 0.8 }}
             >
-              Rethink your space
+              Hand-selected & nurtured
             </span>
 
             {/* Headline */}
@@ -81,7 +81,7 @@ export default function Hero() {
 
             {/* Description */}
             <p className="text-white/50 text-base sm:text-lg max-w-md leading-relaxed paragraphIn" style={{ animationDelay: "0.7s" }}>
-              Breathe new life into your home with our thoughtfully curated collection of indoor plants — because every leaf tells a story.
+              We grow each botanical specimen with care, offering hand-selected plants nurtured to bring life to your home. Because every leaf tells a story.
             </p>
 
             {/* CTA Buttons */}
@@ -114,7 +114,7 @@ export default function Hero() {
               href="#testimonials"
               className="secondary-link inline-flex items-center gap-2 text-white/40 text-sm font-medium hover:text-white/70 transition-colors mt-1"
             >
-              <span>Hear from our community</span>
+              <span>Meet the botanists & our community</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                 <path d="M7 17 17 7M7 7h10v10" />
               </svg>

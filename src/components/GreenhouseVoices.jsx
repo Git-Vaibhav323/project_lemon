@@ -95,9 +95,12 @@ export default function GreenhouseVoices() {
         </span>
       </div>
       <div className="px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto mb-8 sm:mb-10">
-        <h2 className="text-white text-2xl sm:text-3xl md:text-4xl font-bold">
-          From the people who keep them alive.
+        <h2 className="text-white text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+          Our team & the people who keep them alive.
         </h2>
+        <p className="text-white/60 max-w-2xl text-base sm:text-lg">
+          We believe every home deserves a living masterpiece. Hear from our growers and the community that nurtures our plants every day.
+        </p>
       </div>
 
       <div className="marquee-container relative overflow-hidden">
