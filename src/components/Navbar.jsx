@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 
 const navLinks = [
-  { label: "Greenhouse", href: "#collection" },
-  { label: "Plant Journal", href: "#journal" },
-  { label: "Care Studio", href: "#care" },
-  { label: "Our Story", href: "#about" },
+  { label: "Home", href: "#home" },
+  { label: "Shop", href: "#shop" },
+  { label: "About", href: "#about" },
+  { label: "Contact", href: "#contact" },
 ];
 
 function LeafMark() {
