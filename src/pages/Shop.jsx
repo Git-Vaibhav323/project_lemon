@@ -856,8 +856,8 @@ function RarePlantsSection({ onSelectPlant, onAddToCart }) {
 
   const filterOptions = ["All", "Limited Stock", "Collector", "Limited 3", "By Request"];
 
-  const filteredPlants = activeFilter === "All" 
-    ? rarePlants 
+  const filteredPlants = activeFilter === "All"
+    ? rarePlants
     : rarePlants.filter(p => p.badge.toLowerCase() === activeFilter.toLowerCase());
 
   return (
@@ -875,7 +875,7 @@ function RarePlantsSection({ onSelectPlant, onAddToCart }) {
           </p>
         </div>
         <div style={{ display:"flex", gap:"8px", alignItems:"center" }}>
-          <div style={{ display:"flex", gap:"8px", marginRight:"16px" }}>
+          <div style={{ display:"flex", gap:"8px" }}>
             {filterOptions.map((f,i) => {
               const isActive = activeFilter === f;
               return (
@@ -888,13 +888,6 @@ function RarePlantsSection({ onSelectPlant, onAddToCart }) {
               }}>{f}</button>
             )})}
           </div>
-          <button type="button" onClick={() => window.scrollTo({top:0, behavior:'smooth'})} style={{ color:DS.primary, fontFamily:"Inter,sans-serif", fontSize:"14px", fontWeight:600,
-            letterSpacing:"0.08em", textDecoration:"none", display:"flex", alignItems:"center", gap:"8px", background:"none", border:"none", cursor:"pointer" }}>
-            VIEW ALL
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </button>
         </div>
       </div>
 
