@@ -21,6 +21,8 @@ const plants = [
     ],
     price: "Rs. 359 /-",
     img: plant1,
+    stock: "60%",
+    careNote: "Bright indirect light. Water twice weekly.",
   },
   {
     id: 2,
@@ -35,6 +37,8 @@ const plants = [
     ],
     price: "Rs. 309 /-",
     img: plant2,
+    stock: "42%",
+    careNote: "Low light tolerant. Water once weekly.",
   },
   {
     id: 3,
@@ -49,6 +53,8 @@ const plants = [
     ],
     price: "Rs. 399 /-",
     img: plant3,
+    stock: "78%",
+    careNote: "Thrives in any light. Water fortnightly.",
   },
   {
     id: 4,
@@ -63,6 +69,8 @@ const plants = [
     ],
     price: "Rs. 599 /-",
     img: plant4,
+    stock: "15%",
+    careNote: "Bright indirect light. Water weekly.",
   },
   {
     id: 5,
@@ -77,6 +85,8 @@ const plants = [
     ],
     price: "Rs. 449 /-",
     img: plant5,
+    stock: "8%",
+    careNote: "Low to medium light. Keep soil moist.",
   },
   {
     id: 6,
@@ -91,10 +101,12 @@ const plants = [
     ],
     price: "Rs. 749 /-",
     img: plant6,
+    stock: "0%",
+    careNote: "Bright direct light. Water weekly.",
   },
 ];
 
-function PlantCard({ plant, index, visible, isHidden }) {
+function PlantCard({ plant, index, visible, isHidden, revealDelay = 0, stock, careNote }) {
   const cardRef = useRef(null);
   const [entered, setEntered] = useState(false);
 
@@ -126,6 +138,7 @@ function PlantCard({ plant, index, visible, isHidden }) {
         transform: entered
           ? "translateX(0)"
           : `translateX(${isEven ? "90px" : "-90px"})`,
+        transitionDelay: `${revealDelay}s`,
         transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
       }}
     >
@@ -150,6 +163,20 @@ function PlantCard({ plant, index, visible, isHidden }) {
             className="h-full w-auto max-h-full object-contain transition-transform duration-350 group-hover:scale-[1.03]"
             style={{ filter: "drop-shadow(0 12px 24px rgba(74,122,69,0.15))" }}
           />
+          {stock !== undefined && (
+            <div
+              className="absolute bottom-0 left-0 right-0 h-[3px]"
+              style={{ background: "rgba(0,0,0,0.08)" }}
+            >
+              <div
+                className="h-full transition-all duration-1000 ease-out"
+                style={{
+                  width: entered ? stock : "0%",
+                  background: "linear-gradient(90deg, #8fa896, #b8ffb8)",
+                }}
+              />
+            </div>
+          )}
         </div>
 
         <div
@@ -160,6 +187,12 @@ function PlantCard({ plant, index, visible, isHidden }) {
           </span>
           <h3 className="text-brand-dark text-[26px] font-bold leading-tight mt-1">{plant.name}</h3>
           <p className="italic text-sm text-brand-dark/50 mt-1 leading-snug">{plant.editorial}</p>
+
+          {careNote && (
+            <p className="text-xs text-brand-moss/70 mt-1 leading-snug opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              {careNote}
+            </p>
+          )}
 
           <div className="grid grid-cols-2 gap-x-6 gap-y-2 mt-3 max-w-[320px]">
             {plant.specs.map((spec) => (
@@ -256,6 +289,9 @@ export default function TopSelling() {
             index={i}
             visible={visible}
             isHidden={!showAll && i >= 3}
+            revealDelay={i * 0.1}
+            stock={plant.stock}
+            careNote={plant.careNote}
           />
         ))}
       </div>

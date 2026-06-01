@@ -45,11 +45,11 @@ const DS = {
 };
 
 const glass = {
-  background:           "rgba(20, 34, 30, 0.4)",
-  backdropFilter:       "blur(12px)",
-  WebkitBackdropFilter: "blur(12px)",
-  border: "1px solid rgba(139,111,71,0.1)",
-  boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+  background:           "rgba(255, 255, 255, 0.72)",
+  backdropFilter:       "blur(20px)",
+  WebkitBackdropFilter: "blur(20px)",
+  border: "1px solid rgba(139, 111, 71, 0.06)",
+  boxShadow: "0 4px 24px rgba(45, 36, 22, 0.05)",
 };
 
 // ─── Product Data ─────────────────────────────────────────────────────────────
@@ -69,15 +69,15 @@ const rarePlants = [
 ];
 
 const bestSellers = [
-  { id: 301, name: "Calathea Plant",         badge: "TRENDING #1",  category: "Indoor", priceDisplay: "$359",   price: 359,  image: img1 },
-  { id: 302, name: "Desk Companion",         badge: "BESTSELLER",   category: "Office", priceDisplay: "$309",   price: 309,  image: img2 },
-  { id: 303, name: "Areca Palm",             badge: "POPULAR",      category: "Outdoor",priceDisplay: "$529",   price: 529,  image: img6 },
+  { id: 301, name: "Calathea Plant",         badge: "Trending #1",  category: "Indoor", priceDisplay: "$359",   price: 359,  image: "/uploads/Calathea Medallion.png", stock:"22%", careNote:"Bright indirect light. Water twice weekly." },
+  { id: 302, name: "Desk Companion",         badge: "Bestseller",   category: "Office", priceDisplay: "$309",   price: 309,  image: "/uploads/desk companion.png", stock:"45%", careNote:"Low light tolerant. Water once weekly." },
+  { id: 303, name: "Areca Palm",             badge: "Popular",      category: "Outdoor",priceDisplay: "$529",   price: 529,  image: "/uploads/Areca Palm.png", stock:"60%", careNote:"Bright indirect light. Water weekly." },
 ];
 
 const newArrivals = [
-  { id: 401, name: "Cactus Specimen",        badge: "NEW",          category: "Desert", priceDisplay: "$249",   price: 249,  image: img4 },
-  { id: 402, name: "Calathea White Fusion",  badge: "JUST ARRIVED", category: "Air Purifying", priceDisplay: "$399", price: 399, image: img3 },
-  { id: 403, name: "Monstera Deliciosa",     badge: "RESTOCK",      category: "Indoor", priceDisplay: "$479",   price: 479,  image: img5 },
+  { id: 401, name: "Cactus Specimen",        badge: "New",          category: "Desert", priceDisplay: "$249",   price: 249,  image: "/uploads/Cactus Specimen.png", stock:"35%", careNote:"Bright direct light. Water every 2–3 weeks." },
+  { id: 402, name: "Calathea White Fusion",  badge: "Just Arrived", category: "Air Purifying", priceDisplay: "$399", price: 399, image: "/uploads/Calathea White Fusion.png", stock:"12%", careNote:"Indirect light. Keep soil moist." },
+  { id: 403, name: "Monstera Deliciosa",     badge: "Restock",      category: "Indoor", priceDisplay: "$479",   price: 479,  image: "/uploads/Monstera Deliciosa.png", stock:"50%", careNote:"Bright indirect light. Water weekly." },
 ];
 
 // ─── Dynamic text content based on flower animation progress ─────────────────
@@ -1086,47 +1086,62 @@ function BestSellersSection({ onSelectPlant, onAddToCart }) {
                 style={{ ...glass, overflow:"hidden" }}>
                 {/* Image */}
                 <div style={{ height:"320px", position:"relative", overflow:"hidden",
-                  background:"linear-gradient(135deg,rgba(255,255,255,0.92) 0%,rgba(250,247,242,0.88) 100%)" }}>
+                  background:"linear-gradient(135deg,rgba(255,255,255,0.96) 0%,rgba(250,247,242,0.92) 100%)" }}>
                   <img src={plant.image} alt={plant.name}
                     style={{ width:"100%", height:"100%", objectFit:"contain", objectPosition:"center",
                       padding:"32px", animation:`plantFloat ${6+i}s ease-in-out ${i*0.8}s infinite`,
                       filter:"drop-shadow(0 10px 20px rgba(74,122,69,0.12))", transition:"transform 0.5s ease" }}/>
 
-                  {/* Rank badge */}
+                  {/* Rank badge — subtle sage circle with gold ring */}
                   <div className="best-rank" style={{ position:"absolute", top:"16px", right:"16px",
                     background:DS.primary, color:DS.onPrimary,
-                    fontFamily:"'DM Sans',sans-serif", fontSize:"22px", fontWeight:700,
-                    width:"44px", height:"44px", borderRadius:"50%",
+                    fontFamily:"'DM Sans',sans-serif", fontSize:"14px", fontWeight:600,
+                    width:"36px", height:"36px", borderRadius:"50%",
                     display:"flex", alignItems:"center", justifyContent:"center",
-                    boxShadow:`0 0 20px rgba(78,222,163,0.4)` }}>
+                    border:"1.5px solid rgba(139,111,71,0.2)",
+                    boxShadow:"0 2px 12px rgba(0,0,0,0.06)" }}>
                     {i + 1}
                   </div>
 
                   <div style={{ position:"absolute", top:"16px", left:"16px",
-                    background:"rgba(78,222,163,0.15)", border:"1px solid rgba(78,222,163,0.3)",
-                    color:DS.primary, fontSize:"10px", fontFamily:"'DM Sans',sans-serif", fontWeight:600,
-                    letterSpacing:"0.15em", textTransform:"uppercase", padding:"4px 10px" }}>
+                    background:"rgba(250,247,242,0.8)", border:"1px solid rgba(139,111,71,0.12)",
+                    color:DS.onSurfaceVar, fontSize:"10px", fontFamily:"'DM Sans',sans-serif", fontWeight:500,
+                    letterSpacing:"0.15em", textTransform:"uppercase", padding:"4px 10px",
+                    backdropFilter:"blur(4px)", WebkitBackdropFilter:"blur(4px)" }}>
                     {plant.badge}
                   </div>
 
-                  <div style={{ position:"absolute", bottom:0, left:0, right:0, height:"60px",
-                    background:"linear-gradient(to top, rgba(20,34,30,0.8), transparent)", pointerEvents:"none" }}/>
+                  {plant.stock && (
+                    <div style={{ position:"absolute", bottom:0, left:0, right:0, height:"3px",
+                      background:"rgba(139,111,71,0.08)" }}>
+                      <div style={{ height:"100%", width:plant.stock,
+                        background:`linear-gradient(90deg, ${DS.primary}, ${DS.outline})`,
+                        transition:"width 1s ease 0.3s" }}/>
+                    </div>
+                  )}
                 </div>
 
                 {/* Info */}
-                <div style={{ padding:"24px 28px" }}>
-                  <h4 style={{ fontFamily:"'DM Sans',sans-serif", fontSize:"20px", fontWeight:600, color:DS.onSurface }}>
+                <div style={{ padding:"20px 24px 24px" }}>
+                  <h4 style={{ fontFamily:"'DM Sans',sans-serif", fontSize:"18px", fontWeight:500, color:DS.onSurface, letterSpacing:"-0.01em" }}>
                     {plant.name}
                   </h4>
-                  <div className="flex items-center justify-between mt-3">
-                    <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:"22px", fontWeight:600, color:DS.primary }}>
+                  {plant.careNote && (
+                    <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:"12px", color:DS.onSurfaceVar, marginTop:"6px", lineHeight:1.4 }}>
+                      {plant.careNote}
+                    </p>
+                  )}
+                  <div className="flex items-center justify-between mt-4 pt-3"
+                    style={{ borderTop:"1px solid rgba(139,111,71,0.06)" }}>
+                    <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:"22px", fontWeight:500, color:DS.outline, letterSpacing:"-0.01em" }}>
                       {plant.priceDisplay}
                     </span>
                     <MagneticBtn
-                      className="flex items-center gap-2"
-                      style={{ background:DS.primary, color:DS.onPrimary, padding:"10px 20px",
-                        fontSize:"12px", fontFamily:"'DM Sans',sans-serif", fontWeight:700, letterSpacing:"0.08em",
-                        flexShrink:0 }}
+                      className="flex items-center justify-center"
+                      style={{ background:"none", border:"1px solid rgba(139,111,71,0.12)", color:DS.primary, 
+                        padding:"10px 20px", borderRadius:"20px",
+                        fontSize:"11px", fontFamily:"'DM Sans',sans-serif", fontWeight:600, letterSpacing:"0.08em",
+                        flexShrink:0, transition:"all 0.25s ease" }}
                       onClick={(e) => { e.stopPropagation(); onAddToCart(plant, e); }}
                       aria-label={`Add ${plant.name} to cart`}
                     >
@@ -1217,25 +1232,43 @@ function NewArrivalsSection({ onSelectPlant, onAddToCart }) {
         <div className="md:col-span-6 new-wide-card">
           <TiltCard intensity={8} onClick={() => onSelectPlant(newArrivals[0])}
             style={{ ...glass, overflow:"hidden", display:"flex", flexDirection:"column", height:"100%" }}>
-            <div style={{ height:"280px", position:"relative", overflow:"hidden" }}>
+            <div style={{ height:"280px", position:"relative", overflow:"hidden",
+              background:"linear-gradient(135deg,rgba(255,255,255,0.96) 0%,rgba(250,247,242,0.92) 100%)" }}>
               <img src={newArrivals[0].image} alt={newArrivals[0].name}
                 style={{ width:"100%", height:"100%", objectFit:"contain", objectPosition:"center",
                   padding:"32px", animation:"plantFloat 6s ease-in-out infinite",
                   filter:"drop-shadow(0 10px 20px rgba(74,122,69,0.12))" }}/>
               <div style={{ position:"absolute", top:"16px", left:"16px",
-                background:"rgba(78,222,163,0.15)", border:"1px solid rgba(78,222,163,0.3)",
-                color:DS.primary, fontSize:"10px", fontFamily:"'DM Sans',sans-serif", fontWeight:600,
-                letterSpacing:"0.15em", textTransform:"uppercase", padding:"4px 10px" }}>
+                background:"rgba(250,247,242,0.8)", border:"1px solid rgba(139,111,71,0.12)",
+                color:DS.onSurfaceVar, fontSize:"10px", fontFamily:"'DM Sans',sans-serif", fontWeight:500,
+                letterSpacing:"0.15em", textTransform:"uppercase", padding:"4px 10px",
+                backdropFilter:"blur(4px)", WebkitBackdropFilter:"blur(4px)" }}>
                 {newArrivals[0].badge}
               </div>
+              {newArrivals[0].stock && (
+                <div style={{ position:"absolute", bottom:0, left:0, right:0, height:"3px",
+                  background:"rgba(139,111,71,0.08)" }}>
+                  <div style={{ height:"100%", width:newArrivals[0].stock,
+                    background:`linear-gradient(90deg, ${DS.primary}, ${DS.outline})` }}/>
+                </div>
+              )}
             </div>
-            <div style={{ padding:"28px" }}>
-              <h4 style={{ fontFamily:"'DM Sans',sans-serif", fontSize:"22px", fontWeight:600, color:DS.onSurface }}>{newArrivals[0].name}</h4>
-              <div className="flex items-center justify-between mt-3">
-                <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:"22px", fontWeight:600, color:DS.primary }}>{newArrivals[0].priceDisplay}</span>
-                <MagneticBtn style={{ ...glass, color:DS.primary, padding:"10px 20px", fontSize:"12px", fontFamily:"'DM Sans',sans-serif", fontWeight:600, letterSpacing:"0.08em" }}
+            <div style={{ padding:"24px 28px 28px" }}>
+              <h4 style={{ fontFamily:"'DM Sans',sans-serif", fontSize:"20px", fontWeight:500, color:DS.onSurface, letterSpacing:"-0.01em" }}>{newArrivals[0].name}</h4>
+              {newArrivals[0].careNote && (
+                <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:"12px", color:DS.onSurfaceVar, marginTop:"6px", lineHeight:1.4 }}>
+                  {newArrivals[0].careNote}
+                </p>
+              )}
+              <div className="flex items-center justify-between mt-4 pt-3"
+                style={{ borderTop:"1px solid rgba(139,111,71,0.06)" }}>
+                <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:"22px", fontWeight:500, color:DS.outline, letterSpacing:"-0.01em" }}>{newArrivals[0].priceDisplay}</span>
+                <MagneticBtn
+                  style={{ background:"none", border:"1px solid rgba(139,111,71,0.12)", color:DS.primary,
+                    padding:"10px 20px", borderRadius:"20px",
+                    fontSize:"11px", fontFamily:"'DM Sans',sans-serif", fontWeight:600, letterSpacing:"0.08em" }}
                   onClick={(e) => { e.stopPropagation(); onAddToCart(newArrivals[0], e); }}>
-                  ADD TO CART
+                  ADD
                 </MagneticBtn>
               </div>
             </div>
@@ -1247,24 +1280,30 @@ function NewArrivalsSection({ onSelectPlant, onAddToCart }) {
           {newArrivals.slice(1).map((plant, i) => (
             <div key={plant.id} className="new-small-card flex-1">
               <TiltCard intensity={12} onClick={() => onSelectPlant(plant)}
-                style={{ ...glass, display:"flex", alignItems:"center", gap:"24px", padding:"28px", height:"100%" }}>
+                style={{ ...glass, display:"flex", alignItems:"center", gap:"20px", padding:"24px", height:"100%" }}>
                 <div style={{ position:"relative", flexShrink:0, animation:`plantFloat ${5+i}s ease-in-out ${i*0.6}s infinite` }}>
                   <img src={plant.image} alt={plant.name}
-                    style={{ width:"110px", height:"110px", objectFit:"contain",
+                    style={{ width:"100px", height:"100px", objectFit:"contain",
                       filter:"drop-shadow(0 4px 12px rgba(74,122,69,0.1))" }}/>
                 </div>
                 <div style={{ flex:1 }}>
-                  <div style={{ background:"rgba(78,222,163,0.12)", border:"1px solid rgba(78,222,163,0.25)",
-                    color:DS.primary, fontSize:"10px", fontFamily:"'DM Sans',sans-serif", fontWeight:600,
+                  <div style={{ background:"rgba(250,247,242,0.8)", border:"1px solid rgba(139,111,71,0.12)",
+                    color:DS.onSurfaceVar, fontSize:"10px", fontFamily:"'DM Sans',sans-serif", fontWeight:500,
                     letterSpacing:"0.15em", textTransform:"uppercase", padding:"3px 8px", display:"inline-block", marginBottom:"8px" }}>
                     {plant.badge}
                   </div>
-                  <h4 style={{ fontFamily:"'DM Sans',sans-serif", fontSize:"18px", fontWeight:600, color:DS.onSurface }}>{plant.name}</h4>
-                  <div className="flex items-center justify-between mt-2">
-                    <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:"20px", fontWeight:600, color:DS.primary }}>{plant.priceDisplay}</span>
+                  <h4 style={{ fontFamily:"'DM Sans',sans-serif", fontSize:"16px", fontWeight:500, color:DS.onSurface, letterSpacing:"-0.01em" }}>{plant.name}</h4>
+                  {plant.careNote && (
+                    <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:"11px", color:DS.onSurfaceVar, marginTop:"4px", lineHeight:1.4, opacity:0.7 }}>
+                      {plant.careNote}
+                    </p>
+                  )}
+                  <div className="flex items-center justify-between mt-3 pt-2"
+                    style={{ borderTop:"1px solid rgba(139,111,71,0.06)" }}>
+                    <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:"18px", fontWeight:500, color:DS.outline }}>{plant.priceDisplay}</span>
                     <MagneticBtn
-                      style={{ background:"rgba(78,222,163,0.1)", border:`1px solid rgba(78,222,163,0.25)`,
-                        color:DS.primary, padding:"8px 16px", fontSize:"11px", fontFamily:"'DM Sans',sans-serif",
+                      style={{ background:"none", border:"1px solid rgba(139,111,71,0.12)", color:DS.primary,
+                        padding:"6px 14px", borderRadius:"20px", fontSize:"10px", fontFamily:"'DM Sans',sans-serif",
                         fontWeight:600, letterSpacing:"0.08em" }}
                       onClick={(e) => { e.stopPropagation(); onAddToCart(plant, e); }}>
                       ADD
