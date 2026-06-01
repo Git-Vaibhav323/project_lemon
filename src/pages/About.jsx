@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import mainLogo from "../assets/plants/mainlog.png";
+import WindyLeaves from "../components/WindyLeaves";
+import BotanicGrid from "../components/BotanicGrid";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -330,7 +332,9 @@ export default function About() {
           {/* ── CTA ── */}
           <div className="about-cta-section about-card rounded-[28px] overflow-hidden relative"
             style={{ background: "#1B4332", border: "1px solid rgba(74,122,69,0.2)" }}>
-            <div className="absolute inset-0 pointer-events-none">
+            <WindyLeaves opacity={0.6} />
+            <BotanicGrid />
+            <div className="absolute inset-0 pointer-events-none" style={{ zIndex:2 }}>
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[200px]"
                 style={{ background: "radial-gradient(ellipse, rgba(74,122,69,0.25) 0%, transparent 70%)", filter: "blur(40px)" }} />
               {/* Decorative dots */}

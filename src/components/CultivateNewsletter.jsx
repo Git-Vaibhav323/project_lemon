@@ -1,5 +1,7 @@
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
+import WindyLeaves from "./WindyLeaves";
+import BotanicGrid from "./BotanicGrid";
 
 export default function CultivateNewsletter() {
   const sectionRef = useRef(null);
@@ -34,7 +36,10 @@ export default function CultivateNewsletter() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="px-4 sm:px-6 lg:px-10 py-14 sm:py-16 lg:py-20 max-w-7xl mx-auto relative z-10">
+    <section ref={sectionRef} className="px-4 sm:px-6 lg:px-10 py-14 sm:py-16 lg:py-20 max-w-7xl mx-auto relative overflow-hidden">
+      <WindyLeaves />
+      <BotanicGrid />
+      <div className="relative z-10">
       <div
         className="cultivate-panel rounded-[20px] p-8 sm:p-12 lg:p-[60px] lg:px-[80px] flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 lg:gap-12"
         style={{
@@ -83,6 +88,7 @@ export default function CultivateNewsletter() {
             Join the journal
           </button>
         </form>
+      </div>
       </div>
     </section>
   );

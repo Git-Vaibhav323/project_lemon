@@ -5,6 +5,8 @@ gsap.registerPlugin(ScrollTrigger);
 import PlantDetail from "../components/PlantDetail";
 import CartModal from "../components/CartModal";
 import AiScanner from "../components/AiScanner";
+import WindyLeaves from "../components/WindyLeaves";
+import BotanicGrid from "../components/BotanicGrid";
 import useCustomCursor from "../hooks/useCustomCursor";
 import BrandLogo from "../components/ui/BrandLogo";
 import mainLogo from "../assets/plants/mainlog.png";
@@ -1351,12 +1353,14 @@ function NewsletterSection() {
   };
 
   return (
-    <section ref={sectionRef} style={{
+    <section ref={sectionRef} className="relative overflow-hidden" style={{
       padding:"80px 64px", background:DS.surfaceContLo,
       borderTop:`1px solid rgba(60,74,66,0.1)`, borderBottom:`1px solid rgba(60,74,66,0.1)`,
     }}>
+      <WindyLeaves />
+      <BotanicGrid />
       <div className="newsletter-content max-w-screen-xl mx-auto text-center space-y-12"
-        style={{ maxWidth:"1280px" }}>
+        style={{ maxWidth:"1280px", position:"relative", zIndex:1 }}>
         <div className="max-w-2xl mx-auto space-y-4">
           <h2 style={{ fontFamily:"'DM Sans',sans-serif", fontSize:"40px", fontWeight:600, letterSpacing:"-0.01em", color:DS.onSurface }}>
             Join the Conservancy

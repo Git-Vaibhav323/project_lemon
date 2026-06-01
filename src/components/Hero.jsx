@@ -30,6 +30,12 @@ export default function Hero() {
     spans.forEach((span, i) => {
       span.style.animationDelay = `${0.12 + i * 0.18}s`;
     });
+
+    // Reveal stat pills after headline animation
+    const stats = el.querySelector(".hero-stats");
+    if (stats) {
+      setTimeout(() => stats.classList.add("revealed"), 800);
+    }
   }, []);
 
   // GSAP Canvas Sequence
@@ -172,6 +178,37 @@ export default function Hero() {
             >
               Every botanical specimen in our collection is hand-selected and nurtured to bring living beauty into your home. Because every leaf tells a story worth keeping.
             </p>
+
+            {/* Decorative rule + stat pills */}
+            <div className="hero-stats" style={{ position:"relative", zIndex:2 }}>
+              <hr style={{ width:"40px", border:"none", borderTop:"1px solid rgba(80,120,50,0.2)", margin:"0 auto 24px" }} />
+              <div className="flex flex-row items-center justify-center" style={{ gap:"2px" }}>
+                {[
+                  { label:"Rare specimens", value:"240+" },
+                  { label:"Countries sourced", value:"38" },
+                  { label:"Years cultivating", value:"12" },
+                ].map((s, i) => (
+                  <div
+                    key={s.label}
+                    style={{
+                      display:"flex", flexDirection:"column", alignItems:"center",
+                      background:"rgba(255,255,255,0.45)", backdropFilter:"blur(8px)",
+                      WebkitBackdropFilter:"blur(8px)",
+                      border:"0.5px solid rgba(100,140,70,0.2)",
+                      borderRadius:"999px", padding:"10px 28px",
+                      borderRight: i < 2 ? "0.5px solid rgba(100,140,70,0.2)" : "0.5px solid transparent",
+                    }}
+                  >
+                    <span style={{ color:"#6b7c5a", fontSize:"10px", letterSpacing:"0.08em", textTransform:"uppercase", fontWeight:500 }}>
+                      {s.label}
+                    </span>
+                    <span style={{ color:"#1e2e18", fontSize:"22px", fontWeight:600 }}>
+                      {s.value}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
 
             {/* CTA Buttons */}
             <div className="flex flex-wrap items-center gap-4">
