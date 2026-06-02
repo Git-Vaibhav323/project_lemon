@@ -150,10 +150,10 @@ export default function Hero() {
                   borderRight: i < 2 ? "0.5px solid rgba(100,140,70,0.2)" : "0.5px solid transparent",
                 }}
               >
-                <span style={{ color:"#6b7c5a", fontSize:"10px", letterSpacing:"0.08em", textTransform:"uppercase", fontWeight:500 }}>
+                <span style={{ color:"#d4e8c2", fontSize:"10px", letterSpacing:"0.08em", textTransform:"uppercase", fontWeight:500 }}>
                   {s.label}
                 </span>
-                <span style={{ color:"#1e2e18", fontSize:"22px", fontWeight:600 }}>
+                <span style={{ color:"#ffffff", fontSize:"22px", fontWeight:600 }}>
                   {s.value}
                 </span>
               </div>

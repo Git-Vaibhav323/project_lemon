@@ -1448,17 +1448,22 @@ function ShopFooter() {
 // ──────────────────────────────────────────────────────────────────────────────
 function FAB({ onClick }) {
   return (
-    <MagneticBtn
-      onClick={onClick}
-      className="fixed bottom-10 right-10 w-16 h-16 rounded-full flex items-center justify-center z-[60]"
-      style={{ background:DS.primary, color:DS.onPrimary, boxShadow:"0 8px 32px rgba(78,222,163,0.45)", flexShrink:0 }}
-      strength={0.5} aria-label="AI Plant Scanner"
-    >
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-        <path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2" />
-        <circle cx="12" cy="12" r="3" />
-      </svg>
-    </MagneticBtn>
+    <div className="fixed bottom-10 right-10 z-[60] flex flex-col items-end">
+      <div className="mb-3 mr-2 px-3 py-2 bg-[#4CAF50] text-white text-xs font-semibold rounded-lg shadow-lg animate-bounce pointer-events-none relative before:content-[''] before:absolute before:-bottom-2 before:right-6 before:border-[6px] before:border-transparent before:border-t-[#4CAF50]">
+        Try our AI Scanner!
+      </div>
+      <MagneticBtn
+        onClick={onClick}
+        className="w-16 h-16 rounded-full flex items-center justify-center"
+        style={{ background:DS.primary, color:DS.onPrimary, boxShadow:"0 8px 32px rgba(78,222,163,0.45)", flexShrink:0 }}
+        strength={0.5} aria-label="AI Plant Scanner"
+      >
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+          <path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2" />
+          <circle cx="12" cy="12" r="3" />
+        </svg>
+      </MagneticBtn>
+    </div>
   );
 }
 

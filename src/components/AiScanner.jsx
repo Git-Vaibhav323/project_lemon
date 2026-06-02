@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { GoogleGenAI } from "@google/genai";
 
 export default function AiScanner({ onClose }) {
@@ -11,7 +11,16 @@ export default function AiScanner({ onClose }) {
   const streamRef = useRef(null);
 
   // Hardcoded key as requested
-  const apiKey = "AIzaSyBFnUpSqHLymTVgScM5CcS8K_95eQG37cg";
+  const apiKey = import.meta.env.VITE_AI_API_KEY || "AIzaSyBFnUpSqHLymTVgScM5CcS8K_95eQG37cg";
+
+  useEffect(() => {
+    startCamera();
+    return () => {
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => track.stop());
+      }
+    };
+  }, []);
 
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {

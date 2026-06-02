@@ -50,22 +50,6 @@ export default function Footer() {
             <p className="text-brand-dark/50 text-xs sm:text-sm leading-relaxed max-w-xs" style={{ fontFamily: "'DM Sans', sans-serif" }}>
               Thoughtfully curated plants for real homes. We make it easy to bring living greenery into your space — and actually keep it thriving.
             </p>
-            <div className="flex gap-5 mt-6">
-              {[
-                { label: "Facebook", abbr: "FB" },
-                { label: "Twitter", abbr: "TW" },
-                { label: "LinkedIn", abbr: "Li" },
-              ].map((s) => (
-                <a
-                  key={s.abbr}
-                  href="#"
-                  className="text-brand-dark/45 text-xs font-semibold hover:text-brand-dark transition-colors duration-300"
-                  aria-label={s.label}
-                >
-                  {s.abbr}
-                </a>
-              ))}
-            </div>
           </div>
 
           {/* Quick Links */}
@@ -116,8 +100,24 @@ export default function Footer() {
         </div>
 
         {/* Copyright & Admin Link */}
-        <div className="footer-bottom border-t border-brand-bark/10 pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-brand-dark/35 text-xs sm:text-sm text-center sm:text-left" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+        <div className="footer-bottom border-t border-brand-bark/10 pt-6 sm:pt-8 flex flex-col justify-center items-center gap-4">
+          <div className="flex gap-5 mb-2">
+            {[
+              { label: "Facebook", abbr: "FB" },
+              { label: "Twitter", abbr: "TW" },
+              { label: "LinkedIn", abbr: "Li" },
+            ].map((s) => (
+              <a
+                key={s.abbr}
+                href="#"
+                className="text-brand-dark/45 text-xs font-semibold hover:text-brand-dark transition-colors duration-300"
+                aria-label={s.label}
+              >
+                {s.abbr}
+              </a>
+            ))}
+          </div>
+          <p className="text-brand-dark/50 text-xs sm:text-sm text-center" style={{ fontFamily: "'DM Sans', sans-serif" }}>
             &copy; 2025 Planto. All rights reserved.
           </p>
           <a 

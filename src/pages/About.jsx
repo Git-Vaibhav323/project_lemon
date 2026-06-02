@@ -275,10 +275,10 @@ export default function About() {
                   onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(74,122,69,0.08)"; e.currentTarget.style.borderColor = "rgba(74,122,69,0.18)"; }}
                   onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(74,122,69,0.04)"; e.currentTarget.style.borderColor = "rgba(74,122,69,0.09)"; }}>
                   <div className="text-xl mb-3 select-none">{val.icon}</div>
-                  <h3 style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "14px", fontWeight: 600, color: "#1B4332", letterSpacing: "-0.01em", marginBottom: "6px" }}>
+                  <h3 style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "15px", fontWeight: 700, color: "#1B4332", letterSpacing: "-0.01em", marginBottom: "6px" }}>
                     {val.title}
                   </h3>
-                  <p style={{ color: "rgba(45,36,22,0.55)", fontSize: "14px", lineHeight: "1.75" }}>{val.desc}</p>
+                  <p style={{ color: "#2d2416", fontSize: "14px", lineHeight: "1.75", fontWeight: 500 }}>{val.desc}</p>
                 </div>
               ))}
             </div>
