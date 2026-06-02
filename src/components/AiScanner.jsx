@@ -22,6 +22,12 @@ export default function AiScanner({ onClose }) {
     };
   }, []);
 
+  useEffect(() => {
+    if (isCameraActive && videoRef.current && streamRef.current) {
+      videoRef.current.srcObject = streamRef.current;
+    }
+  }, [isCameraActive]);
+
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
@@ -42,9 +48,6 @@ export default function AiScanner({ onClose }) {
         video: { facingMode: "environment" } 
       });
       streamRef.current = stream;
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-      }
       setIsCameraActive(true);
     } catch (err) {
       console.error("Camera error:", err);
@@ -79,12 +82,6 @@ export default function AiScanner({ onClose }) {
   };
 
   const handleScan = async () => {
-    const scanCount = parseInt(sessionStorage.getItem("ai_scan_count") || "0", 10);
-    if (scanCount >= 2) {
-      alert("You have reached the maximum limit of 2 scans per visit.");
-      return;
-    }
-
     if (!image) {
       alert("Please upload an image first.");
       return;
@@ -94,7 +91,6 @@ export default function AiScanner({ onClose }) {
     setResult("");
 
     try {
-      sessionStorage.setItem("ai_scan_count", (scanCount + 1).toString());
       const ai = new GoogleGenAI({ apiKey });
       const base64Image = image.split(",")[1];
       

@@ -64,7 +64,7 @@ export default function Contact() {
 
   return (
     <section id="contact" ref={sectionRef} className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      <div className="max-w-lg mx-auto">
+      <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <span className="contact-header inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.25em] uppercase mb-5 px-4 py-1.5 rounded-full"
             style={{ color: "#4a7a45", background: "rgba(74,122,69,0.08)", border: "1px solid rgba(74,122,69,0.15)" }}>
@@ -80,36 +80,38 @@ export default function Contact() {
 
         <div className="contact-form-container glass rounded-2xl p-6 sm:p-8 lg:p-10">
           <form onSubmit={handleSubmit} className="contact-form space-y-6">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-brand-dark/75 mb-2">
-                Your Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3 rounded-xl bg-brand-sand/50 border border-brand-bark/12 text-brand-dark placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary transition-all"
-                placeholder="John Doe"
-              />
-            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-brand-dark/75 mb-2">
+                  Your Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 rounded-xl bg-brand-sand/50 border border-brand-bark/12 text-brand-dark placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary transition-all"
+                  placeholder="John Doe"
+                />
+              </div>
 
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-brand-dark/75 mb-2">
-                Email Address
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3 rounded-xl bg-brand-sand/50 border border-brand-bark/12 text-brand-dark placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary transition-all"
-                placeholder="john@example.com"
-              />
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-brand-dark/75 mb-2">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 rounded-xl bg-brand-sand/50 border border-brand-bark/12 text-brand-dark placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary transition-all"
+                  placeholder="john@example.com"
+                />
+              </div>
             </div>
 
             <div>
@@ -122,7 +124,7 @@ export default function Contact() {
                 value={formData.message}
                 onChange={handleChange}
                 required
-                rows="5"
+                rows="4"
                 className="w-full px-4 py-3 rounded-xl bg-brand-sand/50 border border-brand-bark/12 text-brand-dark placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary transition-all resize-none"
                 placeholder="Tell us about your plant needs..."
               />
