@@ -48,8 +48,8 @@ export default function CartModal({ cartItems, onClose, onCheckoutSuccess }) {
 
     try {
       const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || "service_3i86esl";
-      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "template_order";
-      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "your_public_key";
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "template_3tptqsd";
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "qvwnHWkmEVPkinND1";
 
       await emailjs.send(
         serviceId,
