@@ -18,7 +18,7 @@ export default function CartModal({ cartItems, onClose, onCheckoutSuccess, onRem
   const generateAndSendEmail = async () => {
     try {
       const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || "service_3i86esl";
-      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "template_3tptqsd";
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "template_y13ccep";
       const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "qvwnHWkmEVPkinND1";
 
       await emailjs.send(
