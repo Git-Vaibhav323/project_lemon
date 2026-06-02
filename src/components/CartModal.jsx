@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { supabase } from "../lib/supabaseClient";
 import jsPDF from "jspdf";
-import "jspdf-autotable";
+import autoTable from "jspdf-autotable";
 import html2canvas from "html2canvas";
 import emailjs from "@emailjs/browser";
 
@@ -34,7 +34,7 @@ export default function CartModal({ cartItems, onClose, onCheckoutSuccess }) {
       `$${(item.price * (item.quantity || 1)).toFixed(2)}`
     ]);
     
-    doc.autoTable({
+    autoTable(doc, {
       startY: 60,
       head: [['Item', 'Qty', 'Price']],
       body: tableData,

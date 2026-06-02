@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { supabase } from "../lib/supabaseClient";
 import gsap from "gsap";
 import jsPDF from "jspdf";
-import "jspdf-autotable";
+import autoTable from "jspdf-autotable";
 
 export default function Admin() {
   const [purchases, setPurchases] = useState([]);
@@ -114,7 +114,7 @@ export default function Admin() {
       `$${(p.price * p.quantity).toFixed(2)}`
     ]);
 
-    doc.autoTable({
+    autoTable(doc, {
       startY: 30,
       head: [['Date', 'Customer', 'Email', 'Phone', 'Plant', 'Qty', 'Total']],
       body: tableData,
