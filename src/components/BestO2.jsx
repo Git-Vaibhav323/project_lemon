@@ -83,8 +83,8 @@ export default function BestO2() {
   }, []);
 
   return (
-    <section id="more" ref={sectionRef} className="px-4 sm:px-6 lg:px-10 py-14 sm:py-16 lg:py-30 max-w-7xl mx-auto">
-      <div>
+    <section id="more" className="relative z-10 overflow-hidden">
+      <div ref={sectionRef} className="px-4 sm:px-6 lg:px-10 py-14 sm:py-16 lg:py-30 max-w-7xl mx-auto">
 
         <div className="besto2-header flex justify-center mb-10 sm:mb-12">
           <SectionTitle>Breathe Easy: Our Top O2 Purifiers</SectionTitle>

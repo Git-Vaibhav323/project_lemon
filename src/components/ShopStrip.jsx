@@ -1,7 +1,6 @@
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import WindyLeaves from "./WindyLeaves";
-import BotanicGrid from "./BotanicGrid";
 
 export default function ShopStrip() {
   const sectionRef = useRef(null);
@@ -26,7 +25,6 @@ export default function ShopStrip() {
   return (
     <section ref={sectionRef} className="relative w-full py-16 sm:py-20 overflow-hidden">
       <WindyLeaves leafCount={8} scrollEffect={false} />
-      <BotanicGrid />
       <div className="absolute inset-0 bg-gradient-to-r from-brand-sand via-brand-glow/30 to-brand-sand" style={{ zIndex:0 }} />
       <div
         className="absolute inset-0 opacity-[0.04]"

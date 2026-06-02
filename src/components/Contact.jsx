@@ -63,7 +63,7 @@ export default function Contact() {
   }, []);
 
   return (
-    <section id="contact" ref={sectionRef} className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
+    <section id="contact" ref={sectionRef} className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <span className="contact-header inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.25em] uppercase mb-5 px-4 py-1.5 rounded-full"

@@ -274,9 +274,13 @@ export default function TopSelling() {
   return (
     <section
       id="collection"
-      ref={sectionRef}
-      className="px-4 sm:px-6 lg:px-10 py-14 sm:py-16 lg:py-20 max-w-7xl mx-auto relative z-10"
+      className="relative z-10 overflow-hidden"
+      style={{ backgroundColor: "#f5f2eb" }}
     >
+      <div
+        ref={sectionRef}
+        className="px-4 sm:px-6 lg:px-10 py-14 sm:py-16 lg:py-20 max-w-7xl mx-auto"
+      >
       <h2 className="top-selling-header text-brand-dark text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-10 sm:mb-12 tracking-tight">
         Our Top Selling
       </h2>
@@ -315,6 +319,7 @@ export default function TopSelling() {
           </button>
         </div>
       )}
+      </div>
     </section>
   );
 }

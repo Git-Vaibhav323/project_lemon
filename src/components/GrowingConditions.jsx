@@ -64,7 +64,7 @@ export default function GrowingConditions() {
   }, []);
 
   return (
-    <section id="care" ref={sectionRef} className="px-4 sm:px-6 lg:px-10 py-14 sm:py-16 lg:py-20 max-w-4xl mx-auto relative z-10">
+    <section id="care" ref={sectionRef} className="px-4 sm:px-6 lg:px-10 py-14 sm:py-16 lg:py-20 max-w-4xl mx-auto relative z-10 overflow-hidden" style={{ backgroundColor: "#f5f2ec" }}>
       <div className="gc-header text-center mb-10 sm:mb-12">
         <span className="inline-block text-[11px] font-semibold tracking-[0.25em] uppercase mb-3 px-3 py-1 rounded-full"
           style={{ color: "#4a7a45", background: "rgba(74,122,69,0.08)", border: "1px solid rgba(74,122,69,0.15)" }}>
