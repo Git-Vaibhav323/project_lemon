@@ -14,6 +14,9 @@ export default function AiScanner({ onClose }) {
   const apiKey = import.meta.env.VITE_AI_API_KEY;
 
   useEffect(() => {
+    if (!apiKey) {
+      console.error("VITE_AI_API_KEY is undefined. Did you restart the Vite server?");
+    }
     startCamera();
     return () => {
       if (streamRef.current) {
@@ -84,6 +87,11 @@ export default function AiScanner({ onClose }) {
   const handleScan = async () => {
     if (!image) {
       alert("Please upload an image first.");
+      return;
+    }
+
+    if (!apiKey) {
+      alert("API key is missing! Please make sure VITE_AI_API_KEY is set in your .env file and restart your 'npm run dev' server.");
       return;
     }
 
