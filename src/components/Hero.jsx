@@ -1,10 +1,13 @@
 import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import plant1 from "../assets/plants/1.png";
-import bgVideo from "../assets/hero-bg.mp4";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero() {
   const wrapperRef = useRef(null);
-  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
 
   // Animate headline words
   useEffect(() => {
@@ -30,18 +33,86 @@ export default function Hero() {
     }
   }, []);
 
-  // Scroll-based scale effect on video
+  // Scroll-based canvas animation
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const scale = 1 + Math.min(scrollY / 400, 1) * 0.15;
-      if (videoRef.current) {
-        videoRef.current.style.transform = `scale(${scale})`;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const context = canvas.getContext("2d");
+
+    // Set canvas size
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const frameCount = 300;
+    const currentFrame = (index) =>
+      `/ezgif-4/ezgif-frame-${(index + 1).toString().padStart(3, "0")}.jpg`;
+
+    const images = [];
+    const seq = { frame: 0 };
+
+    for (let i = 0; i < frameCount; i++) {
+      const img = new Image();
+      img.src = currentFrame(i);
+      images.push(img);
+    }
+
+    const render = () => {
+      const img = images[seq.frame];
+      if (img && img.complete) {
+        // Draw image covering the canvas (object-fit: cover equivalent)
+        const hRatio = canvas.width / img.width;
+        const vRatio = canvas.height / img.height;
+        const ratio = Math.max(hRatio, vRatio);
+        const centerShift_x = (canvas.width - img.width * ratio) / 2;
+        const centerShift_y = (canvas.height - img.height * ratio) / 2;
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(
+          img,
+          0,
+          0,
+          img.width,
+          img.height,
+          centerShift_x,
+          centerShift_y,
+          img.width * ratio,
+          img.height * ratio
+        );
       }
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    images[0].onload = render;
+
+    // Handle resize
+    const handleResize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      render();
+    };
+    window.addEventListener("resize", handleResize);
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: wrapperRef.current,
+        start: "top top",
+        end: "+=250%", // How long the scroll effect lasts
+        pin: true,
+        scrub: 0.5,
+      },
+    });
+
+    tl.to(seq, {
+      frame: frameCount - 1,
+      snap: "frame",
+      ease: "none",
+      onUpdate: render,
+    });
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      tl.kill();
+      // Clean up all scroll triggers created by this component
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+    };
   }, []);
 
   return (
@@ -50,16 +121,10 @@ export default function Hero() {
       className="relative w-full h-screen overflow-hidden"
       ref={wrapperRef}
     >
-      {/* Video background */}
-      <video
-        ref={videoRef}
-        src={bgVideo}
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        className="absolute top-0 left-0 w-full h-full object-cover"
+      {/* Canvas background replacing video */}
+      <canvas
+        ref={canvasRef}
+        className="absolute top-0 left-0 w-full h-full"
         style={{ zIndex: 0 }}
       />
 
