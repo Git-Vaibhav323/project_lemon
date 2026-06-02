@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { supabase } from "../lib/supabaseClient";
 import gsap from "gsap";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 export default function Admin() {
   const [purchases, setPurchases] = useState([]);
@@ -96,6 +98,33 @@ export default function Admin() {
     }
   };
 
+  const downloadAllOrdersPDF = () => {
+    const doc = new jsPDF();
+    doc.setFontSize(22);
+    doc.setTextColor(74, 122, 69);
+    doc.text("Planto - All Orders", 14, 22);
+    
+    const tableData = purchases.map(p => [
+      new Date(p.created_at).toLocaleDateString(),
+      p.customer_name,
+      p.customer_email || "N/A",
+      p.customer_phone || "N/A",
+      p.plant_name,
+      p.quantity,
+      `$${(p.price * p.quantity).toFixed(2)}`
+    ]);
+
+    doc.autoTable({
+      startY: 30,
+      head: [['Date', 'Customer', 'Email', 'Phone', 'Plant', 'Qty', 'Total']],
+      body: tableData,
+      theme: 'grid',
+      headStyles: { fillColor: [74, 122, 69] },
+    });
+
+    doc.save("Planto_All_Orders.pdf");
+  };
+
   const totalRevenue = purchases.reduce((sum, p) => sum + (p.price * p.quantity), 0);
   const totalOrders = purchases.length;
   const itemsSold = purchases.reduce((sum, p) => sum + p.quantity, 0);
@@ -155,9 +184,14 @@ export default function Admin() {
             <h1 className="text-4xl sm:text-5xl font-bold text-brand-moss mb-2 tracking-tight">Admin Dashboard</h1>
             <p className="text-gray-400">Overview of your store's performance and recent orders.</p>
           </div>
-          <button onClick={() => window.location.hash = "#home"} className="px-6 py-2 bg-white/5 hover:bg-white/10 rounded-full text-sm font-medium transition-colors border border-brand-bark/12">
-            Back to Store
-          </button>
+          <div className="flex gap-3">
+            <button onClick={downloadAllOrdersPDF} className="px-6 py-2 bg-brand-moss text-white hover:bg-brand-moss/90 rounded-full text-sm font-medium transition-colors shadow-lg">
+              Download PDF
+            </button>
+            <button onClick={() => window.location.hash = "#home"} className="px-6 py-2 bg-white/5 hover:bg-white/10 rounded-full text-sm font-medium transition-colors border border-brand-bark/12">
+              Back to Store
+            </button>
+          </div>
         </div>
         
         {/* Stats Grid */}

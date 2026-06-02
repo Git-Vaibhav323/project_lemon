@@ -96,7 +96,7 @@ function CareIcon({ type }) {
   return null;
 }
 
-export default function PlantDetail({ plant, onClose }) {
+export default function PlantDetail({ plant, onClose, onAddToCart }) {
   const [imgError, setImgError] = useState(false);
   const details = plantDetails[plant.id] || plantDetails[1];
 
@@ -223,6 +223,10 @@ export default function PlantDetail({ plant, onClose }) {
 
             <button
               type="button"
+              onClick={(e) => {
+                onAddToCart(plant, e);
+                onClose(); // Optional: close detail modal after adding
+              }}
               className="mt-auto w-full font-bold py-4 text-sm transition-all duration-300 active:scale-[0.98]"
               style={{
                 background: "#4a7a45",

@@ -1,19 +1,77 @@
 import { useState, useRef } from "react";
 import { supabase } from "../lib/supabaseClient";
 import jsPDF from "jspdf";
+import "jspdf-autotable";
 import html2canvas from "html2canvas";
+import emailjs from "@emailjs/browser";
 
 export default function CartModal({ cartItems, onClose, onCheckoutSuccess }) {
   const [customerName, setCustomerName] = useState("");
+  const [customerEmail, setCustomerEmail] = useState("");
+  const [customerPhone, setCustomerPhone] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const receiptRef = useRef(null);
 
   const total = cartItems.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
 
+  const generateAndSendEmail = async () => {
+    // Generate native lightweight PDF for email attachment to stay under limits
+    const doc = new jsPDF();
+    doc.setFontSize(22);
+    doc.setTextColor(74, 122, 69); // brand-moss
+    doc.text("Planto Receipt", 14, 22);
+    
+    doc.setFontSize(12);
+    doc.setTextColor(45, 36, 22); // brand-dark
+    doc.text(`Customer: ${customerName}`, 14, 34);
+    doc.text(`Email: ${customerEmail}`, 14, 42);
+    doc.text(`Date: ${new Date().toLocaleString()}`, 14, 50);
+    
+    const tableData = cartItems.map(item => [
+      item.name, 
+      (item.quantity || 1).toString(), 
+      `$${(item.price * (item.quantity || 1)).toFixed(2)}`
+    ]);
+    
+    doc.autoTable({
+      startY: 60,
+      head: [['Item', 'Qty', 'Price']],
+      body: tableData,
+      foot: [['Total', '', `$${total.toFixed(2)}`]],
+      headStyles: { fillColor: [74, 122, 69] },
+      footStyles: { fillColor: [242, 237, 227], textColor: [45, 36, 22] },
+    });
+
+    // Get Base64 for EmailJS (datauristring starts with data:application/pdf;base64,...)
+    const pdfBase64 = doc.output('datauristring');
+
+    try {
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || "service_3i86esl";
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "template_order";
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "your_public_key";
+
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          customer_name: customerName,
+          customer_email: customerEmail,
+          order_total: `$${total.toFixed(2)}`,
+          receipt_pdf: pdfBase64, // Must configure emailjs template attachment property
+        },
+        publicKey
+      );
+      console.log("Confirmation email sent!");
+    } catch (err) {
+      console.error("Failed to send email via EmailJS:", err);
+      // We don't fail the checkout if email fails
+    }
+  };
+
   const handleCheckout = async () => {
-    if (!customerName) {
-      alert("Please enter your name");
+    if (!customerName || !customerEmail || !customerPhone) {
+      alert("Please fill in all details (Name, Email, Phone)");
       return;
     }
     setLoading(true);
@@ -21,6 +79,8 @@ export default function CartModal({ cartItems, onClose, onCheckoutSuccess }) {
       // Insert purchases
       const purchases = cartItems.map(item => ({
         customer_name: customerName,
+        customer_email: customerEmail,
+        customer_phone: customerPhone,
         plant_id: item.id,
         plant_name: item.name,
         price: item.price,
@@ -32,6 +92,9 @@ export default function CartModal({ cartItems, onClose, onCheckoutSuccess }) {
       if (error) throw error;
       
       setSuccess(true);
+
+      // Send email in background
+      generateAndSendEmail();
     } catch (err) {
       console.error(err);
       alert("Error during checkout: " + err.message);
@@ -83,9 +146,9 @@ export default function CartModal({ cartItems, onClose, onCheckoutSuccess }) {
               </svg>
             </div>
             <h2 className="text-2xl font-semibold text-brand-moss mb-2">Purchase Successful!</h2>
-            <p className="text-gray-400 mb-8">Thank you for your order, {customerName}.</p>
+            <p className="text-gray-400 mb-8">Thank you for your order, {customerName}. We've sent a receipt to {customerEmail}.</p>
             
-            {/* Hidden Receipt for PDF Generation (rendered off-screen, NOT display:none) */}
+            {/* Hidden Receipt for high-quality local PDF Generation */}
             <div className="absolute top-[-9999px] left-[-9999px]">
               <div ref={receiptRef} className="p-12 bg-white text-brand-dark w-[800px] border border-brand-bark/12 shadow-2xl">
                 <div className="flex justify-between items-end mb-8 border-b border-brand-bark/12 pb-6">
@@ -100,6 +163,7 @@ export default function CartModal({ cartItems, onClose, onCheckoutSuccess }) {
                   <div>
                     <p className="text-gray-400 mb-1">Customer</p>
                     <p className="font-medium text-xl">{customerName}</p>
+                    <p className="text-brand-dark/70 text-base">{customerEmail}</p>
                   </div>
                   <div className="text-right">
                     <p className="text-gray-400 mb-1">Date</p>
@@ -147,7 +211,7 @@ export default function CartModal({ cartItems, onClose, onCheckoutSuccess }) {
                 onClick={handleDownloadPDF}
                 className="w-full bg-white border border-brand-moss text-brand-moss font-bold py-3 rounded-xl hover:bg-brand-moss/10 transition-colors"
               >
-                Download Receipt (PDF)
+                Download Beautiful Receipt
               </button>
               <button 
                 onClick={handleCloseSuccess}
@@ -200,12 +264,32 @@ export default function CartModal({ cartItems, onClose, onCheckoutSuccess }) {
 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-xs text-gray-400 uppercase tracking-wider mb-1">Customer Name</label>
+                    <label className="block text-xs text-gray-400 uppercase tracking-wider mb-1">Full Name</label>
                     <input 
                       type="text" 
                       value={customerName}
                       onChange={(e) => setCustomerName(e.target.value)}
-                      placeholder="Enter your name"
+                      placeholder="John Doe"
+                      className="w-full bg-brand-sand border border-brand-bark/20 rounded px-3 py-2 text-brand-dark focus:border-brand-moss focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-400 uppercase tracking-wider mb-1">Email Address</label>
+                    <input 
+                      type="email" 
+                      value={customerEmail}
+                      onChange={(e) => setCustomerEmail(e.target.value)}
+                      placeholder="john@example.com"
+                      className="w-full bg-brand-sand border border-brand-bark/20 rounded px-3 py-2 text-brand-dark focus:border-brand-moss focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-400 uppercase tracking-wider mb-1">Mobile Number</label>
+                    <input 
+                      type="tel" 
+                      value={customerPhone}
+                      onChange={(e) => setCustomerPhone(e.target.value)}
+                      placeholder="+1 (234) 567-890"
                       className="w-full bg-brand-sand border border-brand-bark/20 rounded px-3 py-2 text-brand-dark focus:border-brand-moss focus:outline-none"
                     />
                   </div>
@@ -213,7 +297,7 @@ export default function CartModal({ cartItems, onClose, onCheckoutSuccess }) {
                   <button 
                     onClick={handleCheckout}
                     disabled={loading}
-                    className="w-full bg-brand-moss text-white font-bold py-3 rounded-xl disabled:opacity-50"
+                    className="w-full bg-brand-moss text-white font-bold py-3 rounded-xl disabled:opacity-50 mt-4"
                   >
                     {loading ? "Preparing your plant..." : "Reserve Your Specimen"}
                   </button>

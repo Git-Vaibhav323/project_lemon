@@ -1702,7 +1702,11 @@ export default function Shop() {
 
       {/* Detail modal */}
       {selectedPlant && (
-        <PlantDetail plant={selectedPlant} onClose={() => setSelectedPlant(null)}/>
+        <PlantDetail 
+          plant={selectedPlant} 
+          onClose={() => setSelectedPlant(null)}
+          onAddToCart={handleAddToCart}
+        />
       )}
 
       {/* Cart modal */}
