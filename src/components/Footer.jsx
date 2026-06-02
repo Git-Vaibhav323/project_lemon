@@ -50,6 +50,23 @@ export default function Footer() {
             <p className="text-brand-dark/50 text-xs sm:text-sm leading-relaxed max-w-xs" style={{ fontFamily: "'DM Sans', sans-serif" }}>
               Thoughtfully curated plants for real homes. We make it easy to bring living greenery into your space — and actually keep it thriving.
             </p>
+            <div className="flex gap-4 mt-6">
+              <a href="#" className="text-brand-dark/45 hover:text-brand-dark transition-colors duration-300" aria-label="Facebook">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                </svg>
+              </a>
+              <a href="#" className="text-brand-dark/45 hover:text-brand-dark transition-colors duration-300" aria-label="Twitter">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                </svg>
+              </a>
+              <a href="#" className="text-brand-dark/45 hover:text-brand-dark transition-colors duration-300" aria-label="LinkedIn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+                </svg>
+              </a>
+            </div>
           </div>
 
           {/* Quick Links */}
@@ -101,22 +118,6 @@ export default function Footer() {
 
         {/* Copyright & Admin Link */}
         <div className="footer-bottom border-t border-brand-bark/10 pt-6 sm:pt-8 flex flex-col justify-center items-center gap-4">
-          <div className="flex gap-5 mb-2">
-            {[
-              { label: "Facebook", abbr: "FB" },
-              { label: "Twitter", abbr: "TW" },
-              { label: "LinkedIn", abbr: "Li" },
-            ].map((s) => (
-              <a
-                key={s.abbr}
-                href="#"
-                className="text-brand-dark/45 text-xs font-semibold hover:text-brand-dark transition-colors duration-300"
-                aria-label={s.label}
-              >
-                {s.abbr}
-              </a>
-            ))}
-          </div>
           <p className="text-brand-dark/50 text-xs sm:text-sm text-center" style={{ fontFamily: "'DM Sans', sans-serif" }}>
             &copy; 2025 Planto. All rights reserved.
           </p>

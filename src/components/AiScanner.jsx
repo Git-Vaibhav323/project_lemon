@@ -10,8 +10,8 @@ export default function AiScanner({ onClose }) {
   const videoRef = useRef(null);
   const streamRef = useRef(null);
 
-  // Hardcoded key as requested
-  const apiKey = import.meta.env.VITE_AI_API_KEY || "AIzaSyBFnUpSqHLymTVgScM5CcS8K_95eQG37cg";
+  // Read API key from environment variable
+  const apiKey = import.meta.env.VITE_AI_API_KEY;
 
   useEffect(() => {
     startCamera();

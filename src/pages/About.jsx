@@ -253,32 +253,32 @@ export default function About() {
 
           {/* ── Card 3: Values ── */}
           <div className="about-card rounded-[28px] overflow-hidden"
-            style={{ background: "#fff", border: "1px solid rgba(45,36,22,0.07)", boxShadow: "0 4px 32px rgba(0,0,0,0.05)" }}>
+            style={{ background: "#1B4332", border: "1px solid rgba(45,36,22,0.07)", boxShadow: "0 4px 32px rgba(0,0,0,0.05)" }}>
             <div className="flex items-center gap-4 px-8 sm:px-12 pt-8 pb-6"
-              style={{ borderBottom: "1px solid rgba(74,122,69,0.08)" }}>
+              style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
               <div className="w-10 h-10 rounded-2xl flex items-center justify-center shrink-0"
-                style={{ background: "rgba(74,122,69,0.08)", border: "1px solid rgba(74,122,69,0.15)", color: "#4a7a45" }}>
+                style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.15)", color: "#d4e8c2" }}>
                 <IconHeart />
               </div>
               <div className="flex-1">
-                <p className="text-[10px] font-semibold tracking-[0.25em] uppercase mb-0.5" style={{ color: "#4a7a45" }}>Chapter 03</p>
-                <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(20px, 2.5vw, 26px)", fontWeight: 600, color: "#1B4332", lineHeight: 1.2 }}>
+                <p className="text-[10px] font-semibold tracking-[0.25em] uppercase mb-0.5" style={{ color: "#d4e8c2" }}>Chapter 03</p>
+                <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(20px, 2.5vw, 26px)", fontWeight: 600, color: "#ffffff", lineHeight: 1.2 }}>
                   What We Stand For
                 </h2>
               </div>
-              <span className="text-[40px] font-black opacity-[0.06] select-none" style={{ color: "#4a7a45", fontFamily: "'DM Sans', sans-serif" }}>03</span>
+              <span className="text-[40px] font-black opacity-[0.06] select-none" style={{ color: "#ffffff", fontFamily: "'DM Sans', sans-serif" }}>03</span>
             </div>
             <div className="about-values-grid grid sm:grid-cols-2 gap-3 px-8 sm:px-12 py-7">
               {values.map((val, idx) => (
                 <div key={idx} className="about-value-card group rounded-2xl p-5 transition-all duration-300 cursor-default"
-                  style={{ background: "rgba(74,122,69,0.04)", border: "1px solid rgba(74,122,69,0.09)" }}
-                  onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(74,122,69,0.08)"; e.currentTarget.style.borderColor = "rgba(74,122,69,0.18)"; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(74,122,69,0.04)"; e.currentTarget.style.borderColor = "rgba(74,122,69,0.09)"; }}>
-                  <div className="text-xl mb-3 select-none">{val.icon}</div>
-                  <h3 style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "15px", fontWeight: 700, color: "#1B4332", letterSpacing: "-0.01em", marginBottom: "6px" }}>
+                  style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.1)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; }}>
+                  <div className="text-xl mb-3 select-none text-white">{val.icon}</div>
+                  <h3 style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "15px", fontWeight: 700, color: "#ffffff", letterSpacing: "-0.01em", marginBottom: "6px" }}>
                     {val.title}
                   </h3>
-                  <p style={{ color: "#2d2416", fontSize: "14px", lineHeight: "1.75", fontWeight: 500 }}>{val.desc}</p>
+                  <p style={{ color: "rgba(255,255,255,0.8)", fontSize: "14px", lineHeight: "1.75", fontWeight: 500 }}>{val.desc}</p>
                 </div>
               ))}
             </div>
@@ -316,13 +316,13 @@ export default function About() {
           <div className="about-stats-row grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
             {stats.map((stat) => (
               <div key={stat.label} className="about-stat rounded-2xl p-6 text-center transition-all duration-300"
-                style={{ background: "#fff", border: "1px solid rgba(74,122,69,0.12)", boxShadow: "0 2px 16px rgba(0,0,0,0.04)" }}
-                onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(74,122,69,0.12)"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 2px 16px rgba(0,0,0,0.04)"; }}>
-                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(28px, 4vw, 38px)", fontWeight: 700, color: "#4a7a45", lineHeight: 1.1, marginBottom: "4px" }}>
+                style={{ background: "#1B4332", border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 2px 16px rgba(0,0,0,0.1)" }}
+                onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.2)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 2px 16px rgba(0,0,0,0.1)"; }}>
+                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(28px, 4vw, 38px)", fontWeight: 700, color: "#ffffff", lineHeight: 1.1, marginBottom: "4px" }}>
                   {stat.number}
                 </div>
-                <div style={{ fontSize: "11px", color: "rgba(45,36,22,0.45)", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase" }}>
+                <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.7)", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase" }}>
                   {stat.label}
                 </div>
               </div>
