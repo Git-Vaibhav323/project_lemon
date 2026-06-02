@@ -16,36 +16,6 @@ export default function CartModal({ cartItems, onClose, onCheckoutSuccess }) {
   const total = cartItems.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
 
   const generateAndSendEmail = async () => {
-    // Generate native lightweight PDF for email attachment to stay under limits
-    const doc = new jsPDF();
-    doc.setFontSize(22);
-    doc.setTextColor(74, 122, 69); // brand-moss
-    doc.text("Planto Receipt", 14, 22);
-    
-    doc.setFontSize(12);
-    doc.setTextColor(45, 36, 22); // brand-dark
-    doc.text(`Customer: ${customerName}`, 14, 34);
-    doc.text(`Email: ${customerEmail}`, 14, 42);
-    doc.text(`Date: ${new Date().toLocaleString()}`, 14, 50);
-    
-    const tableData = cartItems.map(item => [
-      item.name, 
-      (item.quantity || 1).toString(), 
-      `$${(item.price * (item.quantity || 1)).toFixed(2)}`
-    ]);
-    
-    autoTable(doc, {
-      startY: 60,
-      head: [['Item', 'Qty', 'Price']],
-      body: tableData,
-      foot: [['Total', '', `$${total.toFixed(2)}`]],
-      headStyles: { fillColor: [74, 122, 69] },
-      footStyles: { fillColor: [242, 237, 227], textColor: [45, 36, 22] },
-    });
-
-    // Get Base64 for EmailJS (datauristring starts with data:application/pdf;base64,...)
-    const pdfBase64 = doc.output('datauristring');
-
     try {
       const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || "service_3i86esl";
       const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "template_3tptqsd";
@@ -58,11 +28,10 @@ export default function CartModal({ cartItems, onClose, onCheckoutSuccess }) {
           customer_name: customerName,
           customer_email: customerEmail,
           order_total: `$${total.toFixed(2)}`,
-          receipt_pdf: pdfBase64, // Must configure emailjs template attachment property
         },
         publicKey
       );
-      console.log("Confirmation email sent!");
+      console.log("Confirmation email sent without PDF!");
     } catch (err) {
       console.error("Failed to send email via EmailJS:", err);
       // We don't fail the checkout if email fails
