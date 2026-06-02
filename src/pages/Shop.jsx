@@ -1556,6 +1556,16 @@ export default function Shop() {
     setTimeout(() => setCartBump(false), 400);
   }, []);
 
+  const handleRemoveItem = useCallback((plantId) => {
+    setCartItems(prev => {
+      const existing = prev.find(p => p.id === plantId);
+      if (existing && existing.quantity > 1) {
+        return prev.map(p => p.id === plantId ? { ...p, quantity: p.quantity - 1 } : p);
+      }
+      return prev.filter(p => p.id !== plantId);
+    });
+  }, []);
+
   const removeFlyParticle = useCallback((id) => {
     setFlyParticles(prev => prev.filter(p => p.id !== id));
   }, []);
@@ -1713,6 +1723,7 @@ export default function Shop() {
       {isCartOpen && (
         <CartModal 
           cartItems={cartItems} 
+          onRemoveItem={handleRemoveItem}
           onClose={() => setIsCartOpen(false)} 
           onCheckoutSuccess={() => {
             setCartItems([]);

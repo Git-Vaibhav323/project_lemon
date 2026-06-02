@@ -5,7 +5,7 @@ import autoTable from "jspdf-autotable";
 import html2canvas from "html2canvas";
 import emailjs from "@emailjs/browser";
 
-export default function CartModal({ cartItems, onClose, onCheckoutSuccess }) {
+export default function CartModal({ cartItems, onClose, onCheckoutSuccess, onRemoveItem }) {
   const [customerName, setCustomerName] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
@@ -34,7 +34,7 @@ export default function CartModal({ cartItems, onClose, onCheckoutSuccess }) {
       console.log("Confirmation email sent without PDF!");
     } catch (err) {
       console.error("Failed to send email via EmailJS:", err);
-      // We don't fail the checkout if email fails
+      alert("EmailJS Error: " + (err?.text || err?.message || JSON.stringify(err)));
     }
   };
 
@@ -218,7 +218,15 @@ export default function CartModal({ cartItems, onClose, onCheckoutSuccess }) {
                         <img src={item.imageUrl || item.image || item.img} alt={item.name} className="w-12 h-12 object-cover rounded" />
                         <div>
                           <h4 className="text-brand-dark text-sm">{item.name}</h4>
-                          <span className="text-brand-moss text-xs">Qty: {item.quantity || 1}</span>
+                          <div className="flex items-center gap-2 mt-1">
+                            <button 
+                              onClick={() => onRemoveItem(item.id)}
+                              className="w-5 h-5 flex items-center justify-center bg-brand-moss/10 text-brand-moss hover:bg-brand-moss hover:text-white rounded transition-colors text-xs font-bold"
+                            >
+                              -
+                            </button>
+                            <span className="text-brand-moss text-xs font-medium w-4 text-center">{item.quantity || 1}</span>
+                          </div>
                         </div>
                       </div>
                       <span className="text-brand-dark font-bold">${item.price * (item.quantity || 1)}</span>
