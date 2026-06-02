@@ -5,7 +5,7 @@ import autoTable from "jspdf-autotable";
 import html2canvas from "html2canvas";
 import emailjs from "@emailjs/browser";
 
-export default function CartModal({ cartItems, onClose, onCheckoutSuccess, onRemoveItem }) {
+export default function CartModal({ cartItems, onClose, onCheckoutSuccess, onRemoveItem, onAddItem }) {
   const [customerName, setCustomerName] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
@@ -221,11 +221,17 @@ export default function CartModal({ cartItems, onClose, onCheckoutSuccess, onRem
                           <div className="flex items-center gap-2 mt-1">
                             <button 
                               onClick={() => onRemoveItem(item.id)}
-                              className="w-5 h-5 flex items-center justify-center bg-brand-moss/10 text-brand-moss hover:bg-brand-moss hover:text-white rounded transition-colors text-xs font-bold"
+                              className="w-6 h-6 flex items-center justify-center bg-brand-moss/10 text-brand-moss hover:bg-brand-moss hover:text-white rounded transition-colors text-xs font-bold"
                             >
                               -
                             </button>
                             <span className="text-brand-moss text-xs font-medium w-4 text-center">{item.quantity || 1}</span>
+                            <button 
+                              onClick={() => onAddItem(item)}
+                              className="w-6 h-6 flex items-center justify-center bg-brand-moss/10 text-brand-moss hover:bg-brand-moss hover:text-white rounded transition-colors text-xs font-bold"
+                            >
+                              +
+                            </button>
                           </div>
                         </div>
                       </div>

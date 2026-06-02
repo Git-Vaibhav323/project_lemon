@@ -1724,6 +1724,7 @@ export default function Shop() {
         <CartModal 
           cartItems={cartItems} 
           onRemoveItem={handleRemoveItem}
+          onAddItem={handleAddToCart}
           onClose={() => setIsCartOpen(false)} 
           onCheckoutSuccess={() => {
             setCartItems([]);
