@@ -79,73 +79,75 @@ export default function Contact() {
         </div>
 
         <div className="contact-form-container glass rounded-2xl p-6 sm:p-8 lg:p-10">
-          <form onSubmit={handleSubmit} className="contact-form space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-brand-dark/75 mb-2">
-                  Your Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-xl bg-brand-sand/50 border border-brand-bark/12 text-brand-dark placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary transition-all"
-                  placeholder="John Doe"
-                />
-              </div>
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16">
+            <div className="lg:col-span-3">
+              <form onSubmit={handleSubmit} className="contact-form space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-brand-dark/75 mb-2">
+                      Your Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 rounded-xl bg-brand-sand/50 border border-brand-bark/12 text-brand-dark placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary transition-all"
+                      placeholder="John Doe"
+                    />
+                  </div>
 
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-brand-dark/75 mb-2">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-xl bg-brand-sand/50 border border-brand-bark/12 text-brand-dark placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary transition-all"
-                  placeholder="john@example.com"
-                />
-              </div>
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-brand-dark/75 mb-2">
+                      Email Address
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 rounded-xl bg-brand-sand/50 border border-brand-bark/12 text-brand-dark placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary transition-all"
+                      placeholder="john@example.com"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-brand-dark/75 mb-2">
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    rows="4"
+                    className="w-full px-4 py-3 rounded-xl bg-brand-sand/50 border border-brand-bark/12 text-brand-dark placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary transition-all resize-none"
+                    placeholder="Tell us about your plant needs..."
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full py-4 px-6 rounded-xl bg-brand-primary text-brand-bg font-semibold text-base sm:text-lg hover:bg-brand-primary/90 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  Send Message
+                </button>
+
+                {status && (
+                  <div className="text-center text-brand-primary font-medium animate-fade-in">
+                    {status}
+                  </div>
+                )}
+              </form>
             </div>
 
-            <div>
-              <label htmlFor="message" className="block text-sm font-medium text-brand-dark/75 mb-2">
-                Message
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                required
-                rows="4"
-                className="w-full px-4 py-3 rounded-xl bg-brand-sand/50 border border-brand-bark/12 text-brand-dark placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary transition-all resize-none"
-                placeholder="Tell us about your plant needs..."
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="w-full py-4 px-6 rounded-xl bg-brand-primary text-brand-bg font-semibold text-base sm:text-lg hover:bg-brand-primary/90 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
-            >
-              Send Message
-            </button>
-
-            {status && (
-              <div className="text-center text-brand-primary font-medium animate-fade-in">
-                {status}
-              </div>
-            )}
-          </form>
-
-          <div className="contact-info mt-10 pt-8 border-t border-brand-bark/12">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+            <div className="lg:col-span-2 contact-info flex flex-col justify-center border-t lg:border-t-0 lg:border-l border-brand-bark/12 pt-8 lg:pt-0 lg:pl-10 space-y-8">
               <div>
                 <div className="text-brand-primary font-semibold mb-1">Email</div>
                 <a href="mailto:hello@planto.com" className="text-brand-dark/55 hover:text-brand-primary transition-colors text-sm">
@@ -160,7 +162,9 @@ export default function Contact() {
               </div>
               <div>
                 <div className="text-brand-primary font-semibold mb-1">Location</div>
-                <p className="text-brand-dark/55 text-sm">San Francisco, CA</p>
+                <p className="text-brand-dark/55 text-sm">
+                  San Francisco, CA<br />123 Plant Street
+                </p>
               </div>
             </div>
           </div>
