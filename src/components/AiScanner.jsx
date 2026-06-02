@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { GoogleGenAI } from "@google/genai";
+import ReactMarkdown from "react-markdown";
 
 export default function AiScanner({ onClose }) {
   const [image, setImage] = useState(null);
@@ -206,8 +207,10 @@ export default function AiScanner({ onClose }) {
           </button>
 
           {result && (
-            <div className="mt-4 p-4 bg-brand-sand border border-brand-bark/20 rounded-xl text-sm text-brand-dark/70 max-h-48 overflow-y-auto">
-              <div dangerouslySetInnerHTML={{ __html: result.replace(/\n/g, '<br />') }} />
+            <div className="mt-4 p-4 bg-brand-sand border border-brand-bark/20 rounded-xl text-sm text-brand-dark max-h-64 overflow-y-auto">
+              <div className="prose prose-sm prose-green max-w-none">
+                <ReactMarkdown>{result}</ReactMarkdown>
+              </div>
             </div>
           )}
         </div>
