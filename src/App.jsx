@@ -14,6 +14,7 @@ import Footer from "./components/Footer";
 import Shop from "./pages/Shop";
 import About from "./pages/About";
 import Admin from "./pages/Admin";
+import Chatbot from "./components/Chatbot";
 import useCustomCursor from "./hooks/useCustomCursor";
 
 export default function App() {
@@ -107,6 +108,7 @@ export default function App() {
           <Contact />
         </main>
         <Footer />
+        <Chatbot />
       </div>
     </div>
   );
